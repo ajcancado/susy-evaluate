@@ -1,0 +1,2 @@
+input/case1/a1.c
+input/case1/a2.c

@@ -1,4 +1,0 @@
-main.c
-edge.c
-node.c
-graph.c

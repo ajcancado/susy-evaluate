@@ -13,16 +13,20 @@ import re
 
 filename = ""
 result = None
+expected = []
+unexpected = []
 
 @scenario('input.feature', 'All files have errors reported by cppcheck')
-def test_input_file():
+def test_input_file_with_errors():
     pass
 
 @given('a file that contains a list of files')
 def file_with_list_of_files():
     global filename
+    global expected
 
-    filename = './suport/file.txt'
+    filename = './suport/case1_input.txt'
+    expected = ["a1.c", "a2.c"]
 
 @when('I call the app with the file as parameter')
 def call_the_app():
@@ -35,12 +39,28 @@ def call_the_app():
 def shows_errors():
 
     global filename
+    global expected
+    global unexpected
 
     with open("output.txt",'r') as f_out:
         contents = f_out.read()
 
-        with open(filename, 'r') as f_in:
-            for line in f_in:
-                c = line.rstrip().split('/')[-1] #<name of file>.c
-                assert c in contents
+        for f in expected:
+            assert f in contents
 
+        for f in unexpected:
+            assert not (f in contents)
+
+@scenario('input.feature', 'Not all files have errors reported by cppcheck')
+def test_input_file_without_errors():
+    pass
+
+@given('a file that contains a list of good and bad files')
+def file_with_list_of_good_and_bad_files():
+    global filename
+    global expected
+    global unexpected
+
+    filename = './suport/case2_input.txt'
+    expected = ["a1.c"]
+    unexpected = ["a2.c"]
