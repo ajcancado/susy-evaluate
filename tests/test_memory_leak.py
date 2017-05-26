@@ -11,7 +11,6 @@ from pytest_bdd import (
 import subprocess 
 import re
 
-
 filename = ""
 result = None
 expected = []
@@ -32,7 +31,7 @@ def doesnt_have_memory_leak():
     global filename
     global expected
 
-    filename = './support/case2.memory_leak.txt'
+    filename = './support/case2_memory_leak.txt'
     expected = ["a2.c"]
 
 
@@ -41,15 +40,16 @@ def has_memory_leak():
     global filename
     global expected
 
-    filename = './support/case1.memory_leak.txt'
+    filename = './support/case1_memory_leak.txt'
     expected = ["a1.c"]
 
 @when('it is submitted to the app')
 def submitted():
-   pass
+
+   subprocess.check_output('../main.py ' + filename, shell=True)
 
 
-@then('I should receive the following message "[<filename>.c:2]: (error) vazamento de memória"')
+@then('I should receive the following message "[<filename>.c:<linha>]: (erro) vazamento de memória"')
 def receive_message():
    pass
 
