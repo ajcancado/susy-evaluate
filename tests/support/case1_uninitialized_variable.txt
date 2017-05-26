@@ -1,1 +1,1 @@
-uninitialized_variable/a1.c
+support/uninitialized_variable/a1.c
