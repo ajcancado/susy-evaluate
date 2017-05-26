@@ -55,6 +55,7 @@ def shows_errors():
 def test_input_file_without_errors():
     pass
 
+
 @given('a file that contains a list of good and bad files')
 def file_with_list_of_good_and_bad_files():
     global filename
@@ -64,3 +65,15 @@ def file_with_list_of_good_and_bad_files():
     filename = './support/case2_input.txt'
     expected = ["a1.c"]
     unexpected = ["a2.c"]
+
+@scenario('input.feature', 'No files have errors reported by cppcheck')
+def no_errors():
+    pass
+    
+@then('Then shows me nothing')
+def shows_anything():
+
+    with open("output.txt",'r') as f_out:
+        contents = f_out.read().strip()
+
+        assert len(contents) == 0
