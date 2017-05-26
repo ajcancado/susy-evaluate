@@ -1,2 +1,1 @@
-[a1.c: 6]: (erro) vazamento de memória
-[a1.c: 11]: (erro) vazamento de memória
+[a1.c:6]: (erro) Variável não inicializada
