@@ -1,2 +1,2 @@
-input/case2/a1.c
-input/case2/a2.c
+[a1.c: 6]: (erro) vazamento de memória
+[a1.c: 11]: (erro) vazamento de memória
