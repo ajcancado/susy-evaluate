@@ -25,7 +25,7 @@ def file_with_list_of_files():
     global filename
     global expected
 
-    filename = './suport/case1_input.txt'
+    filename = './support/case1_input.txt'
     expected = ["a1.c", "a2.c"]
 
 @when('I call the app with the file as parameter')
@@ -61,6 +61,6 @@ def file_with_list_of_good_and_bad_files():
     global expected
     global unexpected
 
-    filename = './suport/case2_input.txt'
+    filename = './support/case2_input.txt'
     expected = ["a1.c"]
     unexpected = ["a2.c"]
