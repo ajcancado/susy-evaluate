@@ -8,22 +8,53 @@ from pytest_bdd import (
     when,
 )
 
+import subprocess 
+import re
 
-@scenario('memory_leak.feature', 'Uninitialized variable analysis')
-def test_uninitialized_variable_analysis():
+
+filename = ""
+result = None
+expected = []
+unexpected = []
+
+@scenario('memory_leak.feature', 'Code with memory leak')
+def test_code_with_memory_leak():
+    pass
+
+
+@scenario('memory_leak.feature', 'Code without memory leak')
+def test_code_without_memory_leak():
+    pass
+
+
+@given('the code doesn\'t have memory leak')
+def doesnt_have_memory_leak():
+    global filename
+    global expected
+
+    filename = './support/case2.memory_leak.txt'
+    expected = ["a2.c"]
+
+
+@given('the code has memory leaks')
+def has_memory_leak():
+    global filename
+    global expected
+
+    filename = './support/case1.memory_leak.txt'
+    expected = ["a1.c"]
+
+@when('it is submitted to the app')
+def submitted():
    pass
 
-@given('the code doesn\'t have uninitialized variables')
-def the_code_doesnt_have_uninitialized_variables():
-    pass
 
-
-@when('it is submitted to SuSy')
-def it_is_submitted_to_susy():
-    pass
+@then('I should receive the following message "[<filename>.c:2]: (error) vazamento de memória"')
+def receive_message():
+   pass
 
 
 @then('I shouldn\'t receive any messages')
-def i_shouldnt_receive_any_messages():
+def receive_any_messages():
     pass
 
