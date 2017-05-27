@@ -2,11 +2,9 @@
 
 int main(int argc, char const *argv[])
 {
-	int a = 7, b = 2, c = 3;
+	int a = 7, b = 2;
 
-	a = b;
-
-	printf("%d\n",b );
+	printf("%d %d\n",a, b );
 	
 	return 0;
 }

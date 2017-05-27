@@ -69,9 +69,15 @@ def file_with_list_of_good_and_bad_files():
 @scenario('input.feature', 'No files have errors reported by cppcheck')
 def test_no_errors():
     pass
+
+@given('a file that contains a list of good files')
+def file_with_list_of_good_files():
+    global filename
+
+    filename = './support/case3_input.txt'
     
 @then('shows me nothing')
-def shows_anything():
+def shows_nothing():
 
     with open("output.txt",'r') as f_out:
         contents = f_out.read().strip()

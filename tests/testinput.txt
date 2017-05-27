@@ -1,0 +1,70 @@
+============================= test session starts ==============================
+platform linux -- Python 3.4.2, pytest-3.1.0, py-1.4.33, pluggy-0.4.0
+rootdir: /home/silvana/UNICAMP/Engenharia de Software/susy-evaluate/tests, inifile:
+plugins: console-scripts-0.1.2, bdd-2.18.2
+collected 3 items
+
+test_input.py FF.
+
+=================================== FAILURES ===================================
+_________________________ test_input_file_with_errors __________________________
+
+request = <FixtureRequest for <Function 'test_input_file_with_errors'>>
+
+    @scenario('input.feature', 'All files have errors reported by cppcheck')
+>   def test_input_file_with_errors():
+
+test_input.py:20: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/local/lib/python3.4/dist-packages/pytest_bdd/scenario.py:195: in _execute_scenario
+    _execute_step_function(request, scenario, step, step_func)
+/usr/local/lib/python3.4/dist-packages/pytest_bdd/scenario.py:137: in _execute_step_function
+    step_func(**kwargs)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    @then('shows me a list of files with errors')
+    def shows_errors():
+    
+        global filename
+        global expected
+        global unexpected
+    
+        with open("output.txt",'r') as f_out:
+            contents = f_out.read()
+    
+            for f in expected:
+>               assert f in contents
+E               AssertionError: assert 'a1.c' in '\n\n'
+
+test_input.py:49: AssertionError
+________________________ test_input_file_without_errors ________________________
+
+request = <FixtureRequest for <Function 'test_input_file_without_errors'>>
+
+    @scenario('input.feature', 'Not all files have errors reported by cppcheck')
+>   def test_input_file_without_errors():
+
+test_input.py:55: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/local/lib/python3.4/dist-packages/pytest_bdd/scenario.py:195: in _execute_scenario
+    _execute_step_function(request, scenario, step, step_func)
+/usr/local/lib/python3.4/dist-packages/pytest_bdd/scenario.py:137: in _execute_step_function
+    step_func(**kwargs)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    @then('shows me a list of files with errors')
+    def shows_errors():
+    
+        global filename
+        global expected
+        global unexpected
+    
+        with open("output.txt",'r') as f_out:
+            contents = f_out.read()
+    
+            for f in expected:
+>               assert f in contents
+E               AssertionError: assert 'a1.c' in '\n\n'
+
+test_input.py:49: AssertionError
+====================== 2 failed, 1 passed in 0.22 seconds ======================
