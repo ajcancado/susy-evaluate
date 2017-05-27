@@ -67,10 +67,10 @@ def file_with_list_of_good_and_bad_files():
     unexpected = ["a2.c"]
 
 @scenario('input.feature', 'No files have errors reported by cppcheck')
-def no_errors():
+def test_no_errors():
     pass
     
-@then('Then shows me nothing')
+@then('shows me nothing')
 def shows_anything():
 
     with open("output.txt",'r') as f_out:
