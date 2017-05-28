@@ -41,14 +41,14 @@ def has_memory_leak():
 def submitted():
    subprocess.check_output('../main.py ' + filename, shell=True)
 
-@then('I should receive the following message "[<filename>.c:<linha>]: (erro) vazamento de memória"')
+@then('I should receive the following message "[<filename>.c:<linha>]: (erro) Vazamento de memória"')
 def receive_message():
     global filename
 
     with open("output.txt",'r') as f_out:
 
         for line in f_out:
-            m = re.search('[\[\]\:\w\.\_]*\s(\(erro\) vazamento de memória)', line)
+            m = re.search('[\[\]\:\w\.\_]*\s(\(erro\) Vazamento de memória)', line)
             assert m != None
 
 @then('I shouldn\'t receive any messages')

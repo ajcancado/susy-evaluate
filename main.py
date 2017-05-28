@@ -28,9 +28,9 @@ class Evaluator(ABC):
 
 class Cppcheck(Evaluator):
     ErrorId = {
-        'memleak': '[{file}:{line}]: Descrição memleak',
+        'memleak': '[{file}:{line}]: (erro) Vazamento de memória',
         'redundantAssignment': '[{file}:{line}]: Descrição redundantAssignment',
-        'uninitvar': '[{file}:{line}]: Descrição uninitvar',
+        'uninitvar': '[{file}:{line}]: (erro) Variável não inicializada',
         'unreadVariable': '[{file}:{line}]: Descrição unreadVariable'
     }
 
