@@ -31,7 +31,7 @@ class Cppcheck(Evaluator):
         'memleak': '[{file}:{line}]: (erro) Vazamento de memória',
         'redundantAssignment': '[{file}:{line}]: Descrição redundantAssignment',
         'uninitvar': '[{file}:{line}]: (erro) Variável não inicializada',
-        'unreadVariable': '[{file}:{line}]: Descrição unreadVariable'
+        'nullPointer': '[{file}:{line}]: (erro) Desreferencia a ponteiro nulo'
     }
 
     def init(self):
