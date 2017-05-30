@@ -46,7 +46,7 @@ def it_is_submitted_to_the_app():
     subprocess.check_output('../main.py ' + filename, shell=True)
 
 
-@then('I should receive the following message "[<filename>.c:<linha>]: (error) Desreferencia a ponteiro nulo"')
+@then('I should receive the following message "[<filename>.c:<linha>]: (error) Desreferenciamento de ponteiro nulo"')
 def i_should_receive_message_error():
     global filename
 
