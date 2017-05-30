@@ -1,0 +1,1 @@
+support/redundant_assignment/a2.c
