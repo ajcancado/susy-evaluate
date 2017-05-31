@@ -51,11 +51,14 @@ class Cppcheck(Evaluator):
         result = result[1:]
         fmt_result = []
         for r in result:
-            r = r.decode('utf-8')
-            fname, fline, eid, sev, msg = r.split('::')
-            if eid in self.ErrorId:
-                fmt_result.append(self.ErrorId[eid].format(file=fname,
-                        line=fline, id=eid, severity=sev, message=msg))
+            try:
+                r = r.decode('utf-8')
+                fname, fline, eid, sev, msg = r.split('::')
+                if eid in self.ErrorId:
+                    fmt_result.append(self.ErrorId[eid].format(file=fname,
+                            line=fline, id=eid, severity=sev, message=msg))
+            except:
+                continue
         return '\n'.join(fmt_result) + '\n'
 
 
