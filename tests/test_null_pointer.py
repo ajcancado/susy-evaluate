@@ -53,7 +53,7 @@ def i_should_receive_message_error():
     with open("output.txt",'r') as f_out:
 
         for line in f_out:
-            m = re.search('[\[\]\:\w\.\_]*\s(\(erro\) Desreferencia a ponteiro nulo)', line)
+            m = re.search('[\[\]\:\w\.\_]*\s(\(erro\) Desreferenciamento de ponteiro nulo)', line)
             assert m != None
 
 
