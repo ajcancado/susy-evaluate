@@ -80,6 +80,6 @@ def file_with_list_of_good_files():
 def shows_nothing():
 
     with open("output.txt",'r') as f_out:
-        contents = f_out.read().strip()
+        contents = f_out.read()
 
         assert len(contents) == 0

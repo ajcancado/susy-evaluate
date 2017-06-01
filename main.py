@@ -23,7 +23,9 @@ class Evaluator(ABC):
 
         with open('output.txt', 'w') as out:
             for f in files:
-                out.write(self.process(self.execute(f)))
+                output = self.process(self.execute(f))
+                if len(output) > 1:
+                    out.write(output)
 
 
 class Cppcheck(Evaluator):
