@@ -23,15 +23,15 @@ def test_code_with_memory_leak():
 def test_code_without_memory_leak():
     pass
 
-@given('the code doesn\'t have memory leak')
+@given('a2.c doesn\'t have memory leak')
 def doesnt_have_memory_leak():
     global filename
     global expected
 
     filename = './support/case2_memory_leak.txt'
-    expected = ""
+    expected = ['a2.c']
 
-@given('the code has memory leak')
+@given('a1.c has memory leak')
 def has_memory_leak():
     global filename
 
@@ -51,8 +51,13 @@ def receive_message():
             m = re.search('[\[\]\:\w\.\_]*\s(\(erro\) Vazamento de memória)', line)
             assert m != None
 
-@then('I shouldn\'t receive any messages')
+@then('shows me "[a2.c] Nenhum erro de análise estática foi encontrado"')
 def receive_no_messages():
+    global expected
+
     with open("output.txt",'r') as f_out:
-        contents = f_out.read().strip()
-        assert len(contents) == 0
+        for line in f_out:
+            assert line in expected
+            
+            m = re.search('[\[\]\]*\s(\ Nenhum erro de análise estática foi encontrado)', line)
+            assert m != None
