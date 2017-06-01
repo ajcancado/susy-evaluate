@@ -26,6 +26,10 @@ class Evaluator(ABC):
                 output = self.process(self.execute(f))
                 if len(output) > 1:
                     out.write(output)
+                else:
+                    filename = f.split('/')[-1]
+                    message = '[{file}]: Nenhum erro de análise estática foi encontrado\n'
+                    out.write(message.format(file=filename))
 
 
 class Cppcheck(Evaluator):

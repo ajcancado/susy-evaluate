@@ -1,0 +1,1 @@
+[a2.c]: Nenhum erro de análise estática foi encontrado

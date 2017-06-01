@@ -20,7 +20,7 @@ unexpected = []
 def test_input_file_with_errors():
     pass
 
-@given('a file that contains a list of files')
+@given('Given a file case1_input.txt that contains a list of files: a1.c and a2.c')
 def file_with_list_of_files():
     global filename
     global expected
@@ -35,7 +35,7 @@ def call_the_app():
    result = subprocess.check_output('../main.py ' + filename, shell=True)
 
 
-@then('shows me a list of files with errors')
+@then('shows me a list of files with errors: a1.c')
 def shows_errors():
 
     global filename
@@ -56,7 +56,7 @@ def test_input_file_without_errors():
     pass
 
 
-@given('a file that contains a list of good and bad files')
+@given('Given a file case1_input.txt that contains a list of good and bad files: a1.c and a2.c')
 def file_with_list_of_good_and_bad_files():
     global filename
     global expected
@@ -70,16 +70,22 @@ def file_with_list_of_good_and_bad_files():
 def test_no_errors():
     pass
 
-@given('a file that contains a list of good files')
+@given('Given a file case3_input.txt that contains a list of good file: a2.c')
 def file_with_list_of_good_files():
     global filename
+    global expected
 
     filename = './support/case3_input.txt'
+    expected = ["a2.c"]
     
-@then('shows me nothing')
+@then('shows me "[a2.c]: Nenhum erro de análise estática foi encontrado"')
 def shows_nothing():
 
-    with open("output.txt",'r') as f_out:
-        contents = f_out.read()
+    global expected
 
-        assert len(contents) == 0
+    with open("output.txt",'r') as f_out:
+        for line in f_out:
+            assert line in expected
+            
+            m = re.search('[\[\]\]*\s(\ Nenhum erro de análise estática foi encontrado)', line)
+            assert m != None
