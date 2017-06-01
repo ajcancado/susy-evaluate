@@ -82,5 +82,7 @@ if __name__ == '__main__':
         
         for f in file_list_temp:
             if os.path.exists(f):
-                file_list.append(f)
+                t = f.split('/')[-1].split('.')[-1]
+                if t in ["c","cpp"]:
+                    file_list.append(f)
         ccheck.evaluate(file_list)
