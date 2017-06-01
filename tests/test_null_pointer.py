@@ -25,16 +25,16 @@ def test_code_without_null_pointer_dereference():
     pass
 
 
-@given('the code doesn\'t have null pointer dereference')
+@given('a2.c doesn\'t have null pointer dereference')
 def the_code_doesnt_have_null_pointer_dereference():
     global filename
     global expected
 
     filename = './support/case2_null_pointer.txt'
-    expected = ""
+    expected = ['a2.c']
 
 
-@given('the code has null pointer dereference')
+@given('a1.c has null pointer dereference')
 def the_code_has_null_pointer_dereference():
     global filename
 
@@ -57,8 +57,14 @@ def i_should_receive_message_error():
             assert m != None
 
 
-@then('I shouldn\'t receive any messages')
-def i_shouldnt_receive_any_messages():
+@then('shows me "[a2.c]: Nenhum erro de análise estática foi encontrado"')
+def shows_nothing():
+
+    global expected
+
     with open("output.txt",'r') as f_out:
-        contents = f_out.read().strip()
-        assert len(contents) == 0
+        for line in f_out:
+            assert "a2.c" in line
+            
+            m = re.search('(\[[0-9A-Za-z\_]*\.\w\])\:\sNenhum erro de análise estática foi encontrado', line)
+            assert m != None

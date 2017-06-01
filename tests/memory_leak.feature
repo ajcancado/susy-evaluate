@@ -9,4 +9,4 @@ Scenario: Code with memory leak
 Scenario: Code without memory leak
     Given a2.c doesn't have memory leak
     When it is submitted to the app
-    Then shows me "[a2.c] Nenhum erro de análise estática foi encontrado" 
+    Then shows me "[a2.c]: Nenhum erro de análise estática foi encontrado" 

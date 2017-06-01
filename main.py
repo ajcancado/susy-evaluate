@@ -2,6 +2,7 @@
 
 import subprocess
 import sys
+import os.path
 
 from abc import ABC, abstractmethod
 
@@ -76,5 +77,10 @@ if __name__ == '__main__':
 
     ccheck = Cppcheck()
     with open(sys.argv[1]) as infile:
-        file_list = infile.read().strip().split('\n')
+        file_list_temp = infile.read().strip().split('\n')
+        file_list = []
+        
+        for f in file_list_temp:
+            if os.path.exists(f):
+                file_list.append(f)
         ccheck.evaluate(file_list)

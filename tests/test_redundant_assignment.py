@@ -23,15 +23,15 @@ def test_code_with_redundant_assignment():
 def test_code_without_redundant_assignment():
     pass
 
-@given('the code doesn\'t have redundant assignment')
+@given('a2.c doesn\'t have redundant assignment')
 def doesnt_have_redundant_assignment():
     global filename
     global expected
 
     filename = './support/case2_redundant_assignment.txt'
-    expected = ""
+    expected = ['a2.c']
 
-@given('the code has redundant assignment')
+@given('a1.c has redundant assignment')
 def has_redundant_assignment():
     global filename
 
@@ -51,8 +51,14 @@ def receive_message():
             m = re.search('[\[\]\:\w\.\_]*\s(\(erro\) Atribuição redundante)', line)
             assert m != None
 
-@then('I shouldn\'t receive any messages')
-def receive_no_messages():
+@then('shows me "[a2.c]: Nenhum erro de análise estática foi encontrado"')
+def shows_nothing():
+
+    global expected
+
     with open("output.txt",'r') as f_out:
-        contents = f_out.read().strip()
-        assert len(contents) == 0
+        for line in f_out:
+            assert "a2.c" in line
+            
+            m = re.search('(\[[0-9A-Za-z\_]*\.\w\])\:\sNenhum erro de análise estática foi encontrado', line)
+            assert m != None

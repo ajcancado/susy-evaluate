@@ -51,13 +51,14 @@ def receive_message():
             m = re.search('[\[\]\:\w\.\_]*\s(\(erro\) Vazamento de memória)', line)
             assert m != None
 
-@then('shows me "[a2.c] Nenhum erro de análise estática foi encontrado"')
-def receive_no_messages():
+@then('shows me "[a2.c]: Nenhum erro de análise estática foi encontrado"')
+def shows_nothing():
+
     global expected
 
     with open("output.txt",'r') as f_out:
         for line in f_out:
-            assert line in expected
+            assert "a2.c" in line
             
-            m = re.search('[\[\]\]*\s(\ Nenhum erro de análise estática foi encontrado)', line)
+            m = re.search('(\[[0-9A-Za-z\_]*\.\w\])\:\sNenhum erro de análise estática foi encontrado', line)
             assert m != None
