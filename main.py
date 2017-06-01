@@ -29,6 +29,7 @@ class Evaluator(ABC):
 
 
 class Cppcheck(Evaluator):
+
     ErrorId = {
         'memleak': '[{file}:{line}]: (erro) Vazamento de memória',
         'redundantAssignment': '[{file}:{line}]: (erro) Atribuição redundante',
@@ -56,8 +57,9 @@ class Cppcheck(Evaluator):
             try:
                 r = r.decode('utf-8')
                 fname, fline, eid, sev, msg = r.split('::')
+                filename = fname.split('/')[-1]
                 if eid in self.ErrorId:
-                    fmt_result.append(self.ErrorId[eid].format(file=fname,
+                    fmt_result.append(self.ErrorId[eid].format(file=filename,
                             line=fline, id=eid, severity=sev, message=msg))
             except:
                 continue
