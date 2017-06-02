@@ -43,7 +43,7 @@ def the_code_has_uninitialized_variables():
 
 @when('it is submitted to the app')
 def it_is_submitted_to_the_app():
-    subprocess.check_output('../main.py ' + filename, shell=True)
+    subprocess.check_output('../susy-avalia.py ' + filename + ' > output.txt', shell=True)
 
 
 @then('I should receive the following message "[<filename>.c:<linha>]: (error) Variável não inicializada"')

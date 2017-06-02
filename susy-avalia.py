@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 
 import subprocess
 import sys
@@ -22,15 +22,14 @@ class Evaluator(ABC):
     def evaluate(self, files):
         self.init()
 
-        with open('output.txt', 'w') as out:
-            for f in files:
-                output = self.process(self.execute(f))
-                if len(output) > 1:
-                    out.write(output)
-                else:
-                    filename = f.split('/')[-1]
-                    message = '[{file}]: Nenhum erro de análise estática foi encontrado\n'
-                    out.write(message.format(file=filename))
+        for f in files:
+            output = self.process(self.execute(f))
+            if len(output) > 1:
+                print(output)
+            else:
+                filename = f.split('/')[-1]
+                message = '[{file}]: Nenhum erro de análise estática foi encontrado'
+                print(message.format(file=filename))
 
 
 class Cppcheck(Evaluator):
@@ -68,7 +67,7 @@ class Cppcheck(Evaluator):
                             line=fline, id=eid, severity=sev, message=msg))
             except:
                 continue
-        return '\n'.join(fmt_result) + '\n'
+        return '\n'.join(fmt_result)
 
 
 if __name__ == '__main__':
