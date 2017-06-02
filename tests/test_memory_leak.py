@@ -39,7 +39,7 @@ def has_memory_leak():
     
 @when('it is submitted to the app')
 def submitted():
-   subprocess.check_output('../susy-avalia.py ' + filename, shell=True)
+   subprocess.check_output('../susy-avalia.py ' + filename + ' > output.txt', shell=True)
 
 @then('I should receive the following message "[<filename>.c:<linha>]: (erro) Vazamento de memória"')
 def receive_message():

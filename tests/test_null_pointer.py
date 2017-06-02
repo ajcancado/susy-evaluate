@@ -43,7 +43,7 @@ def the_code_has_null_pointer_dereference():
 
 @when('it is submitted to the app')
 def it_is_submitted_to_the_app():
-    subprocess.check_output('../susy-avalia.py ' + filename, shell=True)
+    subprocess.check_output('../susy-avalia.py ' + filename + ' > output.txt', shell=True)
 
 
 @then('I should receive the following message "[<filename>.c:<linha>]: (error) Desreferenciamento de ponteiro nulo"')
