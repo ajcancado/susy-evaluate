@@ -32,7 +32,7 @@ def file_with_list_of_files():
 def call_the_app():
    global result
 
-   result = subprocess.check_output('../main.py ' + filename, shell=True)
+   result = subprocess.check_output('../susy-avalia.py ' + filename, shell=True)
 
 
 @then('shows me a list of files with errors: a1.c')
