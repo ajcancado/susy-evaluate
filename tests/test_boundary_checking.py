@@ -46,14 +46,14 @@ def it_is_submitted_to_the_app():
     subprocess.check_output('../susy-avalia.py ' + filename + ' > output.txt', shell=True)
 
 
-@then('I should receive the following message "[<filename>.c:<linha>]: (error) Array "arr[3]" acessado no índice 3, está fora dos limites"')
+@then('I should receive the following message "[<filename>.c:<linha>]: (error) Array \'arr[3]\' acessado no índice 3, está fora dos limites"')
 def i_should_receive_message_error():
     global filename
 
     with open("output.txt",'r') as f_out:
 
         for line in f_out:
-            m = re.search('[\[\]\:\w\.\_]*\s(\(erro\) Array "arr[3]" acessado no índice 3, está fora dos limites)', line)
+            m = re.search('[\[\]\:\w\.\_]*\s(\(erro\) Array \'arr[3]\' acessado no índice 3, está fora dos limites)', line)
             assert m != None
 
 
