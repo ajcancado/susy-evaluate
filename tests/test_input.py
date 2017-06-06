@@ -134,7 +134,7 @@ def test_files_with_invalid_extension():
     pass
 
 
-@given('case4_input.txt contains a file list with invalid extension')
+@given('case5_input.txt contains a file list with invalid extension')
 def file_list_with_invalid_extension():
     global filename
     global expected
