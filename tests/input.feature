@@ -15,3 +15,13 @@ Scenario: Files without errors reported by cppcheck
   	Given case3_input.txt contains a file list without programming errors: a1.c
   	When I call the app with the container file as parameter
   	Then shows me "[a1.c]: Nenhum erro de análise estática foi encontrado"
+
+Scenario: Files with invalid path
+  	Given case4_input.txt contains a file list with invalid path
+  	When I call the app with the container file as parameter
+  	Then shows me "[a3.c]: (erro) O arquivo não foi encontrado"
+
+Scenario: Files with invalid extension
+  	Given case4_input.txt contains a file list with invalid extension
+  	When I call the app with the container file as parameter
+  	Then shows me "[a1.py]: (erro) O arquivo tem extensão inválida"

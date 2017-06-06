@@ -102,3 +102,53 @@ def shows_nothing():
 
             m = re.search('(\[[0-9A-Za-z\_]*\.\w\])\:\sNenhum erro de análise estática foi encontrado', line)
             assert m != None
+
+
+@scenario('input.feature', 'Files with invalid path')
+def test_files_with_invalid_path():
+    pass
+
+
+@given('case4_input.txt contains a file list with invalid path')
+def file_list_with_invalid_path():
+    global filename
+    global expected
+
+    filename = './support/case4_input.txt'
+    expected = ["a3.c"]
+
+
+@then('shows me "[a3.c]: (erro) O arquivo não foi encontrado"')
+def shows_file_list_with_invalid_path():
+    global expected
+
+    with open("output.txt",'r') as f_out:
+        contents = f_out.read()
+
+        for f in expected:
+            assert ("[" + f + "]: (erro) O arquivo não foi encontrado") in contents
+
+
+@scenario('input.feature', 'Files with invalid extension')
+def test_files_with_invalid_extension():
+    pass
+
+
+@given('case4_input.txt contains a file list with invalid extension')
+def file_list_with_invalid_extension():
+    global filename
+    global expected
+
+    filename = './support/case5_input.txt'
+    expected = ["a1.py"]
+
+
+@then('shows me "[a1.py]: (erro) O arquivo tem extensão inválida"')
+def shows_file_list_with_invalid_extension():
+    global expected
+
+    with open("output.txt",'r') as f_out:
+        contents = f_out.read()
+
+        for f in expected:
+            assert ("[" + f + "]: (erro) O arquivo tem extensão inválida") in contents
