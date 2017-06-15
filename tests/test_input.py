@@ -92,7 +92,7 @@ def file_list_without_programming_errors_a1c():
     expected = ["a1.c"]
 
 
-@then('shows me "[a1.c]: Nenhum erro de análise estática foi encontrado"')
+@then('shows me "[<filename>.c]: Nenhum erro de análise estática foi encontrado"')
 def shows_nothing():
     global expected
 
@@ -118,7 +118,7 @@ def file_list_with_invalid_path():
     expected = ["a3.c"]
 
 
-@then('shows me "[a3.c]: (erro) O arquivo não foi encontrado"')
+@then('shows me "[<filename>.c]: Arquivo não encontrado"')
 def shows_file_list_with_invalid_path():
     global expected
 
@@ -143,7 +143,7 @@ def file_list_with_invalid_extension():
     expected = ["a1.py"]
 
 
-@then('shows me "[a1.py]: (erro) O arquivo tem extensão inválida"')
+@then('shows me "[a1.py]: Arquivo com extensão inválida"')
 def shows_file_list_with_invalid_extension():
     global expected
 

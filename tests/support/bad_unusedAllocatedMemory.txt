@@ -1,0 +1,1 @@
+/home/silvana/susy-tests/support/unused_function_and_variable/unusedAllocatedMemory/bad.c

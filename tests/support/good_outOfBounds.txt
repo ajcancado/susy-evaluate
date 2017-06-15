@@ -1,0 +1,1 @@
+/home/silvana/susy-tests/support/checking_data_type/outOfBounds/good.c

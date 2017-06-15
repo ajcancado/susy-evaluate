@@ -1,0 +1,1 @@
+/home/silvana/susy-tests/support/format_string/invalidScanfFormatWidth/bad.c

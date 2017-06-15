@@ -1,0 +1,1 @@
+/home/silvana/susy-tests/support/null_pointer/nullPointerRedundantCheck/bad.c
