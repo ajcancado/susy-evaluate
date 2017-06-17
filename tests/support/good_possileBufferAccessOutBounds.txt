@@ -1,1 +1,1 @@
-/home/silvana/susy-tests/support/checking_data_type/possileBufferAccessOutBounds/good.c
+/home/silvana/susy-tests/support/checking_data_type/possibleBufferAccessOutBounds/good.c

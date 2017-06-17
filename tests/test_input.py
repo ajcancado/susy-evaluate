@@ -117,18 +117,6 @@ def file_list_with_invalid_path():
     filename = './support/case4_input.txt'
     expected = ["a3.c"]
 
-
-@then('shows me "[<filename>.c]: Arquivo não encontrado"')
-def shows_file_list_with_invalid_path():
-    global expected
-
-    with open("output.txt",'r') as f_out:
-        contents = f_out.read()
-
-        for f in expected:
-            assert ("[" + f + "]: (erro) O arquivo não foi encontrado") in contents
-
-
 @scenario('input.feature', 'Files with invalid extension')
 def test_files_with_invalid_extension():
     pass
@@ -143,12 +131,12 @@ def file_list_with_invalid_extension():
     expected = ["a1.py"]
 
 
-@then('shows me "[a1.py]: Arquivo com extensão inválida"')
-def shows_file_list_with_invalid_extension():
+@then('shows me nothing')
+def shows_me_nothing():
     global expected
 
     with open("output.txt",'r') as f_out:
         contents = f_out.read()
 
         for f in expected:
-            assert ("[" + f + "]: (erro) O arquivo tem extensão inválida") in contents
+            assert f not in contents
