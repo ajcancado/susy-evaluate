@@ -8,38 +8,58 @@ from pytest_bdd import (
     when,
 )
 
+import subprocess 
+import re
 
-@scenario('check_file/fflushOnInputStream.feature', 'Code with fflush on input stream')
+filename = ""
+result = None
+expected = []
+
+@scenario('fflushOnInputStream.feature', 'Code with fflush on input stream')
 def test_code_with_fflush_on_input_stream():
-    """Code with fflush on input stream."""
+    pass
 
-
-@scenario('check_file/fflushOnInputStream.feature', 'Code without fflush on input stream')
+@scenario('fflushOnInputStream.feature', 'Code without fflush on input stream')
 def test_code_without_fflush_on_input_stream():
-    """Code without fflush on input stream."""
+    pass
 
+@given('<filename>.c doesn\'t have fflush on input stream')
+def doesnt_have_fflush_on_input_stream():
+    global filename
+    global expected
 
-@given('<filename>.c doesn't have fflush on input stream')
-def filenamec_doesnt_have_fflush_on_input_stream():
-    """<filename>.c doesn't have fflush on input stream."""
-
+    filename = './support/good_fflushOnInputStream.txt'
+    expected = ['good.c']
 
 @given('<filename>.c has fflush on input stream')
-def filenamec_has_fflush_on_input_stream():
-    """<filename>.c has fflush on input stream."""
+def has_fflush_on_input_stream():
+    global filename
+
+    filename = './support/bad_fflushOnInputStream.txt'
 
 
 @when('it is submitted to the app')
-def it_is_submitted_to_the_app():
-    """it is submitted to the app."""
-
+def submitted():
+   subprocess.check_output('../susy-avalia.py ' + filename + ' > output.txt', shell=True)
 
 @then('I should receive the following message "[<filename>.c:<linha>]: (erro) Chamada de função fflush() no stream de entrada, podendo resultar em comportamento indefinido em sistemas não-linux"')
-def i_should_receive_the_following_message_filenameclinha_erro_chamada_de_função_fflush_no_stream_de_entrada_podendo_resultar_em_comportamento_indefinido_em_sistemas_nãolinux():
-    """I should receive the following message "[<filename>.c:<linha>]: (erro) Chamada de função fflush() no stream de entrada, podendo resultar em comportamento indefinido em sistemas não-linux"."""
+def receive_message():
+    global filename
 
+    with open("output.txt",'r') as f_out:
+
+        for line in f_out:
+            m = re.search('[\[\]\:\w\.\_]*\s(\(erro\) Chamada de função fflush() no stream de entrada, podendo resultar em comportamento indefinido em sistemas não-linux)', line)
+            assert m != None
 
 @then('shows me "[<filename>.c]: Nenhum erro de análise estática foi encontrado"')
-def shows_me_filenamec_nenhum_erro_de_análise_estática_foi_encontrado():
-    """shows me "[<filename>.c]: Nenhum erro de análise estática foi encontrado"."""
+def shows_nothing():
 
+    global expected
+
+    with open("output.txt",'r') as f_out:
+        for line in f_out:
+            assert "good.c" in line
+            
+            m = re.search('(\[[0-9A-Za-z\_]*\.\w\])\:\sNenhum erro de análise estática foi encontrado', line)
+            assert m != None

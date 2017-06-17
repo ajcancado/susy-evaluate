@@ -8,38 +8,60 @@ from pytest_bdd import (
     when,
 )
 
+import subprocess 
+import re
 
-@scenario('format_string/invalidPrintArgType_n.feature', 'Code with invalid print argument type number')
+filename = ""
+result = None
+expected = []
+
+@scenario('invalidPrintArgType_n.feature', 'Code with invalid print argument type number')
 def test_code_with_invalid_print_argument_type_number():
-    """Code with invalid print argument type number."""
+    pass
 
 
-@scenario('format_string/invalidPrintArgType_n.feature', 'Code without invalid print argument type number')
+@scenario('invalidPrintArgType_n.feature', 'Code without invalid print argument type number')
 def test_code_without_invalid_print_argument_type_number():
-    """Code without invalid print argument type number."""
+    pass
 
 
-@given('<filename>.c doesn't have invalid print argument type number')
-def filenamec_doesnt_have_invalid_print_argument_type_number():
-    """<filename>.c doesn't have invalid print argument type number."""
+@given('<filename>.c doesn\'t have invalid print argument type number')
+def doesnt_have_invalid_print_argument_type_number():
+    global filename
+    global expected
 
+    filename = './support/good_invalidPrintArgType.txt'
+    expected = ['good.c']
 
 @given('<filename>.c has invalid print argument type number')
-def filenamec_has_invalid_print_argument_type_number():
-    """<filename>.c has invalid print argument type number."""
+def has_invalid_print_argument_type_number():
+    global filename
+
+    filename = './support/bad_invalidPrintArgType.txt'
 
 
 @when('it is submitted to the app')
-def it_is_submitted_to_the_app():
-    """it is submitted to the app."""
+def submitted():
+   subprocess.check_output('../susy-avalia.py ' + filename + ' > output.txt', shell=True)
 
+@then('I should receive the following message "[<filename>.c:<linha>]: (erro) Argumento do tipo \'number\' no formato apresentado é inválido"')
+def receive_message():
+    global filename
 
-@then('I should receive the following message "[<filename>.c:<linha>]: (erro) Argumento do tipo 'number' no formato apresentado é inválido"')
-def i_should_receive_the_following_message_filenameclinha_erro_argumento_do_tipo_number_no_formato_apresentado_é_inválido():
-    """I should receive the following message "[<filename>.c:<linha>]: (erro) Argumento do tipo 'number' no formato apresentado é inválido"."""
+    with open("output.txt",'r') as f_out:
 
+        for line in f_out:
+            m = re.search('[\[\]\:\w\.\_]*\s(\(erro\) Argumento do tipo \'number\' no formato apresentado é inválido)', line)
+            assert m != None
 
 @then('shows me "[<filename>.c]: Nenhum erro de análise estática foi encontrado"')
-def shows_me_filenamec_nenhum_erro_de_análise_estática_foi_encontrado():
-    """shows me "[<filename>.c]: Nenhum erro de análise estática foi encontrado"."""
+def shows_nothing():
 
+    global expected
+
+    with open("output.txt",'r') as f_out:
+        for line in f_out:
+            assert "good.c" in line
+            
+            m = re.search('(\[[0-9A-Za-z\_]*\.\w\])\:\sNenhum erro de análise estática foi encontrado', line)
+            assert m != None

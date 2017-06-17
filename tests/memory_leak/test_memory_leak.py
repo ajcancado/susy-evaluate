@@ -23,19 +23,19 @@ def test_code_with_memory_leak():
 def test_code_without_memory_leak():
     pass
 
-@given('a2.c doesn\'t have memory leak')
+@given('<filename>.c doesn\'t have memory leak')
 def doesnt_have_memory_leak():
     global filename
     global expected
 
-    filename = './support/case2_memory_leak.txt'
-    expected = ['a2.c']
+    filename = './support/good_memory_leak.txt'
+    expected = ['good.c']
 
-@given('a1.c has memory leak')
+@given('<filename>.c has memory leak')
 def has_memory_leak():
     global filename
 
-    filename = './support/case1_memory_leak.txt'
+    filename = './support/bad_memory_leak.txt'
     
 @when('it is submitted to the app')
 def submitted():
@@ -58,7 +58,7 @@ def shows_nothing():
 
     with open("output.txt",'r') as f_out:
         for line in f_out:
-            assert "a2.c" in line
+            assert "good.c" in line
             
             m = re.search('(\[[0-9A-Za-z\_]*\.\w\])\:\sNenhum erro de análise estática foi encontrado', line)
             assert m != None

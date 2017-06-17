@@ -8,38 +8,60 @@ from pytest_bdd import (
     when,
 )
 
+import subprocess 
+import re
 
-@scenario('format_string/invalidScanfArgType_int.feature', 'Code with invalid scanf argument type integer')
+filename = ""
+result = None
+expected = []
+
+@scenario('invalidScanfArgType_int.feature', 'Code with invalid scanf argument type integer')
 def test_code_with_invalid_scanf_argument_type_integer():
-    """Code with invalid scanf argument type integer."""
+    pass
 
 
-@scenario('format_string/invalidScanfArgType_int.feature', 'Code without invalid scanf argument type integer')
+@scenario('invalidScanfArgType_int.feature', 'Code without invalid scanf argument type integer')
 def test_code_without_invalid_scanf_argument_type_integer():
-    """Code without invalid scanf argument type integer."""
+    pass
 
 
-@given('<filename>.c doesn't have invalid scanf argument type integer')
-def filenamec_doesnt_have_invalid_scanf_argument_type_integer():
-    """<filename>.c doesn't have invalid scanf argument type integer."""
+@given('<filename>.c doesn\'t have invalid scanf argument type integer')
+def doesnt_have_invalid_scanf_argument_type_integer():
+    global filename
+    global expected
 
+    filename = './support/good_invalidScanfArgType_int.txt'
+    expected = ['good.c']
 
 @given('<filename>.c has invalid scanf argument type integer')
-def filenamec_has_invalid_scanf_argument_type_integer():
-    """<filename>.c has invalid scanf argument type integer."""
+def has_invalid_scanf_argument_type_integer():
+    global filename
 
+    filename = './support/bad_invalidScanfArgType_int.txt'
 
 @when('it is submitted to the app')
-def it_is_submitted_to_the_app():
-    """it is submitted to the app."""
+def submitted():
+   subprocess.check_output('../susy-avalia.py ' + filename + ' > output.txt', shell=True)
 
 
-@then('I should receive the following message "[<filename>.c:<linha>]: (erro) Scanf com argumento do tipo 'int' inválido"')
-def i_should_receive_the_following_message_filenameclinha_erro_scanf_com_argumento_do_tipo_int_inválido():
-    """I should receive the following message "[<filename>.c:<linha>]: (erro) Scanf com argumento do tipo 'int' inválido"."""
+@then('I should receive the following message "[<filename>.c:<linha>]: (erro) Scanf com argumento do tipo \'int\' inválido"')
+def receive_message():
+    global filename
 
+    with open("output.txt",'r') as f_out:
+
+        for line in f_out:
+            m = re.search('[\[\]\:\w\.\_]*\s(\(erro\) Scanf com argumento do tipo \'int\' inválido)', line)
+            assert m != None
 
 @then('shows me "[<filename>.c]: Nenhum erro de análise estática foi encontrado"')
-def shows_me_filenamec_nenhum_erro_de_análise_estática_foi_encontrado():
-    """shows me "[<filename>.c]: Nenhum erro de análise estática foi encontrado"."""
+def shows_nothing():
 
+    global expected
+
+    with open("output.txt",'r') as f_out:
+        for line in f_out:
+            assert "good.c" in line
+            
+            m = re.search('(\[[0-9A-Za-z\_]*\.\w\])\:\sNenhum erro de análise estática foi encontrado', line)
+            assert m != None

@@ -8,38 +8,59 @@ from pytest_bdd import (
     when,
 )
 
+import subprocess 
+import re
 
-@scenario('unused_function_and_variable/unusedStructMember.feature', 'Code with unused struct member')
+filename = ""
+result = None
+expected = []
+
+@scenario('unusedStructMember.feature', 'Code with unused struct member')
 def test_code_with_unused_struct_member():
-    """Code with unused struct member."""
+    pass
 
 
-@scenario('unused_function_and_variable/unusedStructMember.feature', 'Code without unused struct member')
+@scenario('unusedStructMember.feature', 'Code without unused struct member')
 def test_code_without_unused_struct_member():
-    """Code without unused struct member."""
+    pass
 
 
-@given('<filename>.c doesn't have unused struct member')
-def filenamec_doesnt_have_unused_struct_member():
-    """<filename>.c doesn't have unused struct member."""
+@given('<filename>.c doesn\'t have unused struct member')
+def doesnt_have_unused_struct_member():
+    global filename
+    global expected
 
+    filename = './support/good_unusedStrucMember.txt'
+    expected = ['good.c']
 
 @given('<filename>.c has unused struct member')
-def filenamec_has_unused_struct_member():
-    """<filename>.c has unused struct member."""
+def has_unused_struct_member():
+    global filename
 
+    filename = './support/bad_unusedStrucMember.txt'
 
 @when('it is submitted to the app')
-def it_is_submitted_to_the_app():
-    """it is submitted to the app."""
+def submitted():
+   subprocess.check_output('../susy-avalia.py ' + filename + ' > output.txt', shell=True)
 
+@then('I should receive the following message "[<filename>.c:<linha>]: (erro) Variável foi criada em uma \'struct\' mas não foi utilizada"')
+def receive_message():
+    global filename
 
-@then('I should receive the following message "[<filename>.c:<linha>]: (erro) Variável foi criada em uma 'struct' mas não foi utilizada"')
-def i_should_receive_the_following_message_filenameclinha_erro_variável_foi_criada_em_uma_struct_mas_não_foi_utilizada():
-    """I should receive the following message "[<filename>.c:<linha>]: (erro) Variável foi criada em uma 'struct' mas não foi utilizada"."""
+    with open("output.txt",'r') as f_out:
 
+        for line in f_out:
+            m = re.search('[\[\]\:\w\.\_]*\s(\(erro\) Variável foi criada em uma \'struct\' mas não foi utilizada)', line)
+            assert m != None
 
 @then('shows me "[<filename>.c]: Nenhum erro de análise estática foi encontrado"')
-def shows_me_filenamec_nenhum_erro_de_análise_estática_foi_encontrado():
-    """shows me "[<filename>.c]: Nenhum erro de análise estática foi encontrado"."""
+def shows_nothing( ):
+    
+    global expected
 
+    with open("output.txt",'r') as f_out:
+        for line in f_out:
+            assert "good.c" in line
+            
+            m = re.search('(\[[0-9A-Za-z\_]*\.\w\])\:\sNenhum erro de análise estática foi encontrado', line)
+            assert m != None

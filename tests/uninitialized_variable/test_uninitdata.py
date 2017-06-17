@@ -8,38 +8,60 @@ from pytest_bdd import (
     when,
 )
 
+import subprocess 
+import re
 
-@scenario('uninitialized_variable/uninitdata.feature', 'Code with uninitiazed date')
+filename = ""
+result = None
+expected = []
+
+@scenario('uninitdata.feature', 'Code with uninitiazed date')
 def test_code_with_uninitiazed_date():
-    """Code with uninitiazed date."""
+    pass
 
 
-@scenario('uninitialized_variable/uninitdata.feature', 'Code without uninitiazed date')
+@scenario('uninitdata.feature', 'Code without uninitiazed date')
 def test_code_without_uninitiazed_date():
-    """Code without uninitiazed date."""
+    pass
 
 
-@given('<filename>.c doesn't have uninitiazed date')
-def filenamec_doesnt_have_uninitiazed_date():
-    """<filename>.c doesn't have uninitiazed date."""
+@given('<filename>.c doesn\'t have uninitiazed date')
+def doesnt_have_uninitiazed_date():
+    global filename
+    global expected
 
+    filename = './support/good_uninitdata.txt'
+    expected = ['good.c']
 
 @given('<filename>.c has uninitiazed date')
-def filenamec_has_uninitiazed_date():
-    """<filename>.c has uninitiazed date."""
+def has_uninitiazed_date():
+    global filename
+
+    filename = './support/bad_uninitdata.txt'
 
 
 @when('it is submitted to the app')
-def it_is_submitted_to_the_app():
-    """it is submitted to the app."""
-
+def submitted():
+   subprocess.check_output('../susy-avalia.py ' + filename + ' > output.txt', shell=True)
 
 @then('I should receive the following message "[<filename>.c:<linha>]: (erro) Mémoria foi alocada mas não foi inicializada"')
-def i_should_receive_the_following_message_filenameclinha_erro_mémoria_foi_alocada_mas_não_foi_inicializada():
-    """I should receive the following message "[<filename>.c:<linha>]: (erro) Mémoria foi alocada mas não foi inicializada"."""
+def receive_message():
+    global filename
 
+    with open("output.txt",'r') as f_out:
+
+        for line in f_out:
+            m = re.search('[\[\]\:\w\.\_]*\s(\(erro\) Mémoria foi alocada mas não foi inicializada)', line)
+            assert m != None
 
 @then('shows me "[<filename>.c]: Nenhum erro de análise estática foi encontrado"')
-def shows_me_filenamec_nenhum_erro_de_análise_estática_foi_encontrado():
-    """shows me "[<filename>.c]: Nenhum erro de análise estática foi encontrado"."""
+def shows_nothing():
 
+    global expected
+
+    with open("output.txt",'r') as f_out:
+        for line in f_out:
+            assert "good.c" in line
+            
+            m = re.search('(\[[0-9A-Za-z\_]*\.\w\])\:\sNenhum erro de análise estática foi encontrado', line)
+            assert m != None

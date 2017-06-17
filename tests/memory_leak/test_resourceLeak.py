@@ -8,38 +8,62 @@ from pytest_bdd import (
     when,
 )
 
+import subprocess 
+import re
 
-@scenario('memory_leak/resourceLeak.feature', 'Code with resource leak')
+filename = ""
+result = None
+expected = []
+
+
+@scenario('resourceLeak.feature', 'Code with resource leak')
 def test_code_with_resource_leak():
-    """Code with resource leak."""
+    pass
 
 
-@scenario('memory_leak/resourceLeak.feature', 'Code without resource leak')
+@scenario('resourceLeak.feature', 'Code without resource leak')
 def test_code_without_resource_leak():
-    """Code without resource leak."""
+    pass
 
 
-@given('<filename>.c doesn't have resource leak')
-def filenamec_doesnt_have_resource_leak():
-    """<filename>.c doesn't have resource leak."""
+@given('<filename>.c doesn\'t have resource leak')
+def doesnt_have_resource_leak():
+    global filename
+    global expected
 
+    filename = './support/good_resourceLeak.txt'
+    expected = ['good.c']
 
 @given('<filename>.c has resource leak')
-def filenamec_has_resource_leak():
-    """<filename>.c has resource leak."""
+def has_resource_leak():
+    global filename
+
+    filename = './support/bad_resourceLeak.txt'
 
 
 @when('it is submitted to the app')
-def it_is_submitted_to_the_app():
-    """it is submitted to the app."""
+def submitted():
+   subprocess.check_output('../susy-avalia.py ' + filename + ' > output.txt', shell=True)
 
 
 @then('I should receive the following message "[<filename>.c:<linha>]: (erro) Vazamento de recursos"')
-def i_should_receive_the_following_message_filenameclinha_erro_vazamento_de_recursos():
-    """I should receive the following message "[<filename>.c:<linha>]: (erro) Vazamento de recursos"."""
+def receive_message():
+    global filename
 
+    with open("output.txt",'r') as f_out:
+
+        for line in f_out:
+            m = re.search('[\[\]\:\w\.\_]*\s(\(erro\) Vazamento de recursos)', line)
+            assert m != None
 
 @then('shows me "[<filename>.c]: Nenhum erro de análise estática foi encontrado"')
-def shows_me_filenamec_nenhum_erro_de_análise_estática_foi_encontrado():
-    """shows me "[<filename>.c]: Nenhum erro de análise estática foi encontrado"."""
+def shows_nothing():
 
+    global expected
+
+    with open("output.txt",'r') as f_out:
+        for line in f_out:
+            assert "good.c" in line
+            
+            m = re.search('(\[[0-9A-Za-z\_]*\.\w\])\:\sNenhum erro de análise estática foi encontrado', line)
+            assert m != None

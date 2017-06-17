@@ -25,20 +25,20 @@ def test_code_without_null_pointer_dereference():
     pass
 
 
-@given('a2.c doesn\'t have null pointer dereference')
+@given('<filename>.c doesn\'t have null pointer dereference')
 def the_code_doesnt_have_null_pointer_dereference():
     global filename
     global expected
 
-    filename = './support/case2_null_pointer.txt'
-    expected = ['a2.c']
+    filename = './support/good_null_pointer.txt'
+    expected = ['good.c']
 
 
-@given('a1.c has null pointer dereference')
+@given('<filename>.c has null pointer dereference')
 def the_code_has_null_pointer_dereference():
     global filename
 
-    filename = './support/case1_null_pointer.txt'
+    filename = './support/bad_null_pointer.txt'
 
 
 @when('it is submitted to the app')

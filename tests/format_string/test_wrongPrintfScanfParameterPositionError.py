@@ -8,38 +8,61 @@ from pytest_bdd import (
     when,
 )
 
+import subprocess 
+import re
 
-@scenario('format_string/wrongPrintfScanfParameterPositionError.feature', 'Code with wrong printf scanf parameter position error')
+filename = ""
+result = None
+expected = []
+
+
+@scenario('wrongPrintfScanfParameterPositionError.feature', 'Code with wrong printf scanf parameter position error')
 def test_code_with_wrong_printf_scanf_parameter_position_error():
-    """Code with wrong printf scanf parameter position error."""
+    pass
 
 
-@scenario('format_string/wrongPrintfScanfParameterPositionError.feature', 'Code without wrong printf scanf parameter position error')
+@scenario('wrongPrintfScanfParameterPositionError.feature', 'Code without wrong printf scanf parameter position error')
 def test_code_without_wrong_printf_scanf_parameter_position_error():
-    """Code without wrong printf scanf parameter position error."""
+    pass
 
 
-@given('<filename>.c doesn't have wrong printf scanf parameter position error')
-def filenamec_doesnt_have_wrong_printf_scanf_parameter_position_error():
-    """<filename>.c doesn't have wrong printf scanf parameter position error."""
+@given('<filename>.c doesn\'t have wrong printf scanf parameter position error')
+def doesnt_have_wrong_printf_scanf_parameter_position_error():
+    global filename
+    global expected
 
+    filename = './support/good_wrongPrintfScanfParameterPositionError.txt'
+    expected = ['good.c']
 
 @given('<filename>.c has wrong printf scanf parameter position error')
-def filenamec_has_wrong_printf_scanf_parameter_position_error():
-    """<filename>.c has wrong printf scanf parameter position error."""
+def has_wrong_printf_scanf_parameter_position_error():
+    global filename
 
+    filename = './support/bad_wrongPrintfScanfParameterPositionError.txt'
 
 @when('it is submitted to the app')
-def it_is_submitted_to_the_app():
-    """it is submitted to the app."""
+def submitted():
+   subprocess.check_output('../susy-avalia.py ' + filename + ' > output.txt', shell=True)
 
 
 @then('I should receive the following message "[<filename>.c:<linha>]: (erro) Referenciamento de parâmetro foi realizado incorretamente"')
-def i_should_receive_the_following_message_filenameclinha_erro_referenciamento_de_parâmetro_foi_realizado_incorretamente():
-    """I should receive the following message "[<filename>.c:<linha>]: (erro) Referenciamento de parâmetro foi realizado incorretamente"."""
+def receive_message():
+    global filename
 
+    with open("output.txt",'r') as f_out:
+
+        for line in f_out:
+            m = re.search('[\[\]\:\w\.\_]*\s(\(erro\) Referenciamento de parâmetro foi realizado incorretamente)', line)
+            assert m != None
 
 @then('shows me "[<filename>.c]: Nenhum erro de análise estática foi encontrado"')
-def shows_me_filenamec_nenhum_erro_de_análise_estática_foi_encontrado():
-    """shows me "[<filename>.c]: Nenhum erro de análise estática foi encontrado"."""
+def shows_nothing():
 
+    global expected
+
+    with open("output.txt",'r') as f_out:
+        for line in f_out:
+            assert "good.c" in line
+            
+            m = re.search('(\[[0-9A-Za-z\_]*\.\w\])\:\sNenhum erro de análise estática foi encontrado', line)
+            assert m != None

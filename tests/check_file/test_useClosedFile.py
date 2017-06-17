@@ -8,38 +8,61 @@ from pytest_bdd import (
     when,
 )
 
+import subprocess 
+import re
 
-@scenario('check_file/useClosedFile.feature', 'Code with use closed file')
+filename = ""
+result = None
+expected = []
+
+
+@scenario('useClosedFile.feature', 'Code with use closed file')
 def test_code_with_use_closed_file():
-    """Code with use closed file."""
+    pass
 
 
-@scenario('check_file/useClosedFile.feature', 'Code without use closed file')
+@scenario('useClosedFile.feature', 'Code without use closed file')
 def test_code_without_use_closed_file():
-    """Code without use closed file."""
+    pass
 
 
-@given('<filename>.c doesn't have use closed file')
-def filenamec_doesnt_have_use_closed_file():
-    """<filename>.c doesn't have use closed file."""
+@given('<filename>.c doesn\'t have use closed file')
+def doesnt_have_use_closed_file():
+    global filename
+    global expected
+
+    filename = './support/good_useClosedFile.txt'
+    expected = ['good.c']
 
 
 @given('<filename>.c has use closed file')
-def filenamec_has_use_closed_file():
-    """<filename>.c has use closed file."""
+def has_use_closed_file():
+    global filename
 
+    filename = './support/bad_useClosedFile.txt'
 
 @when('it is submitted to the app')
-def it_is_submitted_to_the_app():
-    """it is submitted to the app."""
-
+def submitted():
+   subprocess.check_output('../susy-avalia.py ' + filename + ' > output.txt', shell=True)
 
 @then('I should receive the following message "[<filename>.c:<linha>]: (erro) Arquivo utilizado que não foi aberto"')
-def i_should_receive_the_following_message_filenameclinha_erro_arquivo_utilizado_que_não_foi_aberto():
-    """I should receive the following message "[<filename>.c:<linha>]: (erro) Arquivo utilizado que não foi aberto"."""
+def receive_message():
+    global filename
 
+    with open("output.txt",'r') as f_out:
+
+        for line in f_out:
+            m = re.search('[\[\]\:\w\.\_]*\s(\(erro\) Arquivo utilizado que não foi aberto)', line)
+            assert m != None
 
 @then('shows me "[<filename>.c]: Nenhum erro de análise estática foi encontrado"')
-def shows_me_filenamec_nenhum_erro_de_análise_estática_foi_encontrado():
-    """shows me "[<filename>.c]: Nenhum erro de análise estática foi encontrado"."""
+def shows_nothing():
 
+    global expected
+
+    with open("output.txt",'r') as f_out:
+        for line in f_out:
+            assert "good.c" in line
+            
+            m = re.search('(\[[0-9A-Za-z\_]*\.\w\])\:\sNenhum erro de análise estática foi encontrado', line)
+            assert m != None

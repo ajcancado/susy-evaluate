@@ -8,38 +8,60 @@ from pytest_bdd import (
     when,
 )
 
+import subprocess 
+import re
 
-@scenario('syntax_suspected/compareBoolExpressionWithInt.feature', 'Code with compare boolen expression with integer')
+filename = ""
+result = None
+expected = []
+
+@scenario('compareBoolExpressionWithInt.feature', 'Code with compare boolen expression with integer')
 def test_code_with_compare_boolen_expression_with_integer():
-    """Code with compare boolen expression with integer."""
+    pass
 
 
-@scenario('syntax_suspected/compareBoolExpressionWithInt.feature', 'Code without compare boolen expression with integer')
+@scenario('compareBoolExpressionWithInt.feature', 'Code without compare boolen expression with integer')
 def test_code_without_compare_boolen_expression_with_integer():
-    """Code without compare boolen expression with integer."""
+    pass
 
 
-@given('<filename>.c doesn't have compare boolen expression with integer')
+@given('<filename>.c doesn\'t have compare boolen expression with integer')
 def filenamec_doesnt_have_compare_boolen_expression_with_integer():
-    """<filename>.c doesn't have compare boolen expression with integer."""
+    global filename
+    global expected
 
+    filename = './support/good_compareBoolExpressionWithInt.txt'
+    expected = ['good.c']
 
 @given('<filename>.c has compare boolen expression with integer')
 def filenamec_has_compare_boolen_expression_with_integer():
-    """<filename>.c has compare boolen expression with integer."""
+    global filename
 
+    filename = './support/bad_compareBoolExpressionWithInt.txt'
 
 @when('it is submitted to the app')
-def it_is_submitted_to_the_app():
-    """it is submitted to the app."""
+def submitted():
+   subprocess.check_output('../susy-avalia.py ' + filename + ' > output.txt', shell=True)
 
 
 @then('I should receive the following message "[<filename>.c:<linha>]: (erro) Comparação de tipo booleano com tipo inteiro"')
-def i_should_receive_the_following_message_filenameclinha_erro_comparação_de_tipo_booleano_com_tipo_inteiro():
-    """I should receive the following message "[<filename>.c:<linha>]: (erro) Comparação de tipo booleano com tipo inteiro"."""
+def receive_message():
+    global filename
 
+    with open("output.txt",'r') as f_out:
+
+        for line in f_out:
+            m = re.search('[\[\]\:\w\.\_]*\s(\(erro\) Comparação de tipo booleano com tipo inteiro)', line)
+            assert m != None
 
 @then('shows me "[<filename>.c]: Nenhum erro de análise estática foi encontrado"')
-def shows_me_filenamec_nenhum_erro_de_análise_estática_foi_encontrado():
-    """shows me "[<filename>.c]: Nenhum erro de análise estática foi encontrado"."""
+def shows_nothing():
 
+    global expected
+
+    with open("output.txt",'r') as f_out:
+        for line in f_out:
+            assert "good.c" in line
+            
+            m = re.search('(\[[0-9A-Za-z\_]*\.\w\])\:\sNenhum erro de análise estática foi encontrado', line)
+            assert m != None

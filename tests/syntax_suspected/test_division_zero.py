@@ -25,20 +25,20 @@ def test_code_without_division_by_zero():
     pass
 
 
-@given('a1.c has a division by zero')
+@given('<filename>.c has a division by zero')
 def the_code_has_a_division_by_zero():
     global filename
 
-    filename = './support/case1_division_zero.txt'
+    filename = './support/bad_division_zero.txt'
 
 
-@given('a2.c doesn\'t have a division by zero')
+@given('<filename>.c doesn\'t have a division by zero')
 def the_code_doesnt_have_a_division_by_zero():
     global filename
     global expected
 
-    filename = './support/case2_division_zero.txt'
-    expected = ['a2.c']
+    filename = './support/good_division_zero.txt'
+    expected = ['good.c']
 
 
 @when('it is submitted to the app')
@@ -63,7 +63,7 @@ def shows_nothing():
 
     with open("output.txt",'r') as f_out:
         for line in f_out:
-            assert "a2.c" in line
+            assert "good.c" in line
 
             m = re.search('(\[[0-9A-Za-z\_]*\.\w\])\:\sNenhum erro de análise estática foi encontrado', line)
             assert m != None

@@ -8,38 +8,60 @@ from pytest_bdd import (
     when,
 )
 
+import subprocess 
+import re
 
-@scenario('unused_function_and_variable/unusedAllocatedMemory.feature', 'Code with unused allocated memory')
+filename = ""
+result = None
+expected = []
+
+@scenario('unusedAllocatedMemory.feature', 'Code with unused allocated memory')
 def test_code_with_unused_allocated_memory():
-    """Code with unused allocated memory."""
+    pass
 
 
-@scenario('unused_function_and_variable/unusedAllocatedMemory.feature', 'Code without unused allocated memory')
+@scenario('unusedAllocatedMemory.feature', 'Code without unused allocated memory')
 def test_code_without_unused_allocated_memory():
-    """Code without unused allocated memory."""
+    pass
 
 
-@given('<filename>.c doesn't have unused allocated memory')
+@given('<filename>.c doesn\'t have unused allocated memory')
 def filenamec_doesnt_have_unused_allocated_memory():
-    """<filename>.c doesn't have unused allocated memory."""
+    global filename
+    global expected
 
+    filename = './support/good_unusedAllocatedMemory.txt'
+    expected = ['good.c']
 
 @given('<filename>.c has unused allocated memory')
-def filenamec_has_unused_allocated_memory():
-    """<filename>.c has unused allocated memory."""
+def has_memory_leak():
+    global filename
 
+    filename = './support/bad_unusedAllocatedMemory.txt'
 
 @when('it is submitted to the app')
-def it_is_submitted_to_the_app():
-    """it is submitted to the app."""
+def submitted():
+   subprocess.check_output('../susy-avalia.py ' + filename + ' > output.txt', shell=True)
 
 
 @then('I should receive the following message "[<filename>.c:<linha>]: (erro) Recursos de memória alocados nunca foram utilizados"')
-def i_should_receive_the_following_message_filenameclinha_erro_recursos_de_memória_alocados_nunca_foram_utilizados():
-    """I should receive the following message "[<filename>.c:<linha>]: (erro) Recursos de memória alocados nunca foram utilizados"."""
+def receive_message():
+    global filename
 
+    with open("output.txt",'r') as f_out:
+
+        for line in f_out:
+            m = re.search('[\[\]\:\w\.\_]*\s(\(erro\) Recursos de memória alocados nunca foram utilizados)', line)
+            assert m != None
 
 @then('shows me "[<filename>.c]: Nenhum erro de análise estática foi encontrado"')
-def shows_me_filenamec_nenhum_erro_de_análise_estática_foi_encontrado():
-    """shows me "[<filename>.c]: Nenhum erro de análise estática foi encontrado"."""
+def shows_nothing( ):
+    
+    global expected
 
+    with open("output.txt",'r') as f_out:
+        for line in f_out:
+            assert "good.c" in line
+            
+            m = re.search('(\[[0-9A-Za-z\_]*\.\w\])\:\sNenhum erro de análise estática foi encontrado', line)
+            assert m != None

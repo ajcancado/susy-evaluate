@@ -8,38 +8,60 @@ from pytest_bdd import (
     when,
 )
 
+import subprocess 
+import re
 
-@scenario('memory_leak/deallocuse.feature', 'Code with dealloc use')
+filename = ""
+result = None
+expected = []
+
+
+@scenario('deallocuse.feature', 'Code with dealloc use')
 def test_code_with_dealloc_use():
-    """Code with dealloc use."""
+    pass
 
 
-@scenario('memory_leak/deallocuse.feature', 'Code without dealloc use')
+@scenario('deallocuse.feature', 'Code without dealloc use')
 def test_code_without_dealloc_use():
-    """Code without dealloc use."""
+    pass
 
 
-@given('<filename>.c doesn't have dealloc use')
-def filenamec_doesnt_have_dealloc_use():
-    """<filename>.c doesn't have dealloc use."""
+@given('<filename>.c doesn\'t have dealloc use')
+def doesnt_have_dealloc_use():
+    global filename
+    global expected
 
+    filename = './support/good_deallocuse.txt'
+    expected = ['good.c']
 
 @given('<filename>.c has dealloc use')
-def filenamec_has_dealloc_use():
-    """<filename>.c has dealloc use."""
+def has_memory_leak():
+    global filename
 
+    filename = './support/bad_deallocuse.txt'
 
 @when('it is submitted to the app')
-def it_is_submitted_to_the_app():
-    """it is submitted to the app."""
-
+def submitted():
+   subprocess.check_output('../susy-avalia.py ' + filename + ' > output.txt', shell=True)
 
 @then('I should receive the following message "[<filename>.c:<linha>]: (erro) Acesso a variável já desalocada"')
-def i_should_receive_the_following_message_filenameclinha_erro_acesso_a_variável_já_desalocada():
-    """I should receive the following message "[<filename>.c:<linha>]: (erro) Acesso a variável já desalocada"."""
+def receive_message():
+    global filename
 
+    with open("output.txt",'r') as f_out:
+
+        for line in f_out:
+            m = re.search('[\[\]\:\w\.\_]*\s(\(erro\) Acesso a variável já desalocada)', line)
+            assert m != None
 
 @then('shows me "[<filename>.c]: Nenhum erro de análise estática foi encontrado"')
-def shows_me_filenamec_nenhum_erro_de_análise_estática_foi_encontrado():
-    """shows me "[<filename>.c]: Nenhum erro de análise estática foi encontrado"."""
+def shows_nothing():
 
+    global expected
+
+    with open("output.txt",'r') as f_out:
+        for line in f_out:
+            assert "good.c" in line
+            
+            m = re.search('(\[[0-9A-Za-z\_]*\.\w\])\:\sNenhum erro de análise estática foi encontrado', line)
+            assert m != None

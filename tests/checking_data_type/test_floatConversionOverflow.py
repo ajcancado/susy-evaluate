@@ -8,38 +8,60 @@ from pytest_bdd import (
     when,
 )
 
+import subprocess 
+import re
 
-@scenario('checking_data_type/floatConversionOverflow.feature', 'Code with float conversion overflow')
+filename = ""
+result = None
+expected = []
+
+@scenario('floatConversionOverflow.feature', 'Code with float conversion overflow')
 def test_code_with_float_conversion_overflow():
-    """Code with float conversion overflow."""
+    pass
 
 
-@scenario('checking_data_type/floatConversionOverflow.feature', 'Code without float conversion overflow')
+@scenario('floatConversionOverflow.feature', 'Code without float conversion overflow')
 def test_code_without_float_conversion_overflow():
-    """Code without float conversion overflow."""
+    pass
 
 
-@given('<filename>.c doesn't have float conversion overflow')
-def filenamec_doesnt_have_float_conversion_overflow():
-    """<filename>.c doesn't have float conversion overflow."""
+@given('<filename>.c doesn\'t have float conversion overflow')
+def doesnt_have_float_conversion_overflow():
+    global filename
+    global expected
 
+    filename = './support/good_floatConversionOverflow.txt'
+    expected = ['good.c']
 
 @given('<filename>.c has float conversion overflow')
-def filenamec_has_float_conversion_overflow():
-    """<filename>.c has float conversion overflow."""
+def has_float_conversion_overflow():
+    global filename
 
+    filename = './support/bad_floatConversionOverflow.txt'
 
 @when('it is submitted to the app')
-def it_is_submitted_to_the_app():
-    """it is submitted to the app."""
+def submitted():
+   subprocess.check_output('../susy-avalia.py ' + filename + ' > output.txt', shell=True)
 
 
-@then('I should receive the following message "[<filename>.c:<linha>]: (erro) Overflow de variável do tipo 'float'"')
-def i_should_receive_the_following_message_filenameclinha_erro_overflow_de_variável_do_tipo_float():
-    """I should receive the following message "[<filename>.c:<linha>]: (erro) Overflow de variável do tipo 'float'"."""
+@then('I should receive the following message "[<filename>.c:<linha>]: (erro) Overflow de variável do tipo \'float\'"')
+def receive_message():
+    global filename
 
+    with open("output.txt",'r') as f_out:
+
+        for line in f_out:
+            m = re.search('[\[\]\:\w\.\_]*\s(\(erro\) Overflow de variável do tipo \'float\')', line)
+            assert m != None
 
 @then('shows me "[<filename>.c]: Nenhum erro de análise estática foi encontrado"')
-def shows_me_filenamec_nenhum_erro_de_análise_estática_foi_encontrado():
-    """shows me "[<filename>.c]: Nenhum erro de análise estática foi encontrado"."""
+def shows_nothing():
 
+    global expected
+
+    with open("output.txt",'r') as f_out:
+        for line in f_out:
+            assert "good.c" in line
+            
+            m = re.search('(\[[0-9A-Za-z\_]*\.\w\])\:\sNenhum erro de análise estática foi encontrado', line)
+            assert m != None

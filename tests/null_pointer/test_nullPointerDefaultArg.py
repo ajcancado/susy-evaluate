@@ -8,38 +8,61 @@ from pytest_bdd import (
     when,
 )
 
+import subprocess 
+import re
 
-@scenario('null_pointer/nullPointerDefaultArg.feature', 'Code with null pointer default argument')
+filename = ""
+result = None
+expected = []
+
+@scenario('nullPointerDefaultArg.feature', 'Code with null pointer default argument')
 def test_code_with_null_pointer_default_argument():
-    """Code with null pointer default argument."""
+    pass
 
 
-@scenario('null_pointer/nullPointerDefaultArg.feature', 'Code without null pointer default argument')
+@scenario('nullPointerDefaultArg.feature', 'Code without null pointer default argument')
 def test_code_without_null_pointer_default_argument():
-    """Code without null pointer default argument."""
+    pass
 
 
-@given('<filename>.c doesn't have null pointer default argument')
-def filenamec_doesnt_have_null_pointer_default_argument():
-    """<filename>.c doesn't have null pointer default argument."""
+@given('<filename>.c doesn\'t have null pointer default argument')
+def doesnt_have_null_pointer_default_argument():
+    global filename
+    global expected
+
+    filename = './support/good_nullPointerDefaultArg.txt'
+    expected = ['good.c']
 
 
 @given('<filename>.c has null pointer default argument')
-def filenamec_has_null_pointer_default_argument():
-    """<filename>.c has null pointer default argument."""
+def has_null_pointer_default_argument():
+    global filename
 
+    filename = './support/bad_nullPointerDefaultArg.txt'
 
 @when('it is submitted to the app')
-def it_is_submitted_to_the_app():
-    """it is submitted to the app."""
+def submitted():
+   subprocess.check_output('../susy-avalia.py ' + filename + ' > output.txt', shell=True)
 
 
 @then('I should receive the following message "[<filename>.c:<linha>]: (erro) Possível acesso a pointeiro nulo se o valor padrão foi utilizado"')
-def i_should_receive_the_following_message_filenameclinha_erro_possível_acesso_a_pointeiro_nulo_se_o_valor_padrão_foi_utilizado():
-    """I should receive the following message "[<filename>.c:<linha>]: (erro) Possível acesso a pointeiro nulo se o valor padrão foi utilizado"."""
+def receive_message():
+    global filename
 
+    with open("output.txt",'r') as f_out:
+
+        for line in f_out:
+            m = re.search('[\[\]\:\w\.\_]*\s(\(erro\) Possível acesso a pointeiro nulo se o valor padrão foi utilizado)', line)
+            assert m != None
 
 @then('shows me "[<filename>.c]: Nenhum erro de análise estática foi encontrado"')
-def shows_me_filenamec_nenhum_erro_de_análise_estática_foi_encontrado():
-    """shows me "[<filename>.c]: Nenhum erro de análise estática foi encontrado"."""
+def shows_nothing():
 
+    global expected
+
+    with open("output.txt",'r') as f_out:
+        for line in f_out:
+            assert "good.c" in line
+            
+            m = re.search('(\[[0-9A-Za-z\_]*\.\w\])\:\sNenhum erro de análise estática foi encontrado', line)
+            assert m != None

@@ -8,38 +8,61 @@ from pytest_bdd import (
     when,
 )
 
+import subprocess 
+import re
 
-@scenario('format_string/invalidScanfFormatWidth.feature', 'Code with invalid scanf format width')
+filename = ""
+result = None
+expected = []
+
+@scenario('invalidScanfFormatWidth.feature', 'Code with invalid scanf format width')
 def test_code_with_invalid_scanf_format_width():
-    """Code with invalid scanf format width."""
+    pass
 
 
-@scenario('format_string/invalidScanfFormatWidth.feature', 'Code without invalid scanf format width')
+@scenario('invalidScanfFormatWidth.feature', 'Code without invalid scanf format width')
 def test_code_without_invalid_scanf_format_width():
-    """Code without invalid scanf format width."""
+    pass
 
 
-@given('<filename>.c doesn't have invalid scanf format width')
-def filenamec_doesnt_have_invalid_scanf_format_width():
-    """<filename>.c doesn't have invalid scanf format width."""
+@given('<filename>.c doesn\'t have invalid scanf format width')
+def doesnt_have_invalid_scanf_format_width():
+    global filename
+    global expected
 
+    filename = './support/good_invalidScanfFormatWidth.txt'
+    expected = ['good.c']
 
 @given('<filename>.c has invalid scanf format width')
-def filenamec_has_invalid_scanf_format_width():
-    """<filename>.c has invalid scanf format width."""
+def has_invalid_scanf_format_width():
+    global filename
+
+    filename = './support/bad_invalidScanfFormatWidth.txt'
 
 
 @when('it is submitted to the app')
-def it_is_submitted_to_the_app():
-    """it is submitted to the app."""
+def submitted():
+   subprocess.check_output('../susy-avalia.py ' + filename + ' > output.txt', shell=True)
 
 
-@then('I should receive the following message "[<filename>.c:<linha>]: (erro) Tamanho da variável no formato 'string/char*' é inválida"')
-def i_should_receive_the_following_message_filenameclinha_erro_tamanho_da_variável_no_formato_stringchar_é_inválida():
-    """I should receive the following message "[<filename>.c:<linha>]: (erro) Tamanho da variável no formato 'string/char*' é inválida"."""
+@then('I should receive the following message "[<filename>.c:<linha>]: (erro) Tamanho da variável no formato \'string/char*\' é inválida"')
+def receive_message():
+    global filename
 
+    with open("output.txt",'r') as f_out:
+
+        for line in f_out:
+            m = re.search('[\[\]\:\w\.\_]*\s(\(erro\) Tamanho da variável no formato \'string/char*\' é inválida)', line)
+            assert m != None
 
 @then('shows me "[<filename>.c]: Nenhum erro de análise estática foi encontrado"')
-def shows_me_filenamec_nenhum_erro_de_análise_estática_foi_encontrado():
-    """shows me "[<filename>.c]: Nenhum erro de análise estática foi encontrado"."""
+def shows_nothing():
 
+    global expected
+
+    with open("output.txt",'r') as f_out:
+        for line in f_out:
+            assert "good.c" in line
+            
+            m = re.search('(\[[0-9A-Za-z\_]*\.\w\])\:\sNenhum erro de análise estática foi encontrado', line)
+            assert m != None

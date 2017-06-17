@@ -8,38 +8,62 @@ from pytest_bdd import (
     when,
 )
 
+import subprocess 
+import re
 
-@scenario('unused_function_and_variable/unusedFunction.feature', 'Code with unused function')
+filename = ""
+result = None
+expected = []
+
+@scenario('unusedFunction.feature', 'Code with unused function')
 def test_code_with_unused_function():
-    """Code with unused function."""
+    pass
 
 
-@scenario('unused_function_and_variable/unusedFunction.feature', 'Code without unused function')
+@scenario('unusedFunction.feature', 'Code without unused function')
 def test_code_without_unused_function():
-    """Code without unused function."""
+    pass
 
 
-@given('<filename>.c doesn't have unused function')
-def filenamec_doesnt_have_unused_function():
-    """<filename>.c doesn't have unused function."""
+@given('<filename>.c doesn\'t have unused function')
+def doesnt_have_unused_function():
+    global filename
+    global expected
+
+    filename = './support/good_unusedFunction.txt'
+    expected = ['good.c']
 
 
 @given('<filename>.c has unused function')
-def filenamec_has_unused_function():
-    """<filename>.c has unused function."""
+def has_unused_function():
+    global filename
+
+    filename = './support/bad_unusedFunction.txt'
 
 
 @when('it is submitted to the app')
-def it_is_submitted_to_the_app():
-    """it is submitted to the app."""
+def submitted():
+   subprocess.check_output('../susy-avalia.py ' + filename + ' > output.txt', shell=True)
 
 
 @then('I should receive the following message "[<filename>.c:<linha>]: (erro) Função criada mas nunca foi utilizada"')
-def i_should_receive_the_following_message_filenameclinha_erro_função_criada_mas_nunca_foi_utilizada():
-    """I should receive the following message "[<filename>.c:<linha>]: (erro) Função criada mas nunca foi utilizada"."""
+def receive_message():
+    global filename
 
+    with open("output.txt",'r') as f_out:
 
+        for line in f_out:
+            m = re.search('[\[\]\:\w\.\_]*\s(\(erro\) Função criada mas nunca foi utilizada)', line)
+            assert m != None
+            
 @then('shows me "[<filename>.c]: Nenhum erro de análise estática foi encontrado"')
-def shows_me_filenamec_nenhum_erro_de_análise_estática_foi_encontrado():
-    """shows me "[<filename>.c]: Nenhum erro de análise estática foi encontrado"."""
+def shows_nothing( ):
+    
+    global expected
 
+    with open("output.txt",'r') as f_out:
+        for line in f_out:
+            assert "good.c" in line
+            
+            m = re.search('(\[[0-9A-Za-z\_]*\.\w\])\:\sNenhum erro de análise estática foi encontrado', line)
+            assert m != None

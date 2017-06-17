@@ -8,38 +8,61 @@ from pytest_bdd import (
     when,
 )
 
+import subprocess 
+import re
 
-@scenario('format_string/invalidScanfArgType_s.feature', 'Code with invalid scanf argument type string')
+filename = ""
+result = None
+expected = []
+
+@scenario('invalidScanfArgType_s.feature', 'Code with invalid scanf argument type string')
 def test_code_with_invalid_scanf_argument_type_string():
-    """Code with invalid scanf argument type string."""
+    pass
 
 
-@scenario('format_string/invalidScanfArgType_s.feature', 'Code without invalid scanf argument type string')
+@scenario('invalidScanfArgType_s.feature', 'Code without invalid scanf argument type string')
 def test_code_without_invalid_scanf_argument_type_string():
-    """Code without invalid scanf argument type string."""
+    pass
 
 
-@given('<filename>.c doesn't have invalid scanf argument type string')
-def filenamec_doesnt_have_invalid_scanf_argument_type_string():
-    """<filename>.c doesn't have invalid scanf argument type string."""
+@given('<filename>.c doesn\'t have invalid scanf argument type string')
+def doesnt_have_invalid_scanf_argument_type_string():
+    global filename
+    global expected
 
+    filename = './support/good_invalidScanfArgType_s.txt'
+    expected = ['good.c']
 
 @given('<filename>.c has invalid scanf argument type string')
-def filenamec_has_invalid_scanf_argument_type_string():
-    """<filename>.c has invalid scanf argument type string."""
+def has_invalid_scanf_argument_type_string():
+    global filename
+
+    filename = './support/bad_invalidScanfArgType_s.txt'
 
 
 @when('it is submitted to the app')
-def it_is_submitted_to_the_app():
-    """it is submitted to the app."""
+def submitted():
+   subprocess.check_output('../susy-avalia.py ' + filename + ' > output.txt', shell=True)
 
 
-@then('I should receive the following message "[<filename>.c:<linha>]: (erro) Scanf com argumento do tipo 'string/char*' inválido"')
-def i_should_receive_the_following_message_filenameclinha_erro_scanf_com_argumento_do_tipo_stringchar_inválido():
-    """I should receive the following message "[<filename>.c:<linha>]: (erro) Scanf com argumento do tipo 'string/char*' inválido"."""
+@then('I should receive the following message "[<filename>.c:<linha>]: (erro) Scanf com argumento do tipo \'string/char*\' inválido"')
+def receive_message():
+    global filename
 
+    with open("output.txt",'r') as f_out:
+
+        for line in f_out:
+            m = re.search('[\[\]\:\w\.\_]*\s(\(erro\) Scanf com argumento do tipo \'string/char*\' inválido)', line)
+            assert m != None
 
 @then('shows me "[<filename>.c]: Nenhum erro de análise estática foi encontrado"')
-def shows_me_filenamec_nenhum_erro_de_análise_estática_foi_encontrado():
-    """shows me "[<filename>.c]: Nenhum erro de análise estática foi encontrado"."""
+def shows_nothing():
 
+    global expected
+
+    with open("output.txt",'r') as f_out:
+        for line in f_out:
+            assert "good.c" in line
+            
+            m = re.search('(\[[0-9A-Za-z\_]*\.\w\])\:\sNenhum erro de análise estática foi encontrado', line)
+            assert m != None

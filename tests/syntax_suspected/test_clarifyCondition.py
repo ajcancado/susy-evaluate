@@ -8,38 +8,61 @@ from pytest_bdd import (
     when,
 )
 
+import subprocess 
+import re
 
-@scenario('syntax_suspected/clarifyCondition.feature', 'Code with clarify condition')
+filename = ""
+result = None
+expected = []
+
+@scenario('clarifyCondition.feature', 'Code with clarify condition')
 def test_code_with_clarify_condition():
-    """Code with clarify condition."""
+    pass
 
 
-@scenario('syntax_suspected/clarifyCondition.feature', 'Code without clarify condition')
+@scenario('clarifyCondition.feature', 'Code without clarify condition')
 def test_code_without_clarify_condition():
-    """Code without clarify condition."""
+    pass
 
 
-@given('<filename>.c doesn't have clarify condition')
-def filenamec_doesnt_have_clarify_condition():
-    """<filename>.c doesn't have clarify condition."""
+@given('<filename>.c doesn\'t have clarify condition')
+def doesnt_have_clarify_condition():
+    global filename
+    global expected
+
+    filename = './support/good_clarifyCondition.txt'
+    expected = ['good.c']
 
 
 @given('<filename>.c has clarify condition')
-def filenamec_has_clarify_condition():
-    """<filename>.c has clarify condition."""
+def has_clarify_condition():
+    global filename
+
+    filename = './support/bad_clarifyCondition.txt'
 
 
 @when('it is submitted to the app')
-def it_is_submitted_to_the_app():
-    """it is submitted to the app."""
-
+def submitted():
+   subprocess.check_output('../susy-avalia.py ' + filename + ' > output.txt', shell=True)
 
 @then('I should receive the following message "[<filename>.c:<linha>]: (erro) Condição não esta claramente definida"')
-def i_should_receive_the_following_message_filenameclinha_erro_condição_não_esta_claramente_definida():
-    """I should receive the following message "[<filename>.c:<linha>]: (erro) Condição não esta claramente definida"."""
+def receive_message():
+    global filename
 
+    with open("output.txt",'r') as f_out:
+
+        for line in f_out:
+            m = re.search('[\[\]\:\w\.\_]*\s(\(erro\) Condição não esta claramente definida)', line)
+            assert m != None
 
 @then('shows me "[<filename>.c]: Nenhum erro de análise estática foi encontrado"')
-def shows_me_filenamec_nenhum_erro_de_análise_estática_foi_encontrado():
-    """shows me "[<filename>.c]: Nenhum erro de análise estática foi encontrado"."""
+def shows_nothing():
 
+    global expected
+
+    with open("output.txt",'r') as f_out:
+        for line in f_out:
+            assert "good.c" in line
+            
+            m = re.search('(\[[0-9A-Za-z\_]*\.\w\])\:\sNenhum erro de análise estática foi encontrado', line)
+            assert m != None

@@ -8,38 +8,59 @@ from pytest_bdd import (
     when,
 )
 
+import subprocess 
+import re
 
-@scenario('memory_leak/mismatchAllocDealloc.feature', 'Code with mismatch allocation and deallocation')
+filename = ""
+result = None
+expected = []
+
+@scenario('mismatchAllocDealloc.feature', 'Code with mismatch allocation and deallocation')
 def test_code_with_mismatch_allocation_and_deallocation():
-    """Code with mismatch allocation and deallocation."""
+    pass
 
 
-@scenario('memory_leak/mismatchAllocDealloc.feature', 'Code without mismatch allocation and deallocation')
+@scenario('mismatchAllocDealloc.feature', 'Code without mismatch allocation and deallocation')
 def test_code_without_mismatch_allocation_and_deallocation():
-    """Code without mismatch allocation and deallocation."""
+   pass
 
-
-@given('<filename>.c doesn't have mismatch allocation and deallocation')
+@given('<filename>.c doesn\'t have mismatch allocation and deallocation')
 def filenamec_doesnt_have_mismatch_allocation_and_deallocation():
-    """<filename>.c doesn't have mismatch allocation and deallocation."""
+    global filename
+    global expected
 
+    filename = './support/good_mismachAllocDealloc.txt'
+    expected = ['good.c']
 
 @given('<filename>.c has mismatch allocation and deallocation')
-def filenamec_has_mismatch_allocation_and_deallocation():
-    """<filename>.c has mismatch allocation and deallocation."""
+def has_mismatch_allocation_and_deallocation():
+    global filename
 
+    filename = './support/bad_mismachAllocDealloc.txt'
 
 @when('it is submitted to the app')
-def it_is_submitted_to_the_app():
-    """it is submitted to the app."""
+def submitted():
+   subprocess.check_output('../susy-avalia.py ' + filename + ' > output.txt', shell=True)
 
 
 @then('I should receive the following message "[<filename>.c:<linha>]: (erro) Falta de alocação ou desalocação de memória"')
-def i_should_receive_the_following_message_filenameclinha_erro_falta_de_alocação_ou_desalocação_de_memória():
-    """I should receive the following message "[<filename>.c:<linha>]: (erro) Falta de alocação ou desalocação de memória"."""
+def receive_message():
+    global filename
 
+    with open("output.txt",'r') as f_out:
+
+        for line in f_out:
+            m = re.search('[\[\]\:\w\.\_]*\s(\(erro\) Falta de alocação ou desalocação de memória)', line)
+            assert m != None
 
 @then('shows me "[<filename>.c]: Nenhum erro de análise estática foi encontrado"')
-def shows_me_filenamec_nenhum_erro_de_análise_estática_foi_encontrado():
-    """shows me "[<filename>.c]: Nenhum erro de análise estática foi encontrado"."""
+def shows_nothing():
 
+    global expected
+
+    with open("output.txt",'r') as f_out:
+        for line in f_out:
+            assert "good.c" in line
+            
+            m = re.search('(\[[0-9A-Za-z\_]*\.\w\])\:\sNenhum erro de análise estática foi encontrado', line)
+            assert m != None

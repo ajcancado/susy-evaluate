@@ -8,38 +8,64 @@ from pytest_bdd import (
     when,
 )
 
+import subprocess 
+import re
 
-@scenario('unused_function_and_variable/unusedVariable.feature', 'Code with unused Variable')
+filename = ""
+result = None
+expected = []
+
+
+@scenario('unusedVariable.feature', 'Code with unused Variable')
 def test_code_with_unused_variable():
-    """Code with unused Variable."""
+    pass
 
 
-@scenario('unused_function_and_variable/unusedVariable.feature', 'Code without unused Variable')
+@scenario('unusedVariable.feature', 'Code without unused Variable')
 def test_code_without_unused_variable():
-    """Code without unused Variable."""
+    pass
 
 
-@given('<filename>.c doesn't have unused Variable')
-def filenamec_doesnt_have_unused_variable():
-    """<filename>.c doesn't have unused Variable."""
+@given('<filename>.c doesn\'t have unused Variable')
+def doesnt_have_unused_variable():
+    global filename
+    global expected
+
+    filename = './support/good_unusedVariable.txt'
+    expected = ['good.c']
 
 
 @given('<filename>.c has unused Variable')
-def filenamec_has_unused_variable():
-    """<filename>.c has unused Variable."""
+def has_unused_variable():
+    global filename
+
+    filename = './support/bad_unusedVariable.txt'
 
 
 @when('it is submitted to the app')
-def it_is_submitted_to_the_app():
-    """it is submitted to the app."""
-
+def submitted():
+   subprocess.check_output('../susy-avalia.py ' + filename + ' > output.txt', shell=True)
 
 @then('I should receive the following message "[<filename>.c:<linha>]: (erro) Variável nunca foi utilizada"')
-def i_should_receive_the_following_message_filenameclinha_erro_variável_nunca_foi_utilizada():
-    """I should receive the following message "[<filename>.c:<linha>]: (erro) Variável nunca foi utilizada"."""
+def receive_message():
+    global filename
 
+    with open("output.txt",'r') as f_out:
+
+        for line in f_out:
+            m = re.search('[\[\]\:\w\.\_]*\s(\(erro\) Variável nunca foi utilizada)', line)
+            assert m != None
 
 @then('shows me "[<filename>.c]: Nenhum erro de análise estática foi encontrado"')
-def shows_me_filenamec_nenhum_erro_de_análise_estática_foi_encontrado():
-    """shows me "[<filename>.c]: Nenhum erro de análise estática foi encontrado"."""
+def shows_nothing( ):
+    
+    global expected
+
+    with open("output.txt",'r') as f_out:
+        for line in f_out:
+            assert "good.c" in line
+            
+            m = re.search('(\[[0-9A-Za-z\_]*\.\w\])\:\sNenhum erro de análise estática foi encontrado', line)
+            assert m != None
+
 

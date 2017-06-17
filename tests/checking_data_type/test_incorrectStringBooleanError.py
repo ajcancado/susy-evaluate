@@ -8,38 +8,60 @@ from pytest_bdd import (
     when,
 )
 
+import subprocess 
+import re
 
-@scenario('checking_data_type/incorrectStringBooleanError.feature', 'Code with incorrect string boolean error')
+filename = ""
+result = None
+expected = []
+
+@scenario('incorrectStringBooleanError.feature', 'Code with incorrect string boolean error')
 def test_code_with_incorrect_string_boolean_error():
-    """Code with incorrect string boolean error."""
+    pass
 
 
-@scenario('checking_data_type/incorrectStringBooleanError.feature', 'Code without incorrect string boolean error')
+@scenario('incorrectStringBooleanError.feature', 'Code without incorrect string boolean error')
 def test_code_without_incorrect_string_boolean_error():
-    """Code without incorrect string boolean error."""
+    pass
 
 
-@given('<filename>.c doesn't have incorrect string boolean error')
-def filenamec_doesnt_have_incorrect_string_boolean_error():
-    """<filename>.c doesn't have incorrect string boolean error."""
+@given('<filename>.c doesn\'t have incorrect string boolean error')
+def doesnt_have_incorrect_string_boolean_error():
+    global filename
+    global expected
 
+    filename = './support/good_incorrectStringBooleanError.txt'
+    expected = ['good.c']
 
 @given('<filename>.c has incorrect string boolean error')
-def filenamec_has_incorrect_string_boolean_error():
-    """<filename>.c has incorrect string boolean error."""
+def has_incorrect_string_boolean_error():
+    global filename
 
+    filename = './support/bad_incorrectStringBooleanError.txt'
 
 @when('it is submitted to the app')
-def it_is_submitted_to_the_app():
-    """it is submitted to the app."""
+def submitted():
+   subprocess.check_output('../susy-avalia.py ' + filename + ' > output.txt', shell=True)
 
 
 @then('I should receive the following message "[<filename>.c:<linha>]: (erro) Conversão literal de variável tipo carácter para booleano sempre é verdadeiro"')
-def i_should_receive_the_following_message_filenameclinha_erro_conversão_literal_de_variável_tipo_carácter_para_booleano_sempre_é_verdadeiro():
-    """I should receive the following message "[<filename>.c:<linha>]: (erro) Conversão literal de variável tipo carácter para booleano sempre é verdadeiro"."""
+def receive_message():
+    global filename
 
+    with open("output.txt",'r') as f_out:
+
+        for line in f_out:
+            m = re.search('[\[\]\:\w\.\_]*\s(\(erro\) Conversão literal de variável tipo carácter para booleano sempre é verdadeiro)', line)
+            assert m != None
 
 @then('shows me "[<filename>.c]: Nenhum erro de análise estática foi encontrado"')
-def shows_me_filenamec_nenhum_erro_de_análise_estática_foi_encontrado():
-    """shows me "[<filename>.c]: Nenhum erro de análise estática foi encontrado"."""
+def shows_nothing():
 
+    global expected
+
+    with open("output.txt",'r') as f_out:
+        for line in f_out:
+            assert "good.c" in line
+            
+            m = re.search('(\[[0-9A-Za-z\_]*\.\w\])\:\sNenhum erro de análise estática foi encontrado', line)
+            assert m != None
