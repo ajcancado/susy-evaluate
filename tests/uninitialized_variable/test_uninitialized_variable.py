@@ -25,20 +25,20 @@ def test_code_without_uninitialized_variables():
     pass
 
 
-@given('a2.c doesn\'t have uninitialized variables')
+@given('<filename>.c doesn\'t have uninitialized variables')
 def the_code_doesnt_have_uninitialized_variables():
-        global filename
-        global expected
+    global filename
+    global expected
 
-        filename = './support/case2_uninitialized_variable.txt'
-        expected = ['a2.c']
+    filename = './support/good_uninitialized_variable.txt'
+    expected = ['good.c']
 
 
-@given('a1.c has uninitialized variables')
+@given('<filename>.c has uninitialized variables')
 def the_code_has_uninitialized_variables():
-        global filename
+    global filename
 
-        filename = './support/case1_uninitialized_variable.txt'
+    filename = './support/bad_uninitialized_variable.txt'
 
 
 @when('it is submitted to the app')
@@ -48,13 +48,13 @@ def it_is_submitted_to_the_app():
 
 @then('I should receive the following message "[<filename>.c:<linha>]: (error) Variável não inicializada"')
 def i_should_receive_message_error():
-        global filename
+    global filename
 
-        with open("output.txt",'r') as f_out:
+    with open("output.txt",'r') as f_out:
 
-            for line in f_out:
-                m = re.search('[\[\]\:\w\.\_]*\s(\(erro\) Variável não inicializada)', line)
-                assert m != None
+        for line in f_out:
+            m = re.search('[\[\]\:\w\.\_]*\s(\(erro\) Variável não inicializada)', line)
+            assert m != None
 
 
 @then('shows me "[<filename>.c]: Nenhum erro de análise estática foi encontrado"')
@@ -64,7 +64,7 @@ def shows_nothing():
 
     with open("output.txt",'r') as f_out:
         for line in f_out:
-            assert "a2.c" in line
-            
+            assert "good.c" in line
+
             m = re.search('(\[[0-9A-Za-z\_]*\.\w\])\:\sNenhum erro de análise estática foi encontrado', line)
             assert m != None
