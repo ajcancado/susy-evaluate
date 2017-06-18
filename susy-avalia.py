@@ -3,9 +3,11 @@
 import subprocess
 import sys
 import os.path
+import csv
 
 from abc import ABC, abstractmethod
 
+ErrorId = {}
 
 class Evaluator(ABC):
     def init(self):
@@ -34,16 +36,12 @@ class Evaluator(ABC):
 
 class Cppcheck(Evaluator):
 
-    ErrorId = {
-        'memleak': '[{file}:{line}]: (erro) Vazamento de memória',
-        'redundantAssignment': '[{file}:{line}]: (erro) Atribuição redundante',
-        'uninitvar': '[{file}:{line}]: (erro) Variável não inicializada',
-        'nullPointer': '[{file}:{line}]: (erro) Desreferenciamento de ponteiro nulo'
-    }
-
     def init(self):
         # TODO: Aqui será lido o arquivo CSV para preencher o dict
-        pass
+        with open('../csv/errorid.csv') as csv_file:
+            reader = csv.reader(csv_file)
+            for row in reader:
+                ErrorId[reader.line_num] = row
 
     def execute(self, infile):
         process = subprocess.Popen(['cppcheck', '--enable=style',
