@@ -37,7 +37,6 @@ class Evaluator(ABC):
 class Cppcheck(Evaluator):
 
     def init(self):
-        # TODO: Aqui será lido o arquivo CSV para preencher o dict
         with open('../csv/errorid.csv') as csv_file:
             reader = csv.reader(csv_file)
             for row in reader:
