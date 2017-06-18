@@ -6,14 +6,14 @@ import subprocess
 errors = {
 	'uninitialized_variable': {
 		'uninitdata': {
-			'title': 'Uninitiazed date',
-			'message': 'Mémoria foi alocada mas não foi inicializada',
-			'issue': 'uninitiazed date'
+			'title': 'Uninitialized data',
+			'message': 'Memória foi alocada mas não foi inicializada',
+			'issue': 'uninitialized data'
 		},
 		'uninitStructMember': {
-			'title': 'Uninitiazed Struct Member',
+			'title': 'Uninitialized Struct Member',
 			'message': 'Variável foi criada em uma \'struct\' mas não foi inicializada',
-			'issue': 'uninitiazed struct member'
+			'issue': 'uninitialized struct member'
 		}
 	},
 	'unused_function_and_variable': {
@@ -270,7 +270,7 @@ errors = {
 feature = """Feature: {title}
     Code analysis beyond compilation
 
-Scenario: Code with {issue} 
+Scenario: Code with {issue}
     Given <filename>.c has {issue}
     When it is submitted to the app
     Then I should receive the following message "[<filename>.c:<linha>]: (erro) {message}"
@@ -278,7 +278,7 @@ Scenario: Code with {issue}
 Scenario: Code without {issue}
     Given <filename>.c doesn't have {issue}
     When it is submitted to the app
-    Then shows me "[<filename>.c]: Nenhum erro de análise estática foi encontrado" 
+    Then shows me "[<filename>.c]: Nenhum erro de análise estática foi encontrado"
 """
 
 home = '/home/silvana/susy-tests'
@@ -290,7 +290,7 @@ for _k, group in errors.items():
 		for key, error in group.items():
 			feature_filename = home + '/' + _k + '/' + key + '.feature'
 			test_filename = home + '/' + _k + '/test_' + key + '.py'
-			
+
 			with open(feature_filename, 'w') as file:
 				file.write(feature.format(title=error['title'], issue=error['issue'], message=error['message']))
 
@@ -313,7 +313,7 @@ for _k, group in errors.items():
 		for key, error in group.items():
 			if not os.path.exists(cases_cpp + '/' + _k + '/' + key):
 				os.makedirs(cases_cpp + '/' + _k + '/' + key)
-				
+
 				cases = [
 					cases_cpp + '/' + _k + '/' + key + '/bad.c',
 					cases_cpp + '/' + _k + '/' + key + '/good.c'

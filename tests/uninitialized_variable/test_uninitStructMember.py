@@ -1,5 +1,5 @@
 # coding=utf-8
-"""Uninitiazed Struct Member feature tests."""
+"""Uninitialized Struct Member feature tests."""
 
 from pytest_bdd import (
     given,
@@ -8,33 +8,33 @@ from pytest_bdd import (
     when,
 )
 
-import subprocess 
+import subprocess
 import re
 
 filename = ""
 result = None
 expected = []
 
-@scenario('uninitStructMember.feature', 'Code with uninitiazed struct member')
-def test_code_with_uninitiazed_struct_member():
+@scenario('uninitStructMember.feature', 'Code with uninitialized struct member')
+def test_code_with_uninitialized_struct_member():
     pass
 
 
-@scenario('uninitStructMember.feature', 'Code without uninitiazed struct member')
-def test_code_without_uninitiazed_struct_member():
+@scenario('uninitStructMember.feature', 'Code without uninitialized struct member')
+def test_code_without_uninitialized_struct_member():
     pass
 
 
-@given('<filename>.c doesn\'t have uninitiazed struct member')
-def doesnt_have_uninitiazed_struct_member():
+@given('<filename>.c doesn\'t have uninitialized struct member')
+def doesnt_have_uninitialized_struct_member():
     global filename
     global expected
 
     filename = './support/good_uninitStructMember.txt'
     expected = ['good.c']
 
-@given('<filename>.c has uninitiazed struct member')
-def has_uninitiazed_struct_member():
+@given('<filename>.c has uninitialized struct member')
+def has_uninitialized_struct_member():
     global filename
 
     filename = './support/bad_uninitStructMember.txt'
@@ -63,6 +63,6 @@ def shows_nothing():
     with open("output.txt",'r') as f_out:
         for line in f_out:
             assert "good.c" in line
-            
+
             m = re.search('(\[[0-9A-Za-z\_]*\.\w\])\:\sNenhum erro de análise estática foi encontrado', line)
             assert m != None

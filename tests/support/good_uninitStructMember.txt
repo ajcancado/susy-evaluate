@@ -1,1 +1,1 @@
-/home/silvana/susy-tests/support/uninitialized_variable/uninitStructMember/good.c
+support/uninitialized_variable/uninitStructMember/good.c
