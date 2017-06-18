@@ -1,1 +1,1 @@
-/home/silvana/susy-tests/support/uninitialized_variable/uninitdata/bad.c
+support/uninitialized_variable/uninitdata/bad.c
