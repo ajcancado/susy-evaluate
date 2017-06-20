@@ -35,10 +35,11 @@ class Evaluator(ABC):
 
 
 class Cppcheck(Evaluator):
+    CONFIG_PATH = '../susy-avalia-config.json'
 
     def init(self):        
         global ErrorId
-        csv_file = open('../csv/errorid.csv')
+        csv_file = open(self.CONFIG_PATH)
         file = csv_file.read()
         ErrorId = json.loads(file)
 
