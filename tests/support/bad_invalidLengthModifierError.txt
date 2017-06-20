@@ -1,1 +1,1 @@
-/home/silvana/susy-tests/support/format_string/invalidLengthModifierError/bad.c
+support/format_string/invalidLengthModifierError/bad.c

@@ -1,1 +1,1 @@
-/home/silvana/susy-tests/support/syntax_suspected/clarifyCondition/good.c
+support/syntax_suspected/clarifyCondition/good.c

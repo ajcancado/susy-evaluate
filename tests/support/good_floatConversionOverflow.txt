@@ -1,1 +1,1 @@
-/home/silvana/susy-tests/support/checking_data_type/floatConversionOverflow/good.c
+support/checking_data_type/floatConversionOverflow/good.c

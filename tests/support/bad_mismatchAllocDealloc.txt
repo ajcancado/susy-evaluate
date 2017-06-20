@@ -1,1 +1,1 @@
-/home/silvana/susy-tests/support/memory_leak/mismatchAllocDealloc/bad.c
+support/memory_leak/mismatchAllocDealloc/bad.c

@@ -1,1 +1,1 @@
-/home/silvana/susy-tests/support/memory_leak/resourceLeak/bad.c
+support/memory_leak/resourceLeak/bad.c

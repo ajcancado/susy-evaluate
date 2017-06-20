@@ -1,1 +1,1 @@
-/home/silvana/susy-tests/support/syntax_suspected/compareBoolExpressionWithInt/bad.c
+support/syntax_suspected/compareBoolExpressionWithInt/bad.c

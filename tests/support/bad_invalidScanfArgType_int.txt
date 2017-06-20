@@ -1,1 +1,1 @@
-/home/silvana/susy-tests/support/format_string/invalidScanfArgType_int/bad.c
+support/format_string/invalidScanfArgType_int/bad.c

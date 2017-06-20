@@ -1,1 +1,1 @@
-/home/silvana/susy-tests/support/memory_leak/memleakOnRealloc/bad.c
+support/memory_leak/memleakOnRealloc/bad.c

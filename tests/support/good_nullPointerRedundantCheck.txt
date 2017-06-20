@@ -1,1 +1,1 @@
-/home/silvana/susy-tests/support/null_pointer/nullPointerRedundantCheck/good.c
+support/null_pointer/nullPointerRedundantCheck/good.c

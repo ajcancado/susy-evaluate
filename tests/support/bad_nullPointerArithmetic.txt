@@ -1,1 +1,1 @@
-/home/silvana/susy-tests/support/null_pointer/nullPointerArithmetic/bad.c
+support/null_pointer/nullPointerArithmetic/bad.c

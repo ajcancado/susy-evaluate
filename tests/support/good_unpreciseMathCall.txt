@@ -1,1 +1,1 @@
-/home/silvana/susy-tests/support/checking_data_type/unpreciseMathCall/good.c
+support/checking_data_type/unpreciseMathCall/good.c

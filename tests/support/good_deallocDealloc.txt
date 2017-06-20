@@ -1,1 +1,1 @@
-/home/silvana/susy-tests/support/memory_leak/deallocDealloc/good.c
+support/memory_leak/deallocDealloc/good.c

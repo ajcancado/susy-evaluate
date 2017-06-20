@@ -1,1 +1,1 @@
-/home/silvana/susy-tests/support/unused_function_and_variable/unassignedVariable/bad.c
+support/unused_function_and_variable/unassignedVariable/bad.c

@@ -1,1 +1,1 @@
-/home/silvana/susy-tests/support/format_string/invalidPrintArgType_uint/good.c
+support/format_string/invalidPrintArgType_uint/good.c

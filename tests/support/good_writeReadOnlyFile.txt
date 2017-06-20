@@ -1,1 +1,1 @@
-/home/silvana/susy-tests/support/check_file/writeReadOnlyFile/good.c
+support/check_file/writeReadOnlyFile/good.c
