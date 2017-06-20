@@ -3,5 +3,12 @@
 
 int main(int argc, char const *argv[])
 {
-  printf("%s", 'A');
+  char* a = malloc(4);
+	scanf("%1s", &a);
+	
+	int b = a&;
+	
+	free(a);
+	
+	return b;
 }
