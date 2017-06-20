@@ -4,11 +4,11 @@
 int main(int argc, char const *argv[])
 {
   int* a = malloc(4);
-	scanf("%1s", &a);
+  scanf("%1s", &a);
 	
-	int b = a&;
+  int b = a&;
 	
-	free(a);
+  free(a);
 	
-	return b;
+  return b;
 }
