@@ -7,7 +7,6 @@ import json
 
 from abc import ABC, abstractmethod
 
-ErrorId = {}
 
 class Evaluator(ABC):
     def init(self):
@@ -35,12 +34,13 @@ class Evaluator(ABC):
 
 
 class Cppcheck(Evaluator):
+    CONFIG_PATH = '../susy-avalia-config.json'
+
+    ErrorId = {}
 
     def init(self):        
-        global ErrorId
-        csv_file = open('../csv/errorid.csv')
-        file = csv_file.read()
-        ErrorId = json.loads(file)
+        with open(self.CONFIG_PATH) as cfg_file:
+            self.ErrorId = json.load(cfg_file)
 
     def execute(self, infile):
         process = subprocess.Popen(['cppcheck', '--enable=style',
@@ -59,8 +59,8 @@ class Cppcheck(Evaluator):
                 r = r.decode('utf-8')
                 fname, fline, eid, sev, msg = r.split('::')
                 filename = fname.split('/')[-1]
-                if eid in ErrorId:
-                    fmt_result.append(ErrorId[eid].format(file=filename,
+                if eid in self.ErrorId:
+                    fmt_result.append(self.ErrorId[eid].format(file=filename,
                             line=fline, id=eid, severity=sev, message=msg))
             except:
                 continue
