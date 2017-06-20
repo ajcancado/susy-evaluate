@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 
+import json
+import os.path
 import subprocess
 import sys
-import os.path
-import json
 
 from abc import ABC, abstractmethod
 
@@ -25,12 +25,11 @@ class Evaluator(ABC):
 
         for f in files:
             output = self.process(self.execute(f))
-            if len(output) > 1:
+            if len(output) > 0:
                 print(output)
             else:
-                filename = f.split('/')[-1]
-                message = '[{file}]: Nenhum erro de análise estática foi encontrado'
-                print(message.format(file=filename))
+                print('[{file}]: Nenhum erro de análise estática foi '
+                        'encontrado'.format(file=os.path.basename(f)))
 
 
 class Cppcheck(Evaluator):
@@ -58,9 +57,9 @@ class Cppcheck(Evaluator):
             try:
                 r = r.decode('utf-8')
                 fname, fline, eid, sev, msg = r.split('::')
-                filename = fname.split('/')[-1]
+                fname = os.path.basename(fname)
                 if eid in self.ErrorId:
-                    fmt_result.append(self.ErrorId[eid].format(file=filename,
+                    fmt_result.append(self.ErrorId[eid].format(file=fname,
                             line=fline, id=eid, severity=sev, message=msg))
             except:
                 continue
@@ -74,11 +73,11 @@ if __name__ == '__main__':
     ccheck = Cppcheck()
     with open(sys.argv[1]) as infile:
         file_list_temp = infile.read().strip().split('\n')
+
         file_list = []
-        
         for f in file_list_temp:
             if os.path.exists(f):
-                t = f.split('/')[-1].split('.')[-1]
-                if t in ["c","cpp"]:
+                if f.lower().endswith(('.c', '.cpp')):
                     file_list.append(f)
+
         ccheck.evaluate(file_list)
