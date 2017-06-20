@@ -3,7 +3,6 @@
 import subprocess
 import sys
 import os.path
-import csv
 import json
 
 from abc import ABC, abstractmethod
