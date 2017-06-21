@@ -33,7 +33,11 @@ class Evaluator(ABC):
 
 
 class Cppcheck(Evaluator):
-    CONFIG_PATH = '../susy-avalia-config.json'
+    # Full path to current file's directory
+    BASE_PATH = os.path.dirname(os.path.abspath(__file__))
+
+    # Full path to configuration file
+    CONFIG_PATH = BASE_PATH + '/susy-avalia-config.json'
 
     ErrorId = {}
 
