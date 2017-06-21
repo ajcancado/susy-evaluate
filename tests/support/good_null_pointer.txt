@@ -1,1 +1,1 @@
-support/null_pointer/a1.c
+support/null_pointer/null_pointer/good.c

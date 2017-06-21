@@ -1,5 +1,5 @@
 # coding=utf-8
-"""Unused Struct Member feature tests."""
+"""Known condition true false feature tests."""
 
 from pytest_bdd import (
     given,
@@ -15,47 +15,45 @@ filename = ""
 result = None
 expected = []
 
-@scenario('unusedStructMember.feature', 'Code with unused struct member')
-def test_code_with_unused_struct_member():
+@scenario('knownConditionTrueFalse.feature', 'Code with known condition true false')
+def test_code_with_known_condition_true_false():
     pass
 
-
-@scenario('unusedStructMember.feature', 'Code without unused struct member')
-def test_code_without_unused_struct_member():
+@scenario('knownConditionTrueFalse.feature', 'Code without known condition true false')
+def test_code_without_known_condition_true_false():
     pass
 
-
-@given('<filename>.c doesn\'t have unused struct member')
-def doesnt_have_unused_struct_member():
+@given('<filename>.c doesn\'t have known condition true false')
+def doesnt_have_known_condition_true_false():
     global filename
     global expected
 
-    filename = './support/good_unusedStructMember.txt'
+    filename = './support/good_known_condition_true_false.txt'
     expected = ['good.c']
 
-@given('<filename>.c has unused struct member')
-def has_unused_struct_member():
+@given('<filename>.c has known condition true false')
+def has_known_condition_true_false():
     global filename
 
-    filename = './support/bad_unusedStructMember.txt'
-
+    filename = './support/bad_known_condition_true_false.txt'
+    
 @when('it is submitted to the app')
 def submitted():
    subprocess.check_output('../susy-avalia.py ' + filename + ' > output.txt', shell=True)
 
-@then('I should receive the following message "[<filename>.c:<linha>]: (erro) Variável foi criada em uma \'struct\' mas não foi utilizada"')
+@then('I should receive the following message "[<filename>.c:<linha>]: (erro) Condição sempre verdadeira ou falsa"')
 def receive_message():
     global filename
 
     with open("output.txt",'r') as f_out:
 
         for line in f_out:
-            m = re.search('[\[\]\:\w\.\_]*\s(\(erro\) Variável foi criada em uma \'struct\' mas não foi utilizada)', line)
+            m = re.search('[\[\]\:\w\.\_]*\s(\(erro\) Condição sempre verdadeira ou falsa)', line)
             assert m != None
 
 @then('shows me "[<filename>.c]: Nenhum erro de análise estática foi encontrado"')
-def shows_nothing( ):
-    
+def shows_nothing():
+
     global expected
 
     with open("output.txt",'r') as f_out:

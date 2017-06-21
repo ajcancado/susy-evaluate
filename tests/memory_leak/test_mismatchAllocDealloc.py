@@ -29,14 +29,14 @@ def filenamec_doesnt_have_mismatch_allocation_and_deallocation():
     global filename
     global expected
 
-    filename = './support/good_mismachAllocDealloc.txt'
+    filename = './support/good_mismatchAllocDealloc.txt'
     expected = ['good.c']
 
 @given('<filename>.c has mismatch allocation and deallocation')
 def has_mismatch_allocation_and_deallocation():
     global filename
 
-    filename = './support/bad_mismachAllocDealloc.txt'
+    filename = './support/bad_mismatchAllocDealloc.txt'
 
 @when('it is submitted to the app')
 def submitted():

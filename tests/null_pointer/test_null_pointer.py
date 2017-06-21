@@ -64,7 +64,7 @@ def shows_nothing():
 
     with open("output.txt",'r') as f_out:
         for line in f_out:
-            assert "a2.c" in line
+            assert "good.c" in line
             
             m = re.search('(\[[0-9A-Za-z\_]*\.\w\])\:\sNenhum erro de análise estática foi encontrado', line)
             assert m != None

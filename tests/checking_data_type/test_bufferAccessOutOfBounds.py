@@ -42,7 +42,8 @@ def has_buffer_access_out_of_bounds():
 
 @when('it is submitted to the app')
 def submitted():
-   subprocess.check_output('../susy-avalia.py ' + filename + ' > output.txt', shell=True)
+    global filename
+    subprocess.check_output('../susy-avalia.py ' + filename + ' > output.txt', shell=True)
 
 
 @then('I should receive the following message "[<filename>.c:<linha>]: (erro) Vetor acessado em índice inválido, portanto fora do seu limite"')

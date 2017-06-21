@@ -29,7 +29,7 @@ def test_code_without_array_accessed_out_of_bounds():
 def the_code_has_an_array_accessed_out_of_bounds():
     global filename
 
-    filename = './support/case1_boundary_checking.txt'
+    filename = './support/bad_boundary_checking.txt'
 
 
 @given('a2.c doesn\'t have an array accessed out of bounds')
@@ -37,8 +37,8 @@ def the_code_doesnt_have_an_array_accessed_out_of_bounds():
     global filename
     global expected
 
-    filename = './support/case2_boundary_checking.txt'
-    expected = ['a2.c']
+    filename = './support/good_boundary_checking.txt'
+    expected = ['good.c']
 
 
 @when('it is submitted to the app')
@@ -63,7 +63,7 @@ def shows_nothing():
 
     with open("output.txt",'r') as f_out:
         for line in f_out:
-            assert "a2.c" in line
+            assert "good.c" in line
 
             m = re.search('(\[[0-9A-Za-z\_]*\.\w\])\:\sNenhum erro de análise estática foi encontrado', line)
             assert m != None

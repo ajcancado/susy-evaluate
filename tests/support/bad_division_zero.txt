@@ -1,1 +1,1 @@
-support/division_zero/a1.c
+support/syntax_suspected/division_zero/bad.c

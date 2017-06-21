@@ -1,1 +1,1 @@
-support/memory_leak/a1.c
+support/memory_leak/memory_leak/bad.c

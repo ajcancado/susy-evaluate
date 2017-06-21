@@ -30,7 +30,7 @@ def doesnt_have_invalid_print_argument_type_integer():
     global filename
     global expected
 
-    filename = './support/good_invalidPrintArgType.txt'
+    filename = './support/good_invalidPrintArgType_int.txt'
     expected = ['good.c']
 
 
@@ -38,7 +38,7 @@ def doesnt_have_invalid_print_argument_type_integer():
 def has_invalid_print_argument_type_integer():
     global filename
 
-    filename = './support/bad_invalidPrintArgType.txt'
+    filename = './support/bad_invalidPrintArgType_int.txt'
 
 @when('it is submitted to the app')
 def submitted():

@@ -30,14 +30,14 @@ def doesnt_have_invalid_scanf_argument_type_float():
     global filename
     global expected
 
-    filename = './support/good_invalidPrintfArgType_float.txt'
+    filename = './support/good_invalidScanfArgType_float.txt'
     expected = ['good.c']
 
 @given('<filename>.c has invalid scanf argument type float')
 def has_invalid_scanf_argument_type_float():
     global filename
 
-    filename = './support/bad_invalidPrintfArgType_float.txt'
+    filename = './support/bad_invalidScanfArgType_float.txt'
 
 @when('it is submitted to the app')
 def submitted():

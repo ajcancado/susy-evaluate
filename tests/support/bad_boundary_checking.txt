@@ -1,1 +1,1 @@
-support/boundary_checking/a1.c
+support/checking_data_type/boundary_checking/bad.c

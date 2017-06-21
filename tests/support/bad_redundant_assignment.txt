@@ -1,1 +1,1 @@
-support/redundant_assignment/a1.c
+support/syntax_suspected/redundant_assignment/bad.c

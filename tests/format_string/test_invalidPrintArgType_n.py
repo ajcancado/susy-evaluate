@@ -30,14 +30,14 @@ def doesnt_have_invalid_print_argument_type_number():
     global filename
     global expected
 
-    filename = './support/good_invalidPrintArgType.txt'
+    filename = './support/good_invalidPrintArgType_n.txt'
     expected = ['good.c']
 
 @given('<filename>.c has invalid print argument type number')
 def has_invalid_print_argument_type_number():
     global filename
 
-    filename = './support/bad_invalidPrintArgType.txt'
+    filename = './support/bad_invalidPrintArgType_n.txt'
 
 
 @when('it is submitted to the app')

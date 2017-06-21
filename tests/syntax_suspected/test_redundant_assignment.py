@@ -23,19 +23,19 @@ def test_code_with_redundant_assignment():
 def test_code_without_redundant_assignment():
     pass
 
-@given('a2.c doesn\'t have redundant assignment')
+@given('<filename>.c doesn\'t have redundant assignment')
 def doesnt_have_redundant_assignment():
     global filename
     global expected
 
-    filename = './support/case2_redundant_assignment.txt'
-    expected = ['a2.c']
+    filename = './support/good_redundant_assignment.txt'
+    expected = ['good.c']
 
-@given('a1.c has redundant assignment')
+@given('<filename>.c has redundant assignment')
 def has_redundant_assignment():
     global filename
 
-    filename = './support/case1_redundant_assignment.txt'
+    filename = './support/bad_redundant_assignment.txt'
     
 @when('it is submitted to the app')
 def submitted():
@@ -58,7 +58,7 @@ def shows_nothing():
 
     with open("output.txt",'r') as f_out:
         for line in f_out:
-            assert "a2.c" in line
+            assert "good.c" in line
             
             m = re.search('(\[[0-9A-Za-z\_]*\.\w\])\:\sNenhum erro de análise estática foi encontrado', line)
             assert m != None

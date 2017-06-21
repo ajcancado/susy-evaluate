@@ -30,14 +30,14 @@ def doesnt_have_null_pointer_redundant_check():
     global filename
     global expected
 
-    filename = './support/good_nullPointerRedudantCheck.txt'
+    filename = './support/good_nullPointerRedundantCheck.txt'
     expected = ['good.c']
 
 @given('<filename>.c has null pointer redundant check')
 def has_null_pointer_redundant_check():
     global filename
 
-    filename = './support/bad_nullPointerRedudantCheck.txt'
+    filename = './support/bad_nullPointerRedundantCheck.txt'
 
 @when('it is submitted to the app')
 def submitted():
