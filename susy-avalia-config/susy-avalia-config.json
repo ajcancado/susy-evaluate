@@ -8,9 +8,6 @@
     "uninitdata": "[{file}:{line}]: (erro) Memória foi alocada mas não foi inicializada",
     "uninitStructMember": "[{file}:{line}]: (erro) Variável foi criada em uma 'struct' mas não foi inicializada",
     "nullPointer": "[{file}:{line}]: (erro) Desreferenciamento de ponteiro nulo",
-    "nullPointerArithmetic": "[{file}:{line}]: (erro) Overflow na aritmética de ponteiro, ponteiro nulo é subtraído",
-    
-    
     "wrongPrintfScanfArgNum": "[{file}:{line}]: (erro) Número de variáveis utilizadas não corresponde com o número de formatadores",
     "invalidScanfArgType_s": "[{file}:{line}]: (erro) Scanf com argumento do tipo 'string/char' inválido",
     "invalidScanfArgType_int": "[{file}:{line}]: (erro) Scanf com argumento do tipo 'int' inválido",
@@ -23,5 +20,5 @@
     "unusedAllocatedMemory": "[{file}:{line}]: (erro) Recursos de memória alocados nunca foram utilizados",
     "unreadVariable": "[{file}:{line}]: (erro) Atribuição de valor à variável mas nunca utilizado",
     "zerodiv": "[{file}:{line}]: (erro) Divisão por zero",
-    "redundantAssignment": "[{file}:{line}]: (erro) Atribuição redundante"    
+    "redundantAssignment": "[{file}:{line}]: (erro) Atribuição redundante"   
 }
