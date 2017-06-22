@@ -4,5 +4,9 @@
     "uninitvar": "[{file}:{line}]: (erro) Variável não inicializada",
     "uninitdata": "[{file}:{line}]: (erro) Memória foi alocada mas não foi inicializada",
     "uninitStructMember": "[{file}:{line}]: (erro) Variável foi criada em uma 'struct' mas não foi inicializada",
-    "nullPointer": "[{file}:{line}]: (erro) Desreferenciamento de ponteiro nulo"
+    "nullPointer": "[{file}:{line}]: (erro) Desreferenciamento de ponteiro nulo",
+    "invalidPrintfArgType_float": "[{file}:{line}]: (erro) Argumento de tipo 'float' é inválido neste caso",
+    "unusedVariable": "[{file}:{line}]: (erro) Variável nunca foi utilizada",
+    "unusedAllocatedMemory": "[{file}:{line}]: (erro) Recursos de memória alocados nunca foram utilizados",
+    "unreadVariable": "[{file}:{line}]: (erro) Atribuição de valor à variável mas nunca utilizado"    
 }
