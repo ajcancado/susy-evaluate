@@ -45,14 +45,14 @@ def submitted():
    subprocess.check_output('../susy-avalia.py ' + filename + ' > output.txt', shell=True)
 
 
-@then('I should receive the following message "[<filename>.c:<linha>]: (erro) Possível acesso a pointeiro nulo se o valor padrão foi utilizado"')
+@then('I should receive the following message "[<filename>.c:<linha>]: (erro) Possível acesso a ponteiro nulo se o valor padrão foi utilizado"')
 def receive_message():
     global filename
 
     with open("output.txt",'r') as f_out:
 
         for line in f_out:
-            m = re.search('[\[\]\:\w\.\_]*\s(\(erro\) Possível acesso a pointeiro nulo se o valor padrão foi utilizado)', line)
+            m = re.search('[\[\]\:\w\.\_]*\s(\(erro\) Possível acesso a ponteiro nulo se o valor padrão foi utilizado)', line)
             assert m != None
 
 @then('shows me "[<filename>.c]: Nenhum erro de análise estática foi encontrado"')
