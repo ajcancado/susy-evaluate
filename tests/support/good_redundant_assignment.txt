@@ -1,1 +1,1 @@
-support/redundant_assignment/a2.c
+support/redundant_assignment/good.c
