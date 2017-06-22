@@ -2,5 +2,7 @@
     "memleak": "[{file}:{line}]: (erro) Vazamento de memória",
     "redundantAssignment": "[{file}:{line}]: (erro) Atribuição redundante",
     "uninitvar": "[{file}:{line}]: (erro) Variável não inicializada",
+    "uninitdata": "[{file}:{line}]: (erro) Memória foi alocada mas não foi inicializada",
+    "uninitStructMember": "[{file}:{line}]: (erro) Variável foi criada em uma 'struct' mas não foi inicializada",
     "nullPointer": "[{file}:{line}]: (erro) Desreferenciamento de ponteiro nulo"
 }
