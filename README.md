@@ -58,9 +58,9 @@ SOFTWARE.
 
 ## Alunos
 
-* **Arthur J. Cançado** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
-* **Felipe R. Jensen** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
-* **Gabriell Orisaka** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
-* **Juliana L. G. Corá** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
-* **Silvana Trindade** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
-* **Yusseli L. M. Mendoza** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
+* **Arthur J. Cançado**
+* **Felipe R. Jensen**
+* **Gabriell Orisaka**
+* **Juliana L. G. Corá**
+* **Silvana Trindade**
+* **Yusseli L. M. Mendoza**
