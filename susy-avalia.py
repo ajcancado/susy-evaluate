@@ -91,7 +91,7 @@ class Cppcheck(Evaluator):
             self.ErrorId = json.load(cfg_file)
 
     def execute(self, infile):
-        process = subprocess.Popen([os.path.join(self.CTRL_DIR, 'cppcheck'),
+        process = subprocess.Popen([os.path.join(self.CTRL_PATH, 'cppcheck'),
                 '--enable=style',
                 '--template={file}::{line}::{id}::{severity}::{message}',
                 infile], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
