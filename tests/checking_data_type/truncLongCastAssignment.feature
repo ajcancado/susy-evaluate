@@ -9,4 +9,4 @@ Scenario: Code with truncated long cast assignment
 Scenario: Code without truncated long cast assignment
     Given <filename>.c doesn't have truncated long cast assignment
     When it is submitted to the app
-    Then shows me "[<filename>.c]: Nenhum erro de análise estática foi encontrado" 
+    Then it doesn't show me "[<filename>.c:<linha>]: (erro) Resultado inteiro é atribuído a valor longo, podendo ocasionalmente haver perda de informação" 

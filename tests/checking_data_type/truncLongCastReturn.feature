@@ -9,4 +9,4 @@ Scenario: Code with truncated long cast return
 Scenario: Code without truncated long cast return
     Given <filename>.c doesn't have truncated long cast return
     When it is submitted to the app
-    Then shows me "[<filename>.c]: Nenhum erro de análise estática foi encontrado" 
+    Then it doesn't show me "[<filename>.c:<linha>]: (erro) Resultado inteiro é retornado como valor longo, podendo ocasionalmente haver perda de informação"

@@ -9,4 +9,4 @@ Scenario: Code with read write only file
 Scenario: Code without read write only file
     Given <filename>.c doesn't have read write only file
     When it is submitted to the app
-    Then shows me "[<filename>.c]: Nenhum erro de análise estática foi encontrado" 
+    Then it doesn't show me "[<filename>.c:<linha>]: (erro) Operação de leitura em um arquivo que foi aberto somente para escrita"

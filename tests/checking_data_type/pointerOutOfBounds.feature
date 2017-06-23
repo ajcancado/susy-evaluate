@@ -9,4 +9,4 @@ Scenario: Code with pointer out of bounds
 Scenario: Code without pointer out of bounds
     Given <filename>.c doesn't have pointer out of bounds
     When it is submitted to the app
-    Then shows me "[<filename>.c]: Nenhum erro de análise estática foi encontrado" 
+    Then it doesn't show me "[<filename>.c:<linha>]: (erro) Acesso a posição inválida do ponteiro"

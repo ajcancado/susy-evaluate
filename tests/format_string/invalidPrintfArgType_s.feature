@@ -9,4 +9,4 @@ Scenario: Code with invalid print argument type string
 Scenario: Code without invalid print argument type string
     Given <filename>.c doesn't have invalid print argument type string
     When it is submitted to the app
-    Then shows me "[<filename>.c]: Nenhum erro de análise estática foi encontrado" 
+    Then it doesn't show me "[<filename>.c:<linha>]: (erro) Argumento do tipo 'string/char*' no formato apresentado é inválido"

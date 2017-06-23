@@ -9,4 +9,4 @@ Scenario: Code with compare boolen expression with integer
 Scenario: Code without compare boolen expression with integer
     Given <filename>.c doesn't have compare boolen expression with integer
     When it is submitted to the app
-    Then shows me "[<filename>.c]: Nenhum erro de análise estática foi encontrado" 
+    Then it doesn't show me "[<filename>.c:<linha>]: (erro) Comparação de tipo booleano com tipo inteiro"

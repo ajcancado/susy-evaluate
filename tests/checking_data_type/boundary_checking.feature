@@ -9,4 +9,4 @@ Scenario: Code with array accessed out of bounds
 Scenario: Code without array accessed out of bounds
     Given a2.c doesn't have an array accessed out of bounds
     When it is submitted to the app
-    Then  shows me "[<filename>.c]: Nenhum erro de análise estática foi encontrado"
+    Then it doesn't show me "[<filename>.c:<linha>]: (error) Acesso à posição inválida de vetor"

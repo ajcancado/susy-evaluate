@@ -9,4 +9,4 @@ Scenario: Code with uninitialized struct member
 Scenario: Code without uninitialized struct member
     Given <filename>.c doesn't have uninitialized struct member
     When it is submitted to the app
-    Then shows me "[<filename>.c]: Nenhum erro de análise estática foi encontrado"
+    Then it doesn't show me "[<filename>.c:<linha>]: (erro) Variável foi criada em uma 'struct' mas não foi inicializada"

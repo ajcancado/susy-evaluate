@@ -9,4 +9,4 @@ Scenario: Code with known condition true false
 Scenario: Code without known condition true false
     Given <filename>.c doesn't have known condition true false
     When it is submitted to the app
-    Then shows me "[<filename>.c]: Nenhum erro de análise estática foi encontrado" 
+    Then it doesn't show me "[<filename>.c:<linha>]: (erro) Condição sempre verdadeira ou falsa"

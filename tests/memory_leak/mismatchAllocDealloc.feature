@@ -9,4 +9,4 @@ Scenario: Code with mismatch allocation and deallocation
 Scenario: Code without mismatch allocation and deallocation
     Given <filename>.c doesn't have mismatch allocation and deallocation
     When it is submitted to the app
-    Then shows me "[<filename>.c]: Nenhum erro de análise estática foi encontrado" 
+    Then it doesn't show me "[<filename>.c:<linha>]: (erro) Falta de alocação ou desalocação de memória"

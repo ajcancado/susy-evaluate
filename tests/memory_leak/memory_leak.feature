@@ -9,4 +9,4 @@ Scenario: Code with memory leak
 Scenario: Code without memory leak
     Given <filename>.c doesn't have memory leak
     When it is submitted to the app
-    Then shows me "[<filename>.c]: Nenhum erro de análise estática foi encontrado" 
+    Then it doesn't show me "[<filename>.c:<linha>]: (erro) Vazamento de memória"

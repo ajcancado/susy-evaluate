@@ -9,4 +9,4 @@ Scenario: Code with invalid length modifier error
 Scenario: Code without invalid length modifier error
     Given <filename>.c doesn't have invalid length modifier error
     When it is submitted to the app
-    Then shows me "[<filename>.c]: Nenhum erro de análise estática foi encontrado" 
+    Then it doesn't show me "[<filename>.c:<linha>]: (erro) Formato de 'string/char*' modificado não pode ser utilizado sem conversão específica"

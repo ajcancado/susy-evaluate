@@ -9,4 +9,4 @@ Scenario: Code with null pointer redundant check
 Scenario: Code without null pointer redundant check
     Given <filename>.c doesn't have null pointer redundant check
     When it is submitted to the app
-    Then shows me "[<filename>.c]: Nenhum erro de análise estática foi encontrado" 
+    Then it doesn't show me "[<filename>.c:<linha>]: (erro) Existe uma possibilidade do valor acessado do ponteiro ser nulo"

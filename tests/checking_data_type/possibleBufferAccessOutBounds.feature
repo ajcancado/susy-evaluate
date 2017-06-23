@@ -9,4 +9,4 @@ Scenario: Code with possible buffer access out bounds
 Scenario: Code without possible buffer access out bounds
     Given <filename>.c doesn't have possible buffer access out bounds
     When it is submitted to the app
-    Then shows me "[<filename>.c]: Nenhum erro de análise estática foi encontrado" 
+    Then it doesn't show me "[<filename>.c:<linha>]: (erro) Possível acesso inválido"

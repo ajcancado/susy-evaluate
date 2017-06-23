@@ -9,4 +9,4 @@ Scenario: Code with buffer access out Of bounds
 Scenario: Code without buffer access out Of bounds
     Given <filename>.c doesn't have buffer access out Of bounds
     When it is submitted to the app
-    Then shows me "[<filename>.c]: Nenhum erro de análise estática foi encontrado" 
+    Then it doesn't show me "[<filename>.c:<linha>]: (erro) Vetor acessado em índice inválido, portanto fora do seu limite"
