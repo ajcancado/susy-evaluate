@@ -1,1 +1,1 @@
-[good.c]: Nenhum erro de análise estática foi encontrado
+[good.c:7]: (erro) Atribuição de valor à variável mas nunca utilizado
