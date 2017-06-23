@@ -112,10 +112,22 @@ def test_files_with_invalid_path():
 @given('case4_input.txt contains a file list with invalid path')
 def file_list_with_invalid_path():
     global filename
-    global expected
+    global unexpected
 
     filename = './support/case4_input.txt'
-    expected = ["a3.c"]
+    unexpected = ["a1.c"]
+
+
+@then('files with invalid path will not analyzed')
+def files_with_invalid_path_will_not_analyzed():
+    global unexpected
+
+    with open("output.txt",'r') as f_out:
+        contents = f_out.read()
+
+        for f in unexpected:
+            assert f not in contents
+
 
 @scenario('input.feature', 'Files with invalid extension')
 def test_files_with_invalid_extension():
@@ -128,15 +140,15 @@ def file_list_with_invalid_extension():
     global expected
 
     filename = './support/case5_input.txt'
-    expected = ["a1.py"]
+    expected = ""
 
 
-@then('shows me nothing')
-def shows_me_nothing():
+@then('files with invalid extension will not analyzed')
+def files_with_invalid_extension_will_not_analyzed():
     global expected
 
     with open("output.txt",'r') as f_out:
-        contents = f_out.read()
 
-        for f in expected:
-            assert f not in contents
+        for line in f_out:
+            m = re.search('(\[\w*\.((c|h|cpp){1})(\:\d+)?\])', line)
+            assert m != None

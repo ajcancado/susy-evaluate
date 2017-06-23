@@ -1,1 +1,3 @@
-support/input/case3/a1.py
+support/input/case5/main.c
+support/input/case5/book.h
+support/input/case5/pencil.py

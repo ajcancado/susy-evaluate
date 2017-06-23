@@ -19,9 +19,9 @@ Scenario: Files without errors reported by cppcheck
 Scenario: Files with invalid path
   	Given case4_input.txt contains a file list with invalid path
   	When I call the app with the container file as parameter
-  	Then shows me nothing
+  	Then files with invalid path will not analyzed
 
 Scenario: Files with invalid extension
   	Given case5_input.txt contains a file list with invalid extension
   	When I call the app with the container file as parameter
-  	Then shows me nothing
+  	Then files with invalid extension will not analyzed

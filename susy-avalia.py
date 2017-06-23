@@ -127,7 +127,7 @@ if __name__ == '__main__':
         file_list = []
         for f in file_list_temp:
             if os.path.exists(f):
-                if f.lower().endswith(('.c', '.cpp')):
+                if f.lower().endswith(('.c', '.cpp', '.h')):
                     file_list.append(f)
 
         ccheck.evaluate(file_list)
