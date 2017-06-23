@@ -20,5 +20,8 @@
     "unusedAllocatedMemory": "[{file}:{line}]: (erro) Recursos de memória alocados nunca foram utilizados",
     "unreadVariable": "[{file}:{line}]: (erro) Atribuição de valor à variável mas nunca utilizado",
     "zerodiv": "[{file}:{line}]: (erro) Divisão por zero",
-    "redundantAssignment": "[{file}:{line}]: (erro) Atribuição redundante"   
+    "redundantAssignment": "[{file}:{line}]: (erro) Atribuição redundante",
+    "fflushOnInputStream": "[{file}:{line}]: (erro) Chamada de função fflush() no stream de entrada, podendo resultar em comportamento indefinido em sistemas não-linux",
+    "readWriteOnlyFile": "[{file}:{line}]: (erro) Operação de leitura em um arquivo que foi aberto somente para escrita",
+    "writeReadOnlyFile": "[{file}:{line}]: (erro) Operação de escrita em um arquivo que foi aberto somente para leitura"  
 }
