@@ -51,7 +51,7 @@ def receive_message():
             m = re.search('[\[\]\:\w\.\_]*\s(\(erro\) Atribuição redundante)', line)
             assert m != None
 
-@then('shows me "[<filename>.c]: Nenhum erro de análise estática foi encontrado"')
+@then('it doesn\'t show me "[<filename>.c:<linha>]: (erro) Atribuição redundante"')
 def shows_nothing():
 
     global expected
@@ -60,5 +60,5 @@ def shows_nothing():
         for line in f_out:
             assert "good.c" in line
             
-            m = re.search('(\[[0-9A-Za-z\_]*\.\w\])\:\sNenhum erro de análise estática foi encontrado', line)
-            assert m != None
+            m = re.search('[\[\]\:\w\.\_]*\s(\(erro\) Atribuição redundante)', line)
+            assert m == None

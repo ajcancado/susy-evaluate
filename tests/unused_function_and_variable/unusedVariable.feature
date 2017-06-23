@@ -9,4 +9,4 @@ Scenario: Code with unused Variable
 Scenario: Code without unused Variable
     Given <filename>.c doesn't have unused Variable
     When it is submitted to the app
-    Then shows me "[<filename>.c]: Nenhum erro de análise estática foi encontrado" 
+    Then it doesn't show me "[<filename>.c:<linha>]: (erro) Variável nunca foi utilizada"
