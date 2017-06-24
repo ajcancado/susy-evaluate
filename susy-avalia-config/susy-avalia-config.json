@@ -16,6 +16,7 @@
     "invalidPrintfArgType_n": "[{file}:{line}]: (erro) Argumento do tipo 'number' no formato apresentado é inválido",
     "invalidPrintfArgType_p": "[{file}:{line}]: (erro) Argumento do tipo ponteiro no formato apresentado é inválido",    
     "invalidPrintfArgType_float": "[{file}:{line}]: (erro) Argumento de tipo 'float' é inválido neste caso",
+    "unassignedVariable": "[{file}:{line}]: (erro) Variável não foi atribuída",
     "unusedVariable": "[{file}:{line}]: (erro) Variável nunca foi utilizada",
     "unusedFunction": "[{file}:{line}]: (erro) Função criada mas nunca foi utilizada",
     "unusedLabelSwitch": "[{file}:{line}]: (erro) Label não utilizado",
