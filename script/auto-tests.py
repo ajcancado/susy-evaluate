@@ -108,7 +108,7 @@ errors = {
 	'syntax_suspected': {
 		'clarifyCondition': {
 			'title': 'Clarify Condition',
-			'message': 'Condição não esta claramente definida',
+			'message': 'Condição não está claramente definida',
 			'issue': 'clarify condition'
 		},
 		'compareBoolExpressionWithInt': {

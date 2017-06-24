@@ -49,10 +49,8 @@ def receive_message():
     global filename
 
     with open("output.txt",'r') as f_out:
-
-        for line in f_out:
-            m = re.search('[\[\]\:\w\.\_]*\s(\(erro\) Comparação de tipo booleano com tipo inteiro)', line)
-            assert m != None
+        m = re.search('[\[\]\:\w\.\_]*\s(\(erro\) Comparação de tipo booleano com tipo inteiro)', f_out.read())
+        assert m != None
 
 @then('it doesn\'t show me "[<filename>.c:<linha>]: (erro) Comparação de tipo booleano com tipo inteiro"')
 def shows_nothing():
