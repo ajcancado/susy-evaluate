@@ -1,6 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int main(int argc, char const *argv[])
+int f()
 {
+	int x = 1;
+
+	if ("Hello" && x) { }
+	return 0;
 }
