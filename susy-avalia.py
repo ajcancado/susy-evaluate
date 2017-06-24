@@ -93,7 +93,7 @@ class Cppcheck(Evaluator):
     def execute(self, infile):
         process = subprocess.Popen([os.path.join(self.CTRL_PATH, 'cppcheck'),
                 '--enable=style',
-                '--template={file}::{line}::{id}::{severity}::{message}',
+                '--template={file}||{line}||{id}||{severity}||{message}',
                 infile], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         retcode = process.wait()
         r = process.stdout.read()
@@ -106,7 +106,7 @@ class Cppcheck(Evaluator):
         for r in result:
             try:
                 r = r.decode('utf-8')
-                fname, fline, eid, sev, msg = r.split('::')
+                fname, fline, eid, sev, msg = r.split('||')
                 fname = os.path.basename(fname)
                 if eid in self.ErrorId:
                     fmt_result.append(self.ErrorId[eid].format(file=fname,
