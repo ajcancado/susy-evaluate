@@ -3,7 +3,7 @@
 
 int main(int argc, char const *argv[])
 {
-    char art;
+    int art = 0;
     switch (art) {
         caseZERO:
             return 0;
