@@ -50,7 +50,7 @@ def receive_message():
     with open("output.txt",'r') as f_out:
 
         for line in f_out:
-            m = re.search('[\[\]\:\w\.\_]*\s(\(erro\) Variável foi criada em uma \'struct\' mas não foi utilizada)', line)
+            m = re.search("[\[\]\:\w\.\_]*\s(\(erro\) Variável foi criada em uma 'struct' mas não foi utilizada)", line)
             assert m != None
 
 @then('it doesn\'t show me "[<filename>.c:<linha>]: (erro) Variável foi criada em uma \'struct\' mas não foi utilizada"')
@@ -62,5 +62,5 @@ def shows_nothing( ):
         for line in f_out:
             assert "good.c" in line
             
-            m = re.search('[\[\]\:\w\.\_]*\s(\(erro\) Variável foi criada em uma \'struct\' mas não foi utilizada)', line)
+            m = re.search("[\[\]\:\w\.\_]*\s(\(erro\) Variável foi criada em uma 'struct' mas não foi utilizada)", line)
             assert m == None
