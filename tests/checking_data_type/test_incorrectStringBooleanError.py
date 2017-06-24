@@ -44,17 +44,17 @@ def submitted():
    subprocess.check_output('../susy-avalia.py ' + filename + ' > output.txt', shell=True)
 
 
-@then('I should receive the following message "[<filename>.c:<linha>]: (erro) Conversão literal de variável tipo carácter para booleano sempre é verdadeiro"')
+@then('I should receive the following message "[<filename>.c:<linha>]: (erro) Conversão literal de variável tipo caractere para booleano sempre é verdadeiro"')
 def receive_message():
     global filename
 
     with open("output.txt",'r') as f_out:
 
         for line in f_out:
-            m = re.search('[\[\]\:\w\.\_]*\s(\(erro\) Conversão literal de variável tipo carácter para booleano sempre é verdadeiro)', line)
+            m = re.search('[\[\]\:\w\.\_]*\s(\(erro\) Conversão literal de variável tipo caractere para booleano sempre é verdadeiro)', line)
             assert m != None
 
-@then('it doesn\'t show me "[<filename>.c:<linha>]: (erro) Conversão literal de variável tipo carácter para booleano sempre é verdadeiro"')
+@then('it doesn\'t show me "[<filename>.c:<linha>]: (erro) Conversão literal de variável tipo caractere para booleano sempre é verdadeiro"')
 def shows_nothing():
 
     global expected
@@ -63,5 +63,5 @@ def shows_nothing():
         for line in f_out:
             assert "good.c" in line
             
-            m = re.search('[\[\]\:\w\.\_]*\s(\(erro\) Conversão literal de variável tipo carácter para booleano sempre é verdadeiro)', line)
+            m = re.search('[\[\]\:\w\.\_]*\s(\(erro\) Conversão literal de variável tipo caractere para booleano sempre é verdadeiro)', line)
             assert m == None

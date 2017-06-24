@@ -44,17 +44,17 @@ def has_memory_leak():
 def submitted():
    subprocess.check_output('../susy-avalia.py ' + filename + ' > output.txt', shell=True)
 
-@then('I should receive the following message "[<filename>.c:<linha>]: (erro) Acesso a variável já desalocada"')
+@then('I should receive the following message "[<filename>.c:<linha>]: (erro) Acesso à variável já desalocada"')
 def receive_message():
     global filename
 
     with open("output.txt",'r') as f_out:
 
         for line in f_out:
-            m = re.search('[\[\]\:\w\.\_]*\s(\(erro\) Acesso a variável já desalocada)', line)
+            m = re.search('[\[\]\:\w\.\_]*\s(\(erro\) Acesso à variável já desalocada)', line)
             assert m != None
 
-@then('it doesn\'t show me "[<filename>.c:<linha>]: (erro) Acesso a variável já desalocada"')
+@then('it doesn\'t show me "[<filename>.c:<linha>]: (erro) Acesso à variável já desalocada"')
 def shows_nothing():
 
     global expected
@@ -63,5 +63,5 @@ def shows_nothing():
         for line in f_out:
             assert "good.c" in line
             
-            m = re.search('[\[\]\:\w\.\_]*\s(\(erro\) Acesso a variável já desalocada)', line)
+            m = re.search('[\[\]\:\w\.\_]*\s(\(erro\) Acesso à variável já desalocada)', line)
             assert m == None
