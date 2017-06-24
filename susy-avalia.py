@@ -92,7 +92,7 @@ class Cppcheck(Evaluator):
 
     def execute(self, infile):
         process = subprocess.Popen([os.path.join(self.CTRL_PATH, 'cppcheck'),
-                '--enable=style',
+                '--enable=style,unusedFunction',
                 '--template={file}||{line}||{id}||{severity}||{message}',
                 infile], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         retcode = process.wait()

@@ -17,6 +17,7 @@
     "invalidPrintfArgType_p": "[{file}:{line}]: (erro) Argumento do tipo ponteiro no formato apresentado é inválido",    
     "invalidPrintfArgType_float": "[{file}:{line}]: (erro) Argumento de tipo 'float' é inválido neste caso",
     "unusedVariable": "[{file}:{line}]: (erro) Variável nunca foi utilizada",
+    "unusedFunction": "[{file}:{line}]: (erro) Função criada mas nunca foi utilizada",
     "unusedLabelSwitch": "[{file}:{line}]: (erro) Label não utilizado",
     "unusedStructMember": "[{file}:{line}]: (erro) Variável foi criada em uma 'struct' mas não foi utilizada",
     "unusedAllocatedMemory": "[{file}:{line}]: (erro) Recursos de memória alocados nunca foram utilizados",
