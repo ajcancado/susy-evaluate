@@ -1,1 +1,1 @@
-support/null_pointer/nullPointerDefaultArg/good.c
+support/null_pointer/nullPointerDefaultArg/good.cpp

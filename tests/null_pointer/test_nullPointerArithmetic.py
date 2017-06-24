@@ -48,10 +48,8 @@ def receive_message():
     global filename
 
     with open("output.txt",'r') as f_out:
-
-        for line in f_out:
-            m = re.search('[\[\]\:\w\.\_]*\s(\(erro\) Overflow na aritmética de ponteiro, ponteiro nulo é subtraído)', line)
-            assert m != None
+        m = re.search('[\[\]\:\w\.\_]*\s(\(erro\) Overflow na aritmética de ponteiro, ponteiro nulo é subtraído)', f_out.read())
+        assert m != None
 
 @then('it doesn\'t show me "[<filename>.c:<linha>]: (erro) Overflow na aritmética de ponteiro, ponteiro nulo é subtraído"')
 def shows_nothing():
