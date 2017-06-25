@@ -62,5 +62,5 @@ def shows_nothing():
         for line in f_out:
             assert "good.c" in line
             
-            m = re.search('[\[\]\:\w\.\_]*\s(\(erro\) Tamanho da variável no formato \'string/char*\' é inválida)', line)
+            m = re.search("[\[\]\:\w\.\_]*\s(\(erro\) Tamanho da variável no formato 'string/char*' é inválida)", line)
             assert m == None

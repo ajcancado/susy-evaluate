@@ -49,7 +49,7 @@ def receive_message():
     global filename
 
     with open("output.txt",'r') as f_out:
-        m = re.search('[\[\]\:\w\.\_]*\s(\(erro\) Scanf com argumento do tipo \'int\' inválido)', f_out.read())
+        m = re.search("[\[\]\:\w\.\_]*\s(\(erro\) Scanf com argumento do tipo 'int' inválido)", f_out.read())
         assert m != None
 
 @then('it doesn\'t show me "[<filename>.c:<linha>]: (erro) Scanf com argumento do tipo \'int\' inválido"')
@@ -61,5 +61,5 @@ def shows_nothing():
         for line in f_out:
             assert "good.c" in line
             
-            m = re.search('[\[\]\:\w\.\_]*\s(\(erro\) Scanf com argumento do tipo \'int\' inválido)', line)
+            m = re.search("[\[\]\:\w\.\_]*\s(\(erro\) Scanf com argumento do tipo 'int' inválido)", line)
             assert m == None
