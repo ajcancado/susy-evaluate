@@ -5,7 +5,7 @@ double f() {return 0;}
 
 int main(int argc, char const *argv[])
 {
-   printf("%f %i", f(), f());
+   printf("%f %ol", f(), f());
 
     return 0;
 }

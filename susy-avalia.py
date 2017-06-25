@@ -109,7 +109,6 @@ class Cppcheck(Evaluator):
                 fname, fline, eid, sev, msg = r.split('||')
                 fname = os.path.basename(fname)
                 if eid in self.ErrorId:
-                    print(eid)
                     fmt_result.append(self.ErrorId[eid].format(file=fname,
                             line=fline, id=eid, severity=sev, message=msg))
             except:

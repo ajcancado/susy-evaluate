@@ -50,7 +50,7 @@ def receive_message():
     global filename
 
     with open("output.txt",'r') as f_out:
-        m = re.search('[\[\]\:\w\.\_]*\s(\(erro\) Tamanho da variável no formato \'string/char*\' é inválida)', f_out.read())
+        m = re.search("[\[\]\:\w\.\_]*\s(\(erro\) Tamanho da variável no formato 'string/char*' é inválida)", f_out.read())
         assert m != None
 
 @then('it doesn\'t show me "[<filename>.c:<linha>]: (erro) Tamanho da variável no formato \'string/char*\' é inválida"')

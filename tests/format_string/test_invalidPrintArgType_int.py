@@ -51,7 +51,6 @@ def receive_message():
     global filename
 
     with open("output.txt",'r') as f_out:
-        print(f_out.read())
         m = re.search("[\[\]\:\w\.\_]*\s(\(erro\) Argumento de tipo 'int' é inválido neste caso)", f_out.read())
         assert m != None
 
