@@ -1,7 +1,7 @@
 {
     "deallocDealloc": "[{file}:{line}]: (erro) Ponteiro foi liberado duas vezes",
     "deallocret": "[{file}:{line}]: (erro) Retorno/acesso de variável já desalocada",
-    "deallocuse": "[{file}:{line}]: (erro) Acesso a variável já desalocada",
+    "deallocuse": "[{file}:{line}]: (erro) Acesso à variável já desalocada",
     "doubleFree": "[{file}:{line}]: (erro) Ponteiro foi liberado duas vezes",
     "memleakOnRealloc": "[{file}:{line}]: (erro) Vazamento de memória no processo de realocação",
     "memleak": "[{file}:{line}]: (erro) Vazamento de memória",
