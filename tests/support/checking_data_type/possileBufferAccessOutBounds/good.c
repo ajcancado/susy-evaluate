@@ -3,10 +3,4 @@
 
 int main(int argc, char const *argv[])
 {
-  char *a = (char *) malloc(5*sizeof(char));
-   
-  memset(a, 3, 5*sizeof(char));
-
-  free(a);
-  return 0;
 }
