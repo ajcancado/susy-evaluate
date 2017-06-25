@@ -1,1 +1,4 @@
-[good.c]: Nenhum erro de análise estática foi encontrado
+[good.c:7]: (erro) Argumento de tipo 'short int' é inválido neste caso
+[good.c:7]: (erro) Argumento de tipo 'short int' é inválido neste caso
+[good.c:7]: (erro) Variável não inicializada
+[good.c:4]: (erro) Função criada mas nunca foi utilizada

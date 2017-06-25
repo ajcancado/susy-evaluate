@@ -1,16 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int main(void)
+int f(unsigned int i)
 {
-    char *bar = malloc (sizeof(char));
-    int *a = malloc (sizeof(int));
-    
-    scanf("%1s", bar);
-    scanf("%d", a);
-
-    free(bar);
-    free(a);
+    size_t s;
+    printf("%d %i", s,i );
 
     return 0;
 }

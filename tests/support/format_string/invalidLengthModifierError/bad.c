@@ -1,17 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int main(int argc, char const *argv[])
+int f(unsigned int i)
 {
-    char bar;
-    int a;
-
-    scanf("%5s", bar);
-    scanf("%5[^~]", bar);
-    scanf("aa%%s", bar);
-    scanf("aa%d", &a);
-    scanf("aa%ld", &a);
-    scanf("%*[^~]");
+    size_t s;
+    printf("%I64%i", s,i );
 
     return 0;
 }
