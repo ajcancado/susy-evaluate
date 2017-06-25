@@ -51,7 +51,7 @@
     "outOfBounds": "[{file}:{line}]: (erro) Acesso inválido",
     "pointerArithBool": "[{file}:{line}]: (erro) Valor booleano atribuído a ponteiro",
     "pointerOutOfBounds": "[{file}:{line}]: (erro) Acesso à posição inválida do ponteiro",
-    "possileBufferAccessOutBounds": "[{file}:{line}]: (erro) Possível acesso inválido",
+    "possibleBufferAccessOutBounds": "[{file}:{line}]: (erro) Possível acesso inválido",
     "truncLongCastAssignment": "[{file}:{line}]: (erro) Resultado inteiro é atribuído a valor longo, podendo ocasionalmente haver perda de informação",
     "truncLongCastReturn": "[{file}:{line}]: (erro) Resultado inteiro é retornado como valor longo, podendo ocasionalmente haver perda de informação",
     "unpreciseMathCall": "[{file}:{line}]: (erro) Passando valor que pode gerar resultado indefinido"		 
