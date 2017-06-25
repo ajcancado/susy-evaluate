@@ -3,4 +3,6 @@
 
 int main(int argc, char const *argv[])
 {
+char str[26];  
+scanf("%25s", str); 
 }
