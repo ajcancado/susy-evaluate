@@ -50,10 +50,8 @@ def receive_message():
     global filename
 
     with open("output.txt",'r') as f_out:
-
-        for line in f_out:
-            m = re.search('[\[\]\:\w\.\_]*\s(\(erro\) Formato de \'string/char*\' modificado não pode ser utilizado sem conversão específica)', line)
-            assert m != None
+        m = re.search('[\[\]\:\w\.\_]*\s(\(erro\) Formato de \'string/char*\' modificado não pode ser utilizado sem conversão específica)', f_out.read())
+        assert m != None
 
 @then('it doesn\'t show me "[<filename>.c:<linha>]: (erro) Formato de \'string/char*\' modificado não pode ser utilizado sem conversão específica"')
 def shows_nothing():

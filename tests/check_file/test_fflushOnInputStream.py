@@ -48,9 +48,8 @@ def receive_message():
 
     with open("output.txt",'r') as f_out:
 
-        for line in f_out:
-            m = re.search('[\[\]\:\w\.\_]*\s(\(erro\) Chamada de função fflush\(\) no stream de entrada, podendo resultar em comportamento indefinido em sistemas não-linux)', line)
-            assert m != None
+        m = re.search('[\[\]\:\w\.\_]*\s(\(erro\) Chamada de função fflush\(\) no stream de entrada, podendo resultar em comportamento indefinido em sistemas não-linux)', f_out.read())
+        assert m != None
 
 @then('it doesn\'t show me "[<filename>.c:<linha>]: (erro) Chamada de função fflush() no stream de entrada, podendo resultar em comportamento indefinido em sistemas não-linux"')
 def shows_nothing():

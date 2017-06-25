@@ -50,10 +50,8 @@ def receive_message():
     global filename
 
     with open("output.txt",'r') as f_out:
-
-        for line in f_out:
-            m = re.search('[\[\]\:\w\.\_]*\s(\(erro\) Atribuição de valor à variável mas nunca utilizado)', line)
-            assert m != None
+        m = re.search('[\[\]\:\w\.\_]*\s(\(erro\) Atribuição de valor à variável mas nunca utilizado)', f_out.read())
+        assert m != None
 
 @then('it doesn\'t show me "[<filename>.c:<linha>]: (erro) Atribuição de valor à variável mas nunca utilizado"')
 def shows_nothing( ):

@@ -52,9 +52,8 @@ def i_should_receive_message_error():
 
     with open("output.txt",'r') as f_out:
 
-        for line in f_out:
-            m = re.search('[\[\]\:\w\.\_]*\s(\(erro\) Acesso à posição inválida de vetor)', line)
-            assert m != None
+        m = re.search('[\[\]\:\w\.\_]*\s(\(erro\) Acesso à posição inválida de vetor)', f_out.read())
+        assert m != None
 
 
 @then('it doesn\'t show me "[<filename>.c:<linha>]: (error) Acesso à posição inválida de vetor"')

@@ -50,10 +50,8 @@ def receive_message():
     global filename
 
     with open("output.txt",'r') as f_out:
-
-        for line in f_out:
-            m = re.search('[\[\]\:\w\.\_]*\s(\(erro\) Referenciamento de parâmetro foi realizado incorretamente)', line)
-            assert m != None
+        m = re.search('[\[\]\:\w\.\_]*\s(\(erro\) Referenciamento de parâmetro foi realizado incorretamente)', f_out.read())
+        assert m != None
 
 @then('it doesn\'t show me "[<filename>.c:<linha>]: (erro) Referenciamento de parâmetro foi realizado incorretamente"')
 def shows_nothing():

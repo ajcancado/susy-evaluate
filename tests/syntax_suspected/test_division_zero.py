@@ -49,10 +49,8 @@ def it_is_submitted_to_the_app():
 def i_should_receive_me():
 
     with open("output.txt",'r') as f_out:
-
-        for line in f_out:
-            m = re.search('[\[\]\:\w\.\_]*\s\(erro\) Divisão por zero', line)
-            assert m != None
+        m = re.search('[\[\]\:\w\.\_]*\s\(erro\) Divisão por zero', f_out.read())
+        assert m != None
 
 
 @then('it doesn\'t show me "[<filename>.c:<linha>]: (erro) Divisão por zero"')

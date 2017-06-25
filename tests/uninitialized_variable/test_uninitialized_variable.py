@@ -51,10 +51,8 @@ def i_should_receive_message_error():
     global filename
 
     with open("output.txt",'r') as f_out:
-
-        for line in f_out:
-            m = re.search('[\[\]\:\w\.\_]*\s(\(erro\) Variável não inicializada)', line)
-            assert m != None
+        m = re.search('[\[\]\:\w\.\_]*\s(\(erro\) Variável não inicializada)', f_out.read())
+        assert m != None
 
 
 @then('it doesn\'t show me "[<filename>.c:<linha>]: (error) Variável não inicializada"')

@@ -46,10 +46,8 @@ def receive_message():
     global filename
 
     with open("output.txt",'r') as f_out:
-
-        for line in f_out:
-            m = re.search('[\[\]\:\w\.\_]*\s(\(erro\) Condição sempre verdadeira ou falsa)', line)
-            assert m != None
+        m = re.search('[\[\]\:\w\.\_]*\s(\(erro\) Condição sempre verdadeira ou falsa)', f_out.read())
+        assert m != None
 
 @then('it doesn\'t show me "[<filename>.c:<linha>]: (erro) Condição sempre verdadeira ou falsa"')
 def shows_nothing():

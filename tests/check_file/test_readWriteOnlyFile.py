@@ -50,9 +50,8 @@ def receive_message():
 
     with open("output.txt",'r') as f_out:
 
-        for line in f_out:
-            m = re.search('[\[\]\:\w\.\_]*\s(\(erro\) Operação de leitura em um arquivo que foi aberto somente para escrita)', line)
-            assert m != None
+        m = re.search('[\[\]\:\w\.\_]*\s(\(erro\) Operação de leitura em um arquivo que foi aberto somente para escrita)', f_out.read())
+        assert m != None
 
 @then('it doesn\'t show me "[<filename>.c:<linha>]: (erro) Operação de leitura em um arquivo que foi aberto somente para escrita"')
 def shows_nothing():
