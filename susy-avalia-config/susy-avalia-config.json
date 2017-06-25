@@ -53,6 +53,6 @@
     "pointerOutOfBounds": "[{file}:{line}]: (erro) Acesso a posição inválida do ponteiro",
     "possileBufferAccessOutBounds": "[{file}:{line}]: (erro) Possível acesso inválido",
     "truncLongCastAssignment": "[{file}:{line}]: (erro) Resultado inteiro é atribuído a valor longo, podendo ocasionalmente haver perda de informação",
-    "truncLongCastReturn": "[{file}:{line}]: (erro) Resultado inteiro é atribuído a valor longo, podendo ocasionalmente haver perda de informação",
+    "truncLongCastReturn": "[{file}:{line}]: (erro) Resultado inteiro é retornado como valor longo, podendo ocasionalmente haver perda de informação",
     "unpreciseMathCall": "[{file}:{line}]: (erro) Passando valor que pode gerar resultado indefinido"		 
 }
