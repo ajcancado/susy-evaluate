@@ -26,6 +26,12 @@ pip install -U pytest
 <your-package-manager> install cppcheck
 ```
 
+## Exemplos
+
+### PyTest
+
+![Exemplo PyTest](https://github.com/ajcancado/susy-evaluate/blob/master/assets/img_bdd_example.png)
+
 ## Licenças
 
 ### PyTest
