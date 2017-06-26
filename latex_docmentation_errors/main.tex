@@ -1,0 +1,701 @@
+\documentclass[12pt,a4paper]{report}
+\usepackage[brazil]{babel}
+
+\usepackage[style=numeric,backend=biber]{biblatex}
+\usepackage[utf8]{inputenc}
+\usepackage{kpfonts}
+\usepackage[T1]{fontenc}
+% \usepackage{lineno,hyperref}
+\usepackage{wrapfig}
+\usepackage{graphicx}
+\usepackage{enumerate}
+\usepackage{subcaption}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{listings}
+\usepackage{lipsum}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{bm}
+\usepackage{color}
+\usepackage{afterpage}
+\usepackage[inline]{enumitem}
+\usepackage{pdflscape}
+\usepackage{listingsutf8}
+\usepackage{siunitx}
+
+\lstset{frame=tb,
+  aboveskip=2mm,
+  belowskip=2mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle=\footnotesize,,
+  numbers=left,
+  numbersep=5pt,
+  stepnumber=1,
+  breaklines=true,
+  keepspaces=true,
+  breakatwhitespace=true,
+  showtabs=false,  
+  tabsize=2
+}
+
+\definecolor{mGreen}{rgb}{0,0.6,0}
+\definecolor{mGray}{rgb}{0.5,0.5,0.5}
+\definecolor{mPurple}{rgb}{0.58,0,0.82}
+\definecolor{backgroundColour}{rgb}{0.97,0.97,0.97}
+
+\lstdefinestyle{CStyle}{
+    backgroundcolor=\color{backgroundColour},   
+    commentstyle=\color{mGreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{mGray},
+    stringstyle=\color{mPurple},
+    basicstyle=\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2,
+    language=C
+}
+
+
+\pagenumbering{arabic}
+\renewcommand{\thesection}{\arabic{section}}
+
+\bibliography{ref}
+\renewcommand{\contentsname}{Sumário}{\thispagestyle{empty}}
+\renewcommand{\baselinestretch}{1.5} 
+
+\begin{document}
+
+\begin{titlepage}
+    \begin{center}
+        \vspace*{1cm}
+        \includegraphics[width=0.25\textwidth]{Logo}\\
+        \vspace{1.5cm}
+        \Huge
+    	\textbf{Documentação das Mensagens de Erro Reportadas pelo SuSy-avalia}\\
+        \vspace{1.5cm}
+        \Large
+        \textbf{Equipe}: Arthur J. Cançado, Felipe R. Jensen, Gabriell Orisaka,   
+ 		Juliana L. G. Corá, Silvana Trindade e Yusseli L. M. Mendoza\\
+        \vspace{1.2cm}
+    	\Large 
+    	Instituto de Computação\\
+    % 	\vspace{0.4cm}
+    	Universidade Estadual de Campinas\\
+    	\vspace{1.5cm}
+        Campinas, Junho de 2017.
+    \end{center}
+\end{titlepage}
+\tableofcontents
+\clearpage
+
+\section{Introdução}
+Ferramenta para avaliação de código escrito em linguagem C e C++, para ser integrado ao sistema SuSy.
+A avaliação feita pelo software é conhecida por análise estática, e é utilizada para dar \textit{feedback} ao desenvolvedor sobre possíveis problemas em seu código, tais como vazamento de memória, acesso à posições inválidas de ponteiros e vetores, etc. 
+Este \textit{feedback} é importante para qualquer nível de programador, desde iniciantes até programadores experientes dado à vasta cobertura da análise.
+
+\section{Interpretação das Saídas}\label{interpretacao}
+Nesta seção serão apresentadas exemplos arquivos $.c$ e saídas de erros geradas a partir deles.
+Além disso, nos exemplos apresentados neste documento apresentam apenas os trechos de código onde os erros ocorrem, não sendo portanto programas completos.
+
+\subsection{Variáveis não inicializadas}
+As Variáveis não inicializadas podem gerar resultados indesejados, pois a linguagem C não faz inicialização automática das variáveis, sendo assim, o que tem inicialmente é 'lixo'.
+Já as variáveis não utilizadas geram o desperdício do uso dos recursos.
+\subsubsection{Variável não inicializada}
+Mensagem de erro: '[exemplo.c:3]: (erro) Variável não inicializada'.
+\begin{lstlisting}[style=CStyle]
+void f() {
+    int a;
+    a++;
+}
+\end{lstlisting}
+Pontos a serem percebidos:
+\begin{itemize}
+    \item \textbf{exemplo.c} representa ao arquivo onde o erro foi encontrado e \textbf{3} representa a linha que o erro ocorreu.
+    \item Na sequência é descrito o que motivou o erro a ocorrer, neste caso \textbf{Variável não inicializada}.
+\end{itemize}
+
+
+\subsubsection{Memória foi alocada mas não foi inicializada}
+Mensagem de erro: '[exemplo.c:4]: (erro) Memória foi alocada mas não foi inicializada'.
+\begin{lstlisting}[style=CStyle]
+void f(){
+   char *strMsg = "This is a message";
+   char *buffer=(char*) malloc (128*sizeof(char));
+   strcpy(strMsg,buffer);
+   free(buffer);
+}
+\end{lstlisting}
+
+\subsubsection{Variável foi criada em uma \textit{struct} mas não foi inicializada}
+Mensagem de erro: '[exemplo.c:2]: (erro) Variável foi criada em uma \textit{struct} mas não foi inicializada'.
+\begin{lstlisting}[style=CStyle]
+struct AB { int a; int b; };
+void f(void) {
+    struct AB ab;
+    int a = ab.a;
+}
+\end{lstlisting}
+
+\subsection{Função e Variável não Utilizada}
+Variáveis e funções criadas mas nunca utilizadas demandam recursos e impactam na hora da execução, gerando assim o desperdícios dos recursos utilizados.
+\subsubsection{Função não utilizada}
+Mensagem de erro: '[exemplo.c:1]: (erro) Função criada mas nunca foi utilizada'.
+\begin{lstlisting}[style=CStyle]
+int f() { printf("Hello World!"); }
+\end{lstlisting}
+
+\subsubsection{Variável nunca foi utilizada}
+Mensagem de erro: '[exemplo.c:8]: (erro) Variável nunca foi utilizada'.
+\begin{lstlisting}[style=CStyle]
+void foo(int x) {
+    int i;
+    if (x) {
+        int i;
+    } else {
+        int i;
+    }
+    i = 0;
+}
+\end{lstlisting}
+
+\subsubsection{Recursos alocados mas nunca utilizados}
+Mensagem de erro: '[exemplo.c:2]: (erro) Recursos de memória alocados nunca foram utilizados'.
+\begin{lstlisting}[style=CStyle]
+void foo() {
+    void* ptr = malloc(16);
+    free(ptr);
+}
+\end{lstlisting}
+
+\subsubsection{Atribuição de valor à variável mas nunca utilizado}
+Mensagem de erro: '[exemplo.c:2]: (erro) Atribuição de valor à variável mas nunca utilizado'.
+\begin{lstlisting}[style=CStyle]
+void foo() {
+    int i = 0;
+}
+\end{lstlisting}
+
+\subsubsection{Variável foi criada em uma \textit{struct} mas não foi utilizada}
+Mensagem de erro: '[exemplo.c:2]: (erro) Variável foi criada em uma \textit{struct} mas não foi utilizada'.
+\begin{lstlisting}[style=CStyle]
+struct Point
+{
+    int x;
+};
+\end{lstlisting}
+
+\subsubsection{Variável não foi atribuída}
+Mensagem de erro: '[exemplo.c:2]: (erro) Variável não foi atribuída'.
+\begin{lstlisting}[style=CStyle]
+int foo() {
+    int i;
+    return i;
+}
+\end{lstlisting}
+
+\subsubsection{Label não utilizado}
+Mensagem de erro: '[exemplo.c:3]: (erro) Label não utilizado'.
+\begin{lstlisting}[style=CStyle]
+int f(char art) {
+    switch (art) {
+        caseZERO:
+            return 0;
+        case1:
+            return 1;
+        case 2:
+            return 2;
+    }
+}
+//...
+\end{lstlisting}
+
+\subsection{Verificação de Tipo de Dados}
+Quando o tipo do dado está incorreto, consequentemente o resultado final será incorreto ou indefinido, como por exemplo $\log{0}$ que é indefinido.
+
+\subsubsection{Resultado indefinido}
+Mensagem de erro: '[exemplo.c:3]: (erro) Passando valor que pode gerar resultado indefinido'.
+\begin{lstlisting}[style=CStyle]
+void foo() {
+    print(exp(x) - 1);
+    print(log(1 + x));
+    print(1 - erf(x));
+}
+\end{lstlisting}
+
+\subsubsection{Resultado inteiro é atribuído a valor longo}
+Mensagem de erro: '[exemplo.c:2]: (erro) Resultado inteiro é atribuído a valor longo, podendo ocasionalmente haver perda de informação'.
+\begin{lstlisting}[style=CStyle]
+long f(int x, int y) {
+    const long ret = x * y;
+    return ret;
+}
+\end{lstlisting}
+
+\subsubsection{Resultado inteiro é retornado como valor longo}
+Mensagem de erro: '[exemplo.c:2]: (erro) Resultado inteiro é retornado como valor longo, podendo ocasionalmente haver perda de informação'.
+\begin{lstlisting}[style=CStyle]
+long f(int x, int y) {
+    return x * y;
+}
+\end{lstlisting}
+
+\subsubsection{Overflow de variável do tipo \textit{float}}
+Mensagem de erro: '[exemplo.c:2]: (erro) Overflow de variável do tipo \textit{float}'.
+\begin{lstlisting}[style=CStyle]
+void f(void) {
+    return (int)1E100;
+}
+\end{lstlisting}
+
+\subsubsection{Valor booleano atribuído a ponteiro}
+Mensagem de erro: '[exemplo.c:2]: (erro) Valor booleano atribuído a ponteiro'.
+\begin{lstlisting}[style=CStyle]
+void f(char *p) {
+    if (p+1){}
+}
+\end{lstlisting}
+
+\subsubsection{Conversão literal de variável para booleano sempre é verdadeiro}
+Mensagem de erro: '[exemplo.c:2]: (erro) Conversão literal de variável tipo caractere para booleano sempre é verdadeiro'.
+\begin{lstlisting}[style=CStyle]
+int f() {
+    if ("Hello") { }
+}
+\end{lstlisting}
+
+\subsubsection{Vetor acessado em índice inválido}
+Mensagem de erro: '[exemplo.c:4]: (erro) Vetor acessado em índice inválido, portanto fora do seu limite'.
+\begin{lstlisting}[style=CStyle]
+int buffer[9];
+long int i;
+for(i = 10; i--;) {
+    buffer[i] = i;
+}
+\end{lstlisting}
+
+\subsubsection{Acesso inválido}
+Mensagem de erro: '[exemplo.c:3]: (erro) Acesso inválido'.
+\begin{lstlisting}[style=CStyle]
+void f(unsigned char n) {
+    int a[n];
+    a[-1] = 0;
+    a[256] = 0;
+}
+\end{lstlisting}
+
+\subsubsection{Acesso a posição inválida do ponteiro}
+Mensagem de erro: '[exemplo.c:4]: (erro) Acesso à posição inválida do ponteiro'.
+\begin{lstlisting}[style=CStyle]
+void f() {
+    char a[10];
+    char *p = a + 100;
+}
+\end{lstlisting}
+
+\subsubsection{Possível acesso inválido}
+Mensagem de erro: '[exemplo.c:3]: (erro) Possível acesso inválido'.
+\begin{lstlisting}[style=CStyle]
+void foo() {
+    char *data = alloca(50);
+
+    char src[100];
+    memset(src,'C',99);
+    src[99] = '\0';
+    strcpy(data,src);
+}
+\end{lstlisting}
+Este tipo de mensagem pode ser caracterizada como falso positivo, ou seja, o aluno deve verificar se realmente este erro ocorre.
+
+\subsection{Sintaxe Suspeita}
+Os erros reportados de sintaxe suspeita podem gerar resultados incorretos, entretanto o que deve ser analisado é se realmente o que é gerado um resultado incorreto, sendo assim, cabe ao aluno executar o programa e verificar se de fato a saída gerada sofre impacto pelos erros reportados.
+
+
+\subsubsection{Atribuição redundante}
+Mensagem de erro: '[exemplo.c:4]: (erro) Atribuição redundante'.
+\begin{lstlisting}[style=CStyle]
+void f() {
+    int i[10];
+    i[2] = 1;
+    i[2] = 1;
+}
+\end{lstlisting}
+
+
+\subsubsection{Condição indefinida}
+Mensagem de erro: '[exemplo.c:2]: (erro) Condição não está claramente definida'.
+\begin{lstlisting}[style=CStyle]
+int f() {
+   if (a & b == c){}
+}
+\end{lstlisting}
+
+\subsubsection{Comparação de tipo booleano com tipo inteiro}
+Mensagem de erro: '[exemplo.c:2]: (erro) Comparação de tipo booleano com tipo inteiro'.
+\begin{lstlisting}[style=CStyle]
+void f(int x, bool y) { if ( x != y ) {} }
+\end{lstlisting}
+
+\subsubsection{Condição sempre verdadeira ou falsa}
+
+Mensagem de erro: '[exemplo.c:2]: (erro) Condição sempre verdadeira ou falsa'.
+\begin{lstlisting}[style=CStyle]
+int x = 123;
+if (sizeof(char) != x) {}
+\end{lstlisting}
+
+\subsubsection{Divisão por zero}
+Mensagem de erro: '[exemplo.c:4]: (erro) Divisão por zero'.
+\begin{lstlisting}[style=CStyle]
+int a = 2;
+int b = 2;
+//...
+b = a / (a-b);
+\end{lstlisting}
+
+\subsection{Formatação de Caractere}
+A formatação incorreta das saídas ou entradas do programa pode gerar a busca por erros não existentes no código por resultar em saídas ou entradas no formato incorreto.
+\subsubsection{Número de argumentos inválidos - \textit{printf}}
+Mensagem de erro: '[exemplo.c:4]: (erro) Número de variáveis utilizadas não corresponde com o número de formatadores'.
+\begin{lstlisting}[style=CStyle]
+void foo() {
+    scanf("%5s", bar);
+    scanf("%5[^~]", bar);
+    scanf("aa%%s", bar);
+    scanf("aa%d", &a);
+    scanf("aa%ld", &a);
+    scanf("%*[^~]");
+}
+\end{lstlisting}
+
+\subsubsection{Scanf com argumento do tipo \textit{string}/\textit{char}* inválido}
+Mensagem de erro: '[exemplo.c:3]: (erro) Scanf com argumento do tipo \textit{string}/\textit{char}* inválido'.
+\begin{lstlisting}[style=CStyle]
+void g() {
+    const char c[]="42";
+    scanf("%s", c);
+}
+\end{lstlisting}
+
+\subsubsection{Scanf com argumento do tipo \textit{int} inválido}
+Mensagem de erro: '[exemplo.c:5]: (erro) Scanf com argumento do tipo \textit{int} inválido'.
+\begin{lstlisting}[style=CStyle]
+void foo() {
+    int i;
+    unsigned int u;
+    char str[10];
+    scanf("%d", str);
+}
+\end{lstlisting}
+
+\subsubsection{Scanf com argumento do tipo \textit{float} inválido}
+Mensagem de erro: '[exemplo.c:5]: (erro) Scanf com argumento do tipo \textit{float} inválido'.
+\begin{lstlisting}[style=CStyle]
+void foo() {
+    int i;
+    unsigned int u;
+    char str[10];
+    scanf("%f", str);
+}
+\end{lstlisting}
+
+\subsubsection{Argumento do tipo \textit{string}/\textit{char}* no formato apresentado é inválido}
+Mensagem de erro: '[exemplo.c:3]: (erro) Argumento do tipo \textit{string}/\textit{char} no formato apresentado é inválido'.
+\begin{lstlisting}[style=CStyle]
+void foo(char* s, const char* s2, std::string s3, int i) {
+    printf("%s%s", s, s2);
+    printf("%s", i);
+    printf("%i%s", i, i);
+    printf("%s", s3);
+    printf("%s", "s4");
+    printf("%u", s);
+}
+\end{lstlisting}
+
+\subsubsection{Argumento do tipo \textit{number} no formato apresentado é inválido}
+Mensagem de erro: '[exemplo.c:2]: (erro) Argumento do tipo \textit{number} no formato apresentado é inválido'.
+\begin{lstlisting}[style=CStyle]
+void foo(const int ci) {
+    printf("%n", ci);
+}
+\end{lstlisting}
+
+\subsubsection{Argumento do tipo ponteiro no formato apresentado é inválido}
+Mensagem de erro: '[exemplo.c:3]: (erro) Argumento do tipo ponteiro no formato apresentado é inválido'.
+\begin{lstlisting}[style=CStyle]
+double f() { return 0; }
+void foo() { 
+    printf("%p", f());
+}
+\end{lstlisting}
+
+\subsubsection{Argumento de tipo \textit{int} é inválido neste caso}
+Mensagem de erro: '[exemplo.c:3]: (erro) Argumento de tipo \textit{int} é inválido neste caso'.
+\begin{lstlisting}[style=CStyle]
+double f() { return 0; }
+void foo() { 
+    printf("%f %ol", f(), f());
+}
+\end{lstlisting}
+
+\subsubsection{Argumento de tipo \textit{unsigned int} é inválido neste caso}
+Mensagem de erro: '[exemplo.c:3]: (erro) Argumento de tipo \textit{unsigned int} é inválido neste caso'.
+\begin{lstlisting}[style=CStyle]
+class foo {};
+void foo(const int* cpi, foo f, bar b, bar* bp, double d, int i, bool bo) {
+    printf("%u", f);
+    printf("%u", "s4");
+    printf("%u", d);
+    printf("%u", i);
+    printf("%u", cpi);
+    printf("%u", b);
+    printf("%u", bp);
+    printf("%u", bo);
+}
+\end{lstlisting}
+
+\subsubsection{Argumento de tipo \textit{short int} inválido}
+Mensagem de erro: '[exemplo.c:2]: (erro) Argumento de tipo \textit{short int} é inválido neste caso'.
+\begin{lstlisting}[style=CStyle]
+double f() { return 0; }
+void foo() { 
+    printf("%f %d", f(), f());
+}
+\end{lstlisting}
+
+\subsubsection{Argumento de tipo \textit{float} inválido}
+Mensagem de erro: '[exemplo.c:3]: (erro) Argumento de tipo \textit{float} é inválido neste caso'.
+\begin{lstlisting}[style=CStyle]
+class foo {};
+    //...
+    printf("%f", (float)cpi);
+}
+\end{lstlisting}
+
+\subsubsection{Formato de \textit{string}/\textit{char}* modificado não pode ser utilizado}
+Mensagem de erro: '[exemplo.c:2]: (erro) Formato de \textit{string}/\textit{char} modificado não pode ser utilizado sem conversão específica'.
+\begin{lstlisting}[style=CStyle]
+void foo(unsigned int i) {
+    size_t s;
+    printf("%I64%i", s, i);
+}
+\end{lstlisting}
+
+\subsubsection{Tamanho da variável no formato \textit{string}/\textit{char}* é inválida}
+Mensagem de erro: '[exemplo.c:2]: (erro) Tamanho da variável no formato \textit{string}/\textit{char} é inválida'.
+\begin{lstlisting}[style=CStyle]
+void f()
+{
+  char str [8];
+  scanf ("%70s",str);
+}
+\end{lstlisting}
+
+\subsubsection{Referenciamento de parâmetro foi realizado incorretamente}
+Mensagem de erro: '[exemplo.c:3]: (erro) Referenciamento de parâmetro foi realizado incorretamente'.
+\begin{lstlisting}[style=CStyle]
+void foo() {
+    int bar;
+    scanf("%2$d", &bar);
+    printf("%0$f", 0.0);
+}
+\end{lstlisting}
+
+
+\subsection{Vazamento de Memória}
+Os erros apontados pelo vazamento de memória estão relacionados a alocação e desalocação que podem gerar resultados indesejados ou ambiguidade no código.
+
+\subsubsection{Vazamento de recursos}
+Mensagem de erro: '[exemplo.c:4]: (erro) Vazamento de recursos'.
+\begin{lstlisting}[style=CStyle]
+void f() {
+  FILE *fp = fopen("name", "r");
+  if (!fp) {
+    fp = fopen("name", "w");
+    fclose(fp);
+  }
+}
+\end{lstlisting}
+
+
+\subsubsection{Vazamento de memória}
+Mensagem de erro: '[exemplo.c:3]: (erro) Vazamento de memória'.
+\begin{lstlisting}[style=CStyle]
+void f() {
+  int *p = malloc (sizeof(int)*10);
+  return 1;
+}
+\end{lstlisting}
+
+\subsubsection{Ponteiro liberado duas vezes}
+Mensagem de erro: '[exemplo.c:4]: (erro) Ponteiro foi liberado duas vezes'.
+\begin{lstlisting}[style=CStyle]
+void foo()
+{
+    char *str = malloc(100);
+    free(str);
+    free(str);
+}
+\end{lstlisting}
+
+\subsubsection{Acesso à variável já desalocada}
+Mensagem de erro: '[exemplo.c:2]: (erro) Acesso à variável já desalocada'.
+\begin{lstlisting}[style=CStyle]
+void f(char *p) {
+    free(p);
+    *p = 0;
+}
+\end{lstlisting}
+
+\subsubsection{Falta de alocação ou desalocação de memória}
+Mensagem de erro: '[exemplo.c:2]: (erro) Falta de alocação ou desalocação de memória'.
+\begin{lstlisting}[style=CStyle]
+void f() {
+    FILE*f=fopen(fname,a);
+    free(f);
+}
+\end{lstlisting}
+
+\subsubsection{Vazamento de memória no processo de realocação}
+Mensagem de erro: '[exemplo.c:6]: (erro) Vazamento de memória no processo de realocação'.
+\begin{lstlisting}[style=CStyle]
+static void f() {
+    char *buf = malloc(10);
+    if (aa)
+        // ...
+    else if (buf = realloc(buf, 100))
+       // ...
+    free(buf);
+}
+\end{lstlisting}
+
+\subsubsection{Liberação Dupla de Memória}
+Mensagem de erro: '[exemplo.c:6]: (erro) Ponteiro foi liberado duas vezes'.
+\begin{lstlisting}[style=CStyle]
+void f(char *p) {
+  if (x) {
+    free(p);
+    printf("Hello");
+  }
+  free(p);
+}
+\end{lstlisting}
+
+\subsubsection{Retorno/acesso de variável já desalocada}
+Mensagem de erro: '[exemplo.c:3]: (erro) Retorno/acesso de variável já desalocada'.
+\begin{lstlisting}[style=CStyle]
+void f(char *p) {
+    free(p);
+    return p;
+}
+\end{lstlisting}
+
+\subsection{Ponteiro Nulo}
+Verificação de ocorrência de erros na manipulação de ponteiros irá auxiliar em relação ao acesso de ponteiros que são nulos, e neste o SuSy-avalia faz a cobertura de três erros possíveis, que são os seguintes: aritmética de ponteiros e acesso a ponteiro nulo.
+
+\subsubsection{Possível acesso a ponteiro nulo}
+Mensagem de erro: '[exemplo.c:2]: (erro) Possível acesso a ponteiro nulo se o valor padrão foi utilizado'.
+\begin{lstlisting}[style=CStyle]
+void f(int *p = 0) {
+    *p = 0;
+}
+\end{lstlisting}
+Este erro só acontece em linguagem de programação C++.
+
+\subsubsection{Possível valor de ponteiro ser nulo}
+Mensagem de erro: '[exemplo.c:3]: (erro) Existe uma possibilidade do valor acessado do ponteiro ser nulo'.
+\begin{lstlisting}[style=CStyle]
+void foo(char *p) {
+    //...
+    if (!p) { }
+}
+\end{lstlisting}
+
+
+\subsubsection{Overflow na aritmética de ponteiro}
+Mensagem de erro: '[exemplo.c:2]: (erro) Overflow na aritmética de ponteiro, ponteiro nulo é subtraído'.
+\begin{lstlisting}[style=CStyle]
+void foo(char *s) {
+    p = s - 20;
+}
+void bar() { foo(0); }
+\end{lstlisting}
+
+\subsubsection{Desreferenciamento de ponteiro nulo}
+Mensagem de erro: '[exemplo.c:2]: (erro) Desreferenciamento de ponteiro nulo'.
+
+\begin{lstlisting}[style=CStyle]
+int foo(int *p) {
+    *p = 0;
+    if (!p) {
+        return 1;
+    }
+    return 0;
+}
+\end{lstlisting}
+
+
+\subsection{Verificação de Arquivo}
+
+Os erros apontados de verificação de arquivo podem garantir a manipulação correta de um arquivo, como por exemplo, o objetivo do arquivo é de escrita e leitura e o aluno abriu para leitura, portanto não irá conseguir fazer nenhuma escrita no arquivo.
+
+\subsubsection{Operação de escrita em um arquivo que foi aberto somente para leitura}
+Mensagem de erro: '[exemplo.c:5]: (erro) Operação de escrita em um arquivo que foi aberto somente para leitura'.
+\begin{lstlisting}[style=CStyle]
+void foo(FILE*& f) {
+    f = fopen(name, "r");
+    fread(buffer, 5, 6, f);
+    rewind(f);
+    fwrite(buffer, 5, 6, f);
+}
+\end{lstlisting}
+
+\subsubsection{Operação de leitura em um arquivo que foi aberto somente para escrita}
+Mensagem de erro: '[exemplo.c:5]: (erro) Operação de leitura em um arquivo que foi aberto somente para escrita'.
+\begin{lstlisting}[style=CStyle]
+void foo(FILE*& f) {
+    f = fopen(name, "w");
+    fwrite(buffer, 5, 6, f);
+    rewind(f);
+    fread(buffer, 5, 6, f);
+}
+\end{lstlisting}
+
+\subsubsection{Arquivo utilizado que não foi aberto}
+Mensagem de erro: '[exemplo.c:3]: (erro) Arquivo utilizado que não foi aberto'.
+\begin{lstlisting}[style=CStyle]
+void foo() {
+    FILE* f;
+    fwrite(buffer, 5, 6, f);
+}
+\end{lstlisting}
+
+\subsubsection{Chamada de função fflush() no stream de entrada}
+Mensagem de erro: '[exemplo.c:2]: (erro) Chamada de função fflush() no stream de entrada, podendo resultar em comportamento indefinido em sistemas não-linux'.
+\begin{lstlisting}[style=CStyle]
+void foo() {
+    fflush(stdin);
+}
+\end{lstlisting}
+
+
+\subsection{Nenhum erro foi encontrado}
+Mensagem: '[exemplo.c:2]: Nenhum erro de análise estática foi encontrado'.
+
+Esta mensagem significa que nenhum dos erros apresentados neste documento foram encontrados no arquivo \textit{exemplo.c}.
+Contudo, pode ainda haver erros no código mas que não são cobertos pelo SuSy-avalia.
+
+\printbibliography
+
+\clearpage
+
+\end{document}
