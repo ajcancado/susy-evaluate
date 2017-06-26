@@ -25,3 +25,8 @@ Scenario: Files with invalid extension
   	Given case5_input.txt contains a file list with invalid extension
   	When I call the app with the container file as parameter
   	Then files with invalid extension will not analyzed
+
+Scenario: Source and header files have programming errors
+  	Given case6_input.txt contains a source and header files with programming errors
+  	When I call the app with the container file as parameter
+  	Then shows me a file list with programming errors: source.c, header.h

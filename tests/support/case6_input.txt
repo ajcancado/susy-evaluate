@@ -1,0 +1,2 @@
+support/input/case6/source.c
+support/input/case6/header.h
