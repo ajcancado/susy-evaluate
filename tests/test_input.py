@@ -148,5 +148,5 @@ def files_with_invalid_extension_will_not_analyzed():
     global expected
 
     with open("output.txt",'r') as f_out:
-        m = re.search('(\[\w*\.((c|h|cpp){1})(\:\d+)?\])', f_out.read())
+        m = re.search('(\[\w*\.((c|h|cpp|hpp){1})(\:\d+)?\])', f_out.read())
         assert m != None
