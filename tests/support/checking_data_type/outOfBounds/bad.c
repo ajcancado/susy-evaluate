@@ -1,6 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int main(int argc, char const *argv[])
+struct ABC
 {
+    char str[10];
+};
+
+static char f(){
+    struct ABC abc;
+    return abc.str[10];
 }

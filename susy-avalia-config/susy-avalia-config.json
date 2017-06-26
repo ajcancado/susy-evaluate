@@ -48,7 +48,7 @@
     "bufferAccessOutOfBounds": "[{file}:{line}]: (erro) Vetor acessado em índice inválido, portanto fora do seu limite",
     "floatConversionOverflow": "[{file}:{line}]: (erro) Overflow de variável do tipo 'float'",
     "incorrectStringBooleanError": "[{file}:{line}]: (erro) Conversão literal de variável tipo caractere para booleano sempre é verdadeiro",
-    "outOfBounds": "[{file}:{line}]: (erro) Acesso inválido",
+    "arrayIndexOutOfBounds": "[{file}:{line}]: (erro) Acesso inválido",
     "pointerArithBool": "[{file}:{line}]: (erro) Valor booleano atribuído a ponteiro",
     "pointerOutOfBounds": "[{file}:{line}]: (erro) Acesso à posição inválida do ponteiro",
     "possibleBufferAccessOutBounds": "[{file}:{line}]: (erro) Possível acesso inválido",

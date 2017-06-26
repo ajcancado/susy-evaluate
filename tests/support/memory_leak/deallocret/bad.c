@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int main(int argc, char const *argv[])
-{
+char *f(char *p){
+    free(p);
+    return p;
 }
