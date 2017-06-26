@@ -1,1 +1,0 @@
-support/checking_data_type/boundary_checking/bad.c
