@@ -51,7 +51,7 @@ Cppcheck é uma ferramenta de análise estática de codigo para C/C++ . Diferent
 pip install -U pytest
 ```
 
-* Deve-se ter instalado na máquina o Python, de preferência a versão 3.
+* Deve-se ter instalado na máquina o Python3.
 
 ### CppCheck
 
