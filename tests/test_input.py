@@ -75,7 +75,7 @@ def shows_me_a_file_list_with_programming_errors_a1c():
             assert f in contents
 
         for f in unexpected:
-            assert ("[" + f + "]: Nenhum erro de análise estática foi encontrado") in contents
+            assert ("[" + f + "]: Nada para reportar") in contents
 
 
 @scenario('input.feature', 'Files without errors reported by cppcheck')
@@ -92,7 +92,7 @@ def file_list_without_programming_errors_a1c():
     expected = ["a1.c"]
 
 
-@then('shows me "[<filename>.c]: Nenhum erro de análise estática foi encontrado"')
+@then('shows me "[<filename>.c]: Nada para reportar"')
 def shows_nothing():
     global expected
 
@@ -100,7 +100,7 @@ def shows_nothing():
         for line in f_out:
             assert "a1.c" in line
 
-            m = re.search('(\[[0-9A-Za-z\_]*\.\w\])\:\sNenhum erro de análise estática foi encontrado', line)
+            m = re.search('(\[[0-9A-Za-z\_]*\.\w\])\:\sNada para reportar', line)
             assert m != None
 
 

@@ -33,8 +33,7 @@ class Evaluator(ABC):
             if len(output) > 0:
                 print(output)
             else:
-                print('[{file}]: Nenhum erro de análise estática foi '
-                        'encontrado'.format(file=os.path.basename(f)))
+                print('[{file}]: Nada para reportar'.format(file=os.path.basename(f)))
 
 
 class Cppcheck(Evaluator):
