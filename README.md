@@ -12,10 +12,19 @@ project
     |
     |- script/                                # documentos do projeto
     |
-    |- susy-avalia-config                     # todos os resultados das análises
-    |  |- cppcheck-cfg/                       # gráficos, geralmente as figuras do manuscrito
+    |- susy-avalia-config                     # 
+    |  |- cppcheck-cfg/                       # 
     |
-    |- tests/   
+    |- tests/                                 #
+    |  |- check_file/                         #
+    |  |- checking_data_type/                 #
+    |  |- format_string/                      #
+    |  |- memory_leak/                        #
+    |  |- null_pointer/                       #
+    |  |- support/                            #
+    |  |- syntax_suspected/                   #
+    |  |- uninitialized_variable/             #
+    |  |- unused_function_and_variable/       #
     |
     |- AUTHORS                                # atores do projeto
     |- LICENCE                                # licença de uso
