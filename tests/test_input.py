@@ -163,7 +163,7 @@ def source_and_header_files_with_programming_errors():
     global expected
 
     filename = './support/case6_input.txt'
-    expected = 4 #numero de arquivos analisados
+    expected = 2 #numero de arquivos analisados
 
 
 @then('shows me a file list with programming errors: source.c, header.h')

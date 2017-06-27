@@ -1,15 +1,1 @@
-[source.c:10]: (erro) Formato de 'string/char' modificado não pode ser utilizado sem conversão específica
-[source.c:10]: (erro) Argumento de tipo 'short int' é inválido neste caso
-[source.c:17]: (erro) Argumento de tipo 'float' é inválido neste caso
-[header.h:14]: (erro) Divisão por zero
-[source.c:28]: (erro) Atribuição de valor à variável mas nunca utilizado
-[source.c:22]: (erro) Retorno/acesso de variável já desalocada
-[source.c:48]: (erro) Falta de alocação ou desalocação de memória
-[source.c:35]: (erro) Vazamento de memória no processo de realocação
-[source.c:10]: (erro) Variável não inicializada
-[source.c:66]: (erro) Variável foi criada em uma 'struct' mas não foi inicializada
-[source.c:20]: (erro) Função criada mas nunca foi utilizada
-[source.c:25]: (erro) Função criada mas nunca foi utilizada
-[source.c:45]: (erro) Função criada mas nunca foi utilizada
-[header.h:14]: (erro) Divisão por zero
-[header.h:11]: (erro) Função criada mas nunca foi utilizada
+[good.c]: Nada para reportar
