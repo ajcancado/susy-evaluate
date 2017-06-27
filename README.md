@@ -6,7 +6,7 @@ Plugin para avaliação de código escrito em linguagem C, para ser integrado ao
 
 ```
 project
-    |- assets/                                # imagens de exemplo de execuço
+    |- assets/                                # imagens de exemplo de execução
     |
     |- latex_documentation_errors/            # 
     |
