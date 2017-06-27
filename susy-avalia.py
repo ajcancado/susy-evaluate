@@ -28,12 +28,12 @@ class Evaluator(ABC):
     def evaluate(self, files):
         self.init()
 
-        for f in files:
-            output = self.process(self.execute(f))
-            if len(output) > 0:
-                print(output)
-            else:
-                print('[{file}]: Nada para reportar'.format(file=os.path.basename(f)))
+        output = self.process(self.execute(files))
+        if len(output) > 0:
+            print(output)
+        else:
+            fnames = ', '.join(map(os.path.basename, files))
+            print('[{files}]: Nada a reportar.'.format(files=fnames))
 
 
 class Cppcheck(Evaluator):
@@ -89,12 +89,12 @@ class Cppcheck(Evaluator):
         with open(self.CONFIG_PATH) as cfg_file:
             self.ErrorId = json.load(cfg_file)
 
-    def execute(self, infile):
+    def execute(self, infiles):
         process = subprocess.Popen([os.path.join(self.CTRL_PATH, 'cppcheck'),
                 '--enable=style,unusedFunction',
                 '--inconclusive',
-                '--template={file}||{line}||{id}||{severity}||{message}',
-                infile], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+                '--template={file}||{line}||{id}||{severity}||{message}'] +
+                infiles, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         retcode = process.wait()
         r = process.stdout.read()
         return r
@@ -113,6 +113,11 @@ class Cppcheck(Evaluator):
                             line=fline, id=eid, severity=sev, message=msg))
             except:
                 continue
+        if len(fmt_result) >= 12:
+            total = len(fmt_result)
+            fmt_result = fmt_result[:10]
+            fmt_result.append('\nE mais {n} possíveis problemas '
+                    'encontrados.'.format(n=total - 10))
         return '\n'.join(fmt_result)
 
 
