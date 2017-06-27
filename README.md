@@ -82,7 +82,7 @@ ou caso queira especificar o arquivo de saida:
 python3 susy-avalia.py <your-file-to-evaluate.c> <your-directory/output.txt>
 ```
 
-![Exemplo Susy-Avalia]https://github.com/ajcancado/susy-evaluate/blob/master/assets/img_susy-avalia_example.png
+![Exemplo Susy-Avalia](https://github.com/ajcancado/susy-evaluate/blob/master/assets/img_susy-avalia_example.png)
 
 ## Licenças
 
