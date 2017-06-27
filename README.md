@@ -57,7 +57,7 @@ pip install -U pytest
 ### PyTest
 
 ```
-cd <your-directory>/project/tests/
+cd <your-directory>/susy-evaluate/tests/
 ```
 
 ```
@@ -65,6 +65,24 @@ pytest <your-test>.py
 ```
 
 ![Exemplo PyTest](https://github.com/ajcancado/susy-evaluate/blob/master/assets/img_bdd_example.png)
+
+### Susy-Avalia
+
+```
+cd <your-directory>/susy-avaluate/>
+```
+
+```
+python3 susy-avalia.py <your-file-to-evaluate.c>
+```
+
+ou caso queira especificar o arquivo de saida:
+
+```
+python3 susy-avalia.py <your-file-to-evaluate.c> <your-directory/output.txt>
+```
+
+![Exemplo Susy-Avalia]https://github.com/ajcancado/susy-evaluate/blob/master/assets/img_susy-avalia_example.png
 
 ## Licenças
 
