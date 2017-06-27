@@ -2,15 +2,15 @@
 
 Plugin para avaliação de código escrito em linguagem C, para ser integrado ao sistema SuSy. A avaliação feita pelo software é conhecida por análise estática, e é utilizada para dar feedback ao desenvolvedor sobre possíveis problemas em seu código, tais como vazamento de memória, acesso à posições inválidas de ponteiros e vetores, etc. Este feedback é importante para qualquer nível de programador, desde iniciantes até programadores experientes dado à vasta cobertura da análise.
 
-## Ferramentas utilizadas
+## Ferramentas
 
-### PyTest
+### PyTest - (https://docs.pytest.org/en/latest/)
 
-The pytest framework makes it easy to write small tests, yet scales to support complex functional testing for applications and libraries.
+O PyTest facilita a criação de pequenos testes a testes funcionais complexos para aplicações e bibliotecas.
 
-### CppCheck
+### CppCheck - (http://cppcheck.sourceforge.net/)
 
-Cppcheck is a static analysis tool for C/C++ code. Unlike C/C++ compilers and many other analysis tools it does not detect syntax errors in the code. Cppcheck primarily detects the types of bugs that the compilers normally do not detect. The goal is to detect only real errors in the code (i.e. have zero false positives).
+Cppcheck é uma ferramenta de anális estática de codigo para C/C++ . Diferente dos compiladores C/C++ e outras ferramentas de análise que não detectão erros de sintaxe no código. Cppcheck primeiramente detecta os tipos de "bugs" que não so detectados normalmente. O objetivo é detectar apenas erros reais, buscando não ter falsos positivos.
 
 ## Instalação
 
@@ -20,17 +20,45 @@ Cppcheck is a static analysis tool for C/C++ code. Unlike C/C++ compilers and ma
 pip install -U pytest
 ```
 
+* Deve-se ter instalado na máquina o Python, de preferência a versão 3.
+
 ### CppCheck
 
 ```
 <your-package-manager> install cppcheck
 ```
 
+* Em algumas distribuiço do linux o gerenciador de pacotes pode no conseguir instalar automaticamente, para isso será necessário a instalação no modo HardCode. Mais informações em: (http://cppcheck.sourceforge.net/#download)
+
 ## Exemplos
 
 ### PyTest
 
+
+
 ![Exemplo PyTest](https://github.com/ajcancado/susy-evaluate/blob/master/assets/img_bdd_example.png)
+
+## Arquitetura
+
+```
+project
+    |- assets/                                # imagens de exemplo de execuço
+    |
+    |- latex_documentation_errors/            # 
+    |
+    |- script/                                # documentos do projeto
+    |
+    |- susy-avalia-config                     # todos os resultados das análises
+    |  |- cppcheck-cfg/                       # gráficos, geralmente as figuras do manuscrito
+    |
+    |- tests/   
+    |
+    |- AUTHORS                                # atores do projeto
+    |- LICENCE                                # licença de uso
+    |- README                                 # descrição do conteúdo do diretório do projeto
+    |- documentacao_mensagens_de_erro.pdf     # 
+    |- susy-avalia.py                         # script de execução do susy-avalia
+```
 
 ## Licenças
 
