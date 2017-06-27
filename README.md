@@ -41,7 +41,7 @@ O PyTest facilita a criação de pequenos testes a testes funcionais complexos p
 
 ### [CppCheck](http://cppcheck.sourceforge.net/)
 
-Cppcheck é uma ferramenta de anális estática de codigo para C/C++ . Diferente dos compiladores C/C++ e outras ferramentas de análise que não detectão erros de sintaxe no código. Cppcheck primeiramente detecta os tipos de "bugs" que não so detectados normalmente. O objetivo é detectar apenas erros reais, buscando não ter falsos positivos.
+Cppcheck é uma ferramenta de análise estática de codigo para C/C++ . Diferente dos compiladores C/C++ e outras ferramentas de análise que não detectão erros de sintaxe no código. Cppcheck primeiramente detecta os tipos de "bugs" que não são detectados normalmente. O objetivo é detectar apenas erros reais, buscando não ter falsos positivos.
 
 ## Instalação
 
@@ -59,7 +59,7 @@ pip install -U pytest
 <your-package-manager> install cppcheck
 ```
 
-* Em algumas distribuiço do linux o gerenciador de pacotes pode no conseguir instalar automaticamente, para isso será necessário a instalação no modo HardCode. Mais informações [aqui](http://cppcheck.sourceforge.net/#download).
+* Em algumas distribuiço do linux o gerenciador de pacotes pode não conseguir instalar automaticamente o cppcheck, neste caso será necessário a instalação no modo Hard Code. Mais informações [aqui](http://cppcheck.sourceforge.net/#download).
 
 ## Exemplos
 
