@@ -10,8 +10,8 @@ project
     |
     |- latex_documentation_errors/            # pasta de configuração do latex
     |
-    |- script/                                # documentos do projeto
-    |
+    |- script/                                # script para geração dos testes bdd
+    |
     |- susy-avalia-config                     # pasta de configuração do susy-avalia
     |  |- cppcheck-cfg/                       # pasta de configuração do cppcheck
     |
