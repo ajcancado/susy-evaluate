@@ -1,1 +1,1 @@
-[good.c]: Nenhum erro de análise estática foi encontrado
+[good.c]: Nada para reportar

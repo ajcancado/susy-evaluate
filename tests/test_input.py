@@ -163,7 +163,7 @@ def source_and_header_files_with_programming_errors():
     global expected
 
     filename = './support/case6_input.txt'
-    expected = 2 #numero de arquivos analisados
+    expected = 4 #numero de arquivos analisados
 
 
 @then('shows me a file list with programming errors: source.c, header.h')
@@ -171,5 +171,4 @@ def shows_me_a_file_list_with_programming_errors_source_header():
     global expected
 
     with open("output.txt",'r') as f_out:
-        print (len(f_out.readlines()))
         assert len(f_out.readlines()) == expected
