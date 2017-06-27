@@ -76,7 +76,7 @@ Distributed under the terms of the [MIT](https://github.com/pytest-dev/pytest/bl
 
 ### CppCheck
 
-[GPLv3](https://www.gnu.org/licenses/gpl-3.0.en.html) - GNU General Public License version 3.0
+[GNU General Public License version 3.0](https://www.gnu.org/licenses/gpl-3.0.en.html)
 
 ## Alunos
 
