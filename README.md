@@ -8,14 +8,14 @@ Plugin para avaliação de código escrito em linguagem C, para ser integrado ao
 project
     |- assets/                                # imagens de exemplo de execução
     |
-    |- latex_documentation_errors/            # 
-    |
+    |- latex_documentation_errors/            # pasta de configuração do latex
+    |
     |- script/                                # documentos do projeto
     |
-    |- susy-avalia-config                     # 
-    |  |- cppcheck-cfg/                       # 
+    |- susy-avalia-config                     # pasta de configuração do susy-avalia
+    |  |- cppcheck-cfg/                       # pasta de configuração do cppcheck
     |
-    |- tests/                                 #
+    |- tests/                                 # pasta contendo os testes bdd ( dividos por categoria )
     |  |- check_file/                         #
     |  |- checking_data_type/                 #
     |  |- format_string/                      #
@@ -28,8 +28,8 @@ project
     |
     |- AUTHORS                                # atores do projeto
     |- LICENCE                                # licença de uso
-    |- README                                 # descrição do conteúdo do diretório do projeto
-    |- documentacao_mensagens_de_erro.pdf     # 
+    |- README                                 # descrição do conteúdo do projeto
+    |- documentacao_mensagens_de_erro.pdf     # documentacao das mensagens de erro geradas pelo latex
     |- susy-avalia.py                         # script de execução do susy-avalia
 ```
 
