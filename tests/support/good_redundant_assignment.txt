@@ -1,1 +1,1 @@
-support/redundant_assignment/good.c
+support/syntax_suspected/redundant_assignment/good.c

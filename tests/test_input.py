@@ -70,12 +70,13 @@ def shows_me_a_file_list_with_programming_errors_a1c():
 
     with open("output.txt",'r') as f_out:
         contents = f_out.read()
+        print(contents)
 
         for f in expected:
             assert f in contents
 
         for f in unexpected:
-            assert ("[" + f + "]: Nada para reportar") in contents
+            assert ("[" + f + "]: Nada a reportar") in contents
 
 
 @scenario('input.feature', 'Files without errors reported by cppcheck')
@@ -92,7 +93,7 @@ def file_list_without_programming_errors_a1c():
     expected = ["a1.c"]
 
 
-@then('shows me "[<filename>.c]: Nada para reportar"')
+@then('shows me "[<filename>.c]: Nada a reportar"')
 def shows_nothing():
     global expected
 
@@ -100,7 +101,7 @@ def shows_nothing():
         for line in f_out:
             assert "a1.c" in line
 
-            m = re.search('(\[[0-9A-Za-z\_]*\.\w\])\:\sNada para reportar', line)
+            m = re.search('(\[[0-9A-Za-z\_]*\.\w\])\:\sNada a reportar', line)
             assert m != None
 
 

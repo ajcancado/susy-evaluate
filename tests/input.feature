@@ -14,7 +14,7 @@ Scenario: Not all files have errors reported by cppcheck
 Scenario: Files without errors reported by cppcheck
   	Given case3_input.txt contains a file list without programming errors: a1.c
   	When I call the app with the container file as parameter
-  	Then shows me "[<filename>.c]: Nada para reportar"
+  	Then shows me "[<filename>.c]: Nada a reportar"
 
 Scenario: Files with invalid path
   	Given case4_input.txt contains a file list with invalid path

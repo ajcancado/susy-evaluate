@@ -31,9 +31,11 @@ class Evaluator(ABC):
         output = self.process(self.execute(files))
         if len(output) > 0:
             print(output)
-        else:
-            fnames = ', '.join(map(os.path.basename, files))
-            print('[{files}]: Nada a reportar.'.format(files=fnames))
+        
+        for f in files:
+            filename = os.path.basename(f)
+            if filename not in output:
+                print('[{file}]: Nada a reportar'.format(file=filename))
 
 
 class Cppcheck(Evaluator):

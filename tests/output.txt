@@ -1,1 +1,1 @@
-[good.c]: Nada para reportar
+[good.c]: Nada a reportar
