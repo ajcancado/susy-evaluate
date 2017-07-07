@@ -16,12 +16,13 @@ project
     |  |- cppcheck-cfg/                       # pasta de configuração do cppcheck
     |
     |- tests/                                 # pasta contendo os testes bdd ( dividos por categoria )
+    |  |- input/                              # 
     |  |- check_file/                         #
     |  |- checking_data_type/                 #
     |  |- format_string/                      #
     |  |- memory_leak/                        #
     |  |- null_pointer/                       #
-    |  |- support/                            #
+    |  |- support/                            # arquivos bad.c e good.c
     |  |- syntax_suspected/                   #
     |  |- uninitialized_variable/             #
     |  |- unused_function_and_variable/       #
